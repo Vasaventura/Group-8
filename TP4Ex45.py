@@ -10,12 +10,18 @@ student_and_grade = {"Martina": 5.35, "Bastien": 5.07, "Claire": 3.53, "Anna":
                     3.55, "Sannah": 4.99, "Sallie": 4.34,"Urbi": 4.11, "Kellian": 5.14, "Helmut": 4.53,
                     "Joan": 4.69, "Joseph": 4.00, "Vilmer": 5.19 }
 
-grade_average = s.mean(student_and_grade.values())
-students_above_avg = []
-for name, grade in student_and_grade.items():
-    if grade > grade_average:
-        students_above_avg.append(grade)
 
+
+grade_average = s.mean(student_and_grade.values())
 print(grade_average)
-#print(len(students_above_avg)) #todo uncomment the line to find the right answer
+
+students_above_avg = []
+count=0
+for name, grade in student_and_grade.items():
+  if grade>grade_average:
+    count += 1
+    print(count,name,grade)
+
+
+
 
