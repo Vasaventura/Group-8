@@ -17,6 +17,5 @@ for name, grade in student_and_grade.items():
         students_above_avg.append(grade)
 
 print(grade_average)
-print(len(students_above_avg))
-
+#print(len(students_above_avg)) #todo uncomment the line to find the right answer
 
