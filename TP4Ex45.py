@@ -13,7 +13,7 @@ student_and_grade = {"Martina": 5.35, "Bastien": 5.07, "Claire": 3.53, "Anna":
 
 
 grade_average = s.mean(student_and_grade.values())
-print(grade_average)
+print("the overall mean is", grade_average)
 
 students_above_avg = []
 count=0
