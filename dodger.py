@@ -8,9 +8,9 @@ BACKGROUNDCOLOR = (255, 255, 255)
 FPS = 60
 BADDIEMINSIZE = 10
 BADDIEMAXSIZE = 40
-BADDIEMINSPEED = 1
-BADDIEMAXSPEED = 8
-ADDNEWBADDIERATE = 6
+BADDIEMINSPEED = 1  #la vitesse minimale d'ennemi
+BADDIEMAXSPEED = 6 #la vitesse maximale d'ennemi
+ADDNEWBADDIERATE = 5 #le taux de reproduction des nouveaux ennemis
 PLAYERMOVERATE = 5
 
 def terminate():
