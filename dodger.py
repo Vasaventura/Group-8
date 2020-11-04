@@ -64,6 +64,7 @@ musicPlaying = True
 # Set up images.
 playerImage = pygame.image.load('pere-noel-image2.png')
 playerRect = playerImage.get_rect()
+playerStretchedImage = pygame.transform.scale(playerImage, (0, 0))
 baddieImage = pygame.image.load('baddie_mario.png')
 
 # Set up backgrounds.
