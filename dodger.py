@@ -56,9 +56,9 @@ font = pygame.font.SysFont(None, 48)
 
 # Set up sounds.
 gameOverSound = pygame.mixer.Sound('gameoversong.wav')
-pygame.mixer.music.load('background.mid')
+pygame.mixer.music.load('KatyPerry-CozyLittleChristmas.mp3')
 pygame.mixer.music.play(-1, 0.0)
-pygame.mixer.music.load('background.mid')
+pygame.mixer.music.load('KatyPerry-CozyLittleChristmas.mp3')
 musicPlaying = True
 
 # Set up images.
