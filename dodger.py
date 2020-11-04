@@ -66,6 +66,10 @@ playerImage = pygame.image.load('pere-noel-image2.png')
 playerRect = playerImage.get_rect()
 baddieImage = pygame.image.load('baddie_mario.png')
 
+# Set up backgrounds.
+#gameBackground = pygame.image.load()
+gameOverBackground = pygame.image.load("Grinch end game.png")
+
 # Show the "Start" screen.
 windowSurface.fill(BACKGROUNDCOLOR)
 drawText('Dodger', font, windowSurface, (WINDOWWIDTH / 3), (WINDOWHEIGHT / 3))
