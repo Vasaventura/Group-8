@@ -63,10 +63,10 @@ pygame.mixer.music.load('KatyPerry-CozyLittleChristmas.mp3')
 musicPlaying = True
 
 # Set up images.
-playerImage = pygame.image.load('pere-noel-image2.png')
+playerImage = pygame.image.load('santa_player.png')
 playerRect = playerImage.get_rect()
 playerStretchedImage = pygame.transform.scale(playerImage, (0, 0))
-baddieImage = pygame.image.load('baddie_mario.png')
+baddieImage = pygame.image.load('gremlin.png')
 
 # todo Set up backgrounds.
 #gameBackground = pygame.image.load('background_snow.jpg')
@@ -75,8 +75,8 @@ baddieImage = pygame.image.load('baddie_mario.png')
 # Show the "Start" screen.
 windowSurface.fill(MENUBACKGROUNDCOLOR)
 drawText('Dodger', font, windowSurface, (WINDOWWIDTH / 3), (WINDOWHEIGHT / 3))
-drawText('Press a key', font, windowSurface, (WINDOWWIDTH / 3) - 30, (WINDOWHEIGHT / 3) + 50)
-drawText('to save Christmas', font, windowSurface, (WINDOWWIDTH / 3) - 60, (WINDOWHEIGHT / 3) + 100)
+drawText('Press a key to start', font, windowSurface, (WINDOWWIDTH / 3) - 80, (WINDOWHEIGHT / 3) + 50)
+drawText('saving Christmas', font, windowSurface, (WINDOWWIDTH / 3) - 70, (WINDOWHEIGHT / 3) + 100)
 pygame.display.update()
 waitForPlayerToPressKey()
 
@@ -212,7 +212,8 @@ while True:
     gameOverSound.play()
 
     drawText('GAME OVER', font, windowSurface, (WINDOWWIDTH / 3), (WINDOWHEIGHT / 3))
-    drawText('Press a key to retry saving Christmas.', font, windowSurface, (WINDOWWIDTH / 3) - 80, (WINDOWHEIGHT / 3) + 50)
+    drawText('Press a key to retry', font, windowSurface, (WINDOWWIDTH / 3) - 45, (WINDOWHEIGHT / 3) + 50)
+    drawText('to save Christmas', font, windowSurface, (WINDOWWIDTH / 3) - 45,(WINDOWHEIGHT / 3) + 100)
     pygame.display.update()
     waitForPlayerToPressKey()
 
