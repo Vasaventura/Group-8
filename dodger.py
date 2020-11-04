@@ -5,6 +5,7 @@ WINDOWWIDTH = 600
 WINDOWHEIGHT = 600
 TEXTCOLOR = (0, 0, 0)
 BACKGROUNDCOLOR = (255, 255, 255)
+MENUBACKGROUNDCOLOR = ('lavenderblush')
 FPS = 60
 BADDIEMINSIZE = 10
 BADDIEMAXSIZE = 40
@@ -55,7 +56,7 @@ pygame.mouse.set_visible(False)
 font = pygame.font.SysFont(None, 48)
 
 # Set up sounds.
-gameOverSound = pygame.mixer.Sound('gameoversong.wav')
+gameOverSound = pygame.mixer.Sound('gameover.wav')
 pygame.mixer.music.load('KatyPerry-CozyLittleChristmas.mp3')
 pygame.mixer.music.play(-1, 0.0)
 pygame.mixer.music.load('KatyPerry-CozyLittleChristmas.mp3')
@@ -66,14 +67,15 @@ playerImage = pygame.image.load('pere-noel-image2.png')
 playerRect = playerImage.get_rect()
 baddieImage = pygame.image.load('baddie_mario.png')
 
-# Set up backgrounds.
-#gameBackground = pygame.image.load()
-gameOverBackground = pygame.image.load("Grinch end game.png")
+# todo Set up backgrounds.
+#gameBackground = pygame.image.load('background_snow.jpg')
+#gameOverBackground = pygame.image.load("Grinch end game.png")
 
 # Show the "Start" screen.
-windowSurface.fill(BACKGROUNDCOLOR)
+windowSurface.fill(MENUBACKGROUNDCOLOR)
 drawText('Dodger', font, windowSurface, (WINDOWWIDTH / 3), (WINDOWHEIGHT / 3))
-drawText('Press a key to save Christmas', font, windowSurface, (WINDOWWIDTH / 3) - 30, (WINDOWHEIGHT / 3) + 50)
+drawText('Press a key', font, windowSurface, (WINDOWWIDTH / 3) - 30, (WINDOWHEIGHT / 3) + 50)
+drawText('to save Christmas', font, windowSurface, (WINDOWWIDTH / 3) - 60, (WINDOWHEIGHT / 3) + 100)
 pygame.display.update()
 waitForPlayerToPressKey()
 
