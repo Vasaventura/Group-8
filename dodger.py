@@ -61,7 +61,7 @@ pygame.mixer.music.play(-1, 0.0)
 musicPlaying = True
 
 # Set up images.
-playerImage = pygame.image.load('player.png')
+playerImage = pygame.image.load('pere-noel-image2.png')
 playerRect = playerImage.get_rect()
 baddieImage = pygame.image.load('baddie_mario.png')
 
