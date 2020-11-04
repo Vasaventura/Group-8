@@ -56,7 +56,7 @@ pygame.mouse.set_visible(False)
 font = pygame.font.SysFont(None, 48)
 
 # Set up sounds.
-gameOverSound = pygame.mixer.Sound('gameover.wav')
+gameOverSound = pygame.mixer.Sound('grinch_gameoversound.mp3')
 pygame.mixer.music.load('KatyPerry-CozyLittleChristmas.mp3')
 pygame.mixer.music.play(-1, 0.0)
 pygame.mixer.music.load('KatyPerry-CozyLittleChristmas.mp3')
