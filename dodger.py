@@ -8,14 +8,16 @@ BACKGROUNDCOLOR = (255, 255, 255)
 FPS = 60
 BADDIEMINSIZE = 10
 BADDIEMAXSIZE = 40
-BADDIEMINSPEED = 1  #la vitesse minimale d'ennemi
-BADDIEMAXSPEED = 6 #la vitesse maximale d'ennemi
-ADDNEWBADDIERATE = 5 #le taux de reproduction des nouveaux ennemis
+BADDIEMINSPEED = 1  # la vitesse minimale d'ennemi
+BADDIEMAXSPEED = 6  # la vitesse maximale d'ennemi
+ADDNEWBADDIERATE = 5  # le taux de reproduction de nouveaux ennemis
 PLAYERMOVERATE = 5
+
 
 def terminate():
     pygame.quit()
     sys.exit()
+
 
 def waitForPlayerToPressKey():
     while True:
@@ -23,9 +25,10 @@ def waitForPlayerToPressKey():
             if event.type == QUIT:
                 terminate()
             if event.type == KEYDOWN:
-                if event.key == K_ESCAPE: # Pressing ESC quits.
+                if event.key == K_ESCAPE:  # Pressing ESC quits.
                     terminate()
                 return
+
 
 def playerHasHitBaddie(playerRect, baddies):
     for b in baddies:
@@ -33,11 +36,13 @@ def playerHasHitBaddie(playerRect, baddies):
             return True
     return False
 
+
 def drawText(text, font, surface, x, y):
     textobj = font.render(text, 1, TEXTCOLOR)
     textrect = textobj.get_rect()
     textrect.topleft = (x, y)
     surface.blit(textobj, textrect)
+
 
 # Set up pygame, the window, and the mouse cursor.
 pygame.init()
@@ -52,9 +57,11 @@ font = pygame.font.SysFont(None, 48)
 # Set up sounds.
 gameOverSound = pygame.mixer.Sound('gameover.wav')
 pygame.mixer.music.load('background.mid')
+pygame.mixer.music.play(-1, 0.0)
+musicPlaying = True
 
 # Set up images.
-playerImage = pygame.image.load('pere-noel-image2.png')
+playerImage = pygame.image.load('player.png')
 playerRect = playerImage.get_rect()
 baddieImage = pygame.image.load('baddie_mario.png')
 
@@ -76,13 +83,12 @@ while True:
     baddieAddCounter = 0
     pygame.mixer.music.play(-1, 0.0)
 
-    while True: # The game loop runs while the game part is playing.
-        score += 1 # Increase score.
+    while True:  # The game loop runs while the game part is playing.
+        score += 1  # Increase score.
 
         for event in pygame.event.get():
             if event.type == QUIT:
                 terminate()
-
             if event.type == KEYDOWN:
                 if event.key == K_z:
                     reverseCheat = True
@@ -100,6 +106,13 @@ while True:
                 if event.key == K_DOWN or event.key == K_s:
                     moveUp = False
                     moveDown = True
+                # option mute pour enlever le son du jeu. Par contre le son du Game Over reste toujours
+                if event.key == K_m:
+                    if musicPlaying:
+                        pygame.mixer.music.stop()
+                    else:
+                        pygame.mixer.music.play(-1, 0.0)
+                musicPlaying = not musicPlaying  # le code a ete adapte depuis le livre de cours (Ai Swegart) Ch. 19 Page 325-326
 
             if event.type == KEYUP:
                 if event.key == K_z:
@@ -109,7 +122,7 @@ while True:
                     slowCheat = False
                     score = 0
                 if event.key == K_ESCAPE:
-                        terminate()
+                    terminate()
 
                 if event.key == K_LEFT or event.key == K_a:
                     moveLeft = False
@@ -130,10 +143,11 @@ while True:
         if baddieAddCounter == ADDNEWBADDIERATE:
             baddieAddCounter = 0
             baddieSize = random.randint(BADDIEMINSIZE, BADDIEMAXSIZE)
-            newBaddie = {'rect': pygame.Rect(random.randint(0, WINDOWWIDTH - baddieSize), 0 - baddieSize, baddieSize, baddieSize),
-                        'speed': random.randint(BADDIEMINSPEED, BADDIEMAXSPEED),
-                        'surface':pygame.transform.scale(baddieImage, (baddieSize, baddieSize)),
-                        }
+            newBaddie = {'rect': pygame.Rect(random.randint(0, WINDOWWIDTH - baddieSize), 0 - baddieSize, baddieSize,
+                                             baddieSize),
+                         'speed': random.randint(BADDIEMINSPEED, BADDIEMAXSPEED),
+                         'surface': pygame.transform.scale(baddieImage, (baddieSize, baddieSize)),
+                         }
 
             baddies.append(newBaddie)
 
@@ -180,7 +194,7 @@ while True:
         # Check if any of the baddies have hit the player.
         if playerHasHitBaddie(playerRect, baddies):
             if score > topScore:
-                topScore = score # set new top score
+                topScore = score  # set new top score
             break
 
         mainClock.tick(FPS)
