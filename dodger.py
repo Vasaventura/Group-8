@@ -7,11 +7,11 @@ TEXTCOLOR = (0, 0, 0)
 BACKGROUNDCOLOR = (255, 255, 255)
 MENUBACKGROUNDCOLOR = ('lavenderblush')
 FPS = 60
-BADDIEMINSIZE = 10
-BADDIEMAXSIZE = 40
+BADDIEMINSIZE = 25 #ici le code a été modifié en suivant les conseils du livre (Ai Swegart) Ch. 20, Pg. 353-354
+BADDIEMAXSIZE = 60
 BADDIEMINSPEED = 1  # la vitesse minimale d'ennemi
-BADDIEMAXSPEED = 6  # la vitesse maximale d'ennemi
-ADDNEWBADDIERATE = 5  # le taux de reproduction de nouveaux ennemis
+BADDIEMAXSPEED = 4  # la vitesse maximale d'ennemi
+ADDNEWBADDIERATE = 12  # le taux de reproduction de nouveaux ennemis
 PLAYERMOVERATE = 5
 
 
