@@ -1,8 +1,8 @@
 import pygame, random, sys
 from pygame.locals import *
 
-WINDOWWIDTH = 600
-WINDOWHEIGHT = 600
+WINDOWWIDTH = 1600
+WINDOWHEIGHT = 800
 TEXTCOLOR = (0, 0, 0)
 BACKGROUNDCOLOR = (255, 255, 255)
 MENUBACKGROUNDCOLOR = ('lavenderblush')
@@ -68,7 +68,7 @@ playerRect = playerImage.get_rect()
 playerStretchedImage = pygame.transform.scale(playerImage, (0, 0))
 baddieImage = pygame.image.load('gremlin.png')
 
-# todo Set up backgrounds.
+# to do Set up backgrounds.
 #gameBackground = pygame.image.load('background_snow.jpg')
 #gameOverBackground = pygame.image.load("Grinch end game.png")
 
