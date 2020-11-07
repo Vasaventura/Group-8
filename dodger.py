@@ -68,9 +68,10 @@ playerRect = playerImage.get_rect()
 playerStretchedImage = pygame.transform.scale(playerImage, (0, 0))
 baddieImage = pygame.image.load('gremlin.png')
 
-# to do Set up backgrounds.
-#gameBackground = pygame.image.load('background_snow.jpg')
-#gameOverBackground = pygame.image.load("Grinch end game.png")
+
+# Set up backgrounds.
+gameBackground = pygame.image.load("background_snow.png")
+gameOverBackground = pygame.image.load("Grinch end game.png")
 
 # Show the "Start" screen.
 windowSurface.fill(MENUBACKGROUNDCOLOR)
@@ -79,6 +80,7 @@ drawText('Press a key to start', font, windowSurface, (WINDOWWIDTH / 3)-40, (WIN
 drawText('saving Christmas', font, windowSurface, (WINDOWWIDTH / 3)-35, (WINDOWHEIGHT / 3) + 100)
 pygame.display.update()
 waitForPlayerToPressKey()
+
 
 topScore = 0
 while True:
@@ -91,9 +93,10 @@ while True:
     baddieAddCounter = 0
     pygame.mixer.music.play(-1, 0.0)
 
-    while True:  # The game loop runs while the game part is playing.
-        score += 1  # Increase score.
 
+    while True:  # The game loop runs while the game part is playing.
+
+        score += 1  # Increase score.
         for event in pygame.event.get():
             if event.type == QUIT:
                 terminate()
@@ -119,7 +122,7 @@ while True:
                     if musicPlaying:
                         pygame.mixer.music.stop()
                     else:
-                        pygame.mixer.music.play(-1, 0.0)
+                        pygame.mixer.music.play(-1, 0.0) #quand la musique arrive à la fin, elle recommence
                 musicPlaying = not musicPlaying  # le code a ete adapte depuis le livre de cours (Ai Swegart) Ch. 19 Page 325-326
 
             if event.type == KEYUP:
@@ -185,6 +188,8 @@ while True:
 
         # Draw the game world on the window.
         windowSurface.fill(BACKGROUNDCOLOR)
+        #add the background image
+        windowSurface.blit(gameBackground, (0,0))
 
         # Draw the score and top score.
         drawText('Score: %s' % (score), font, windowSurface, 10, 0)
@@ -210,6 +215,11 @@ while True:
     # Stop the game and show the "Game Over" screen.
     pygame.mixer.music.stop()
     gameOverSound.play()
+
+    #Background game over set up
+    windowSurface.fill(BACKGROUNDCOLOR)
+    # add the background image
+    windowSurface.blit(gameOverBackground, (0, 0))
 
     drawText('GAME OVER', font, windowSurface, (WINDOWWIDTH / 3), (WINDOWHEIGHT / 3))
     drawText('Press a key to retry', font, windowSurface, (WINDOWWIDTH / 3) - 45, (WINDOWHEIGHT / 3) + 50)
