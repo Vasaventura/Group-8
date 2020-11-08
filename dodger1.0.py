@@ -1,8 +1,8 @@
 import pygame, random, sys
 from pygame.locals import *
 
-WINDOWWIDTH = 600
-WINDOWHEIGHT = 600
+WINDOWWIDTH = 800
+WINDOWHEIGHT = 800
 TEXTCOLOR = (0, 0, 0)
 BACKGROUNDCOLOR = (255, 255, 255)
 MENUBACKGROUNDCOLOR = ('lavenderblush')
@@ -68,8 +68,8 @@ playerRect = playerImage.get_rect()
 playerStretchedImage = pygame.transform.scale(playerImage, (0, 0))
 baddieImage = pygame.image.load('gremlin.png')
 
-#todo Set up backgrounds.
-gameBackground1 = pygame.image.load("background_snow.png")
+
+gameBackground1 = pygame.image.load("winter_background.png")
 gameOverBackground = pygame.image.load("Grinch end game.png")
 
 # Show the "Start" screen.
@@ -209,7 +209,7 @@ while True:
         mainClock.tick(FPS)
 
     # Stop the game and show the "Game Over" screen.
-    windowSurface.blit(gameOverBackground, (-1250, 0))
+    windowSurface.blit(gameOverBackground, (-850, 0))
     pygame.mixer.music.stop()
     gameOverSound.play()
 
