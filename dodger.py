@@ -284,6 +284,14 @@ class GameLevel():
                     if event.key == K_DOWN or event.key == K_s:
                         moveDown = False
 
+                        #for e in pygame.event.get():
+   # if e.type == QUIT: raise SystemExit, "QUIT"
+   # if e.type == KEYDOWN and e.key == K_ESCAPE:
+     #   raise SystemExit, "ESCAPE"
+
+#pressed = pygame.key.get_pressed()
+#up, left, right = [pressed[key] for key in (K_UP, K_LEFT, K_RIGHT)]
+
                 if event.type == MOUSEMOTION:
                     # If the mouse moves, move the player where to the cursor.
                     playerRect.centerx = event.pos[0]

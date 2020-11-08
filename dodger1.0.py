@@ -68,9 +68,9 @@ playerRect = playerImage.get_rect()
 playerStretchedImage = pygame.transform.scale(playerImage, (0, 0))
 baddieImage = pygame.image.load('gremlin.png')
 
-# todo Set up backgrounds.
-#gameBackground = pygame.image.load('background_snow.jpg')
-#gameOverBackground = pygame.image.load("Grinch end game.png")
+#todo Set up backgrounds.
+gameBackground1 = pygame.image.load("background_snow.png")
+gameOverBackground = pygame.image.load("Grinch end game.png")
 
 # Show the "Start" screen.
 windowSurface.fill(MENUBACKGROUNDCOLOR)
@@ -185,7 +185,8 @@ while True:
 
         # Draw the game world on the window.
         windowSurface.fill(BACKGROUNDCOLOR)
-
+        #Set up the background
+        windowSurface.blit(gameBackground1, (0, -100))
         # Draw the score and top score.
         drawText('Score: %s' % (score), font, windowSurface, 10, 0)
         drawText('Top Score: %s' % (topScore), font, windowSurface, 10, 40)
@@ -208,6 +209,7 @@ while True:
         mainClock.tick(FPS)
 
     # Stop the game and show the "Game Over" screen.
+    windowSurface.blit(gameOverBackground, (-1250, 0))
     pygame.mixer.music.stop()
     gameOverSound.play()
 
