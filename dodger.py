@@ -63,9 +63,9 @@ pygame.mixer.music.load('KatyPerry-CozyLittleChristmas.mp3')
 musicPlaying = True
 
 # Set up images.
-playerImage = pygame.image.load('santa_player.png')
+playerImage = pygame.image.load('santa-player.png')
+#playerSIZE = pygame.transform.scale(playerImage, (100, 200)) #todo custom-set player Size
 playerRect = playerImage.get_rect()
-playerStretchedImage = pygame.transform.scale(playerImage, (0, 0))
 baddieImage = pygame.image.load('gremlin.png')
 
 
