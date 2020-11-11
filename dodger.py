@@ -63,9 +63,9 @@ pygame.mixer.music.load('KatyPerry-CozyLittleChristmas.mp3')
 musicPlaying = True
 
 # Set up images.
-playerImage = pygame.image.load('santa_player.png')
+playerImage = pygame.image.load('santa-player.png')
+#playerSIZE = pygame.transform.scale(playerImage, (100, 200)) #todo custom-set player Size
 playerRect = playerImage.get_rect()
-playerStretchedImage = pygame.transform.scale(playerImage, (0, 0))
 baddieImage = pygame.image.load('gremlin.png')
 
 
@@ -283,6 +283,14 @@ class GameLevel():
                         moveUp = False
                     if event.key == K_DOWN or event.key == K_s:
                         moveDown = False
+
+                        #for e in pygame.event.get():
+   # if e.type == QUIT: raise SystemExit, "QUIT"
+   # if e.type == KEYDOWN and e.key == K_ESCAPE:
+     #   raise SystemExit, "ESCAPE"
+
+#pressed = pygame.key.get_pressed()
+#up, left, right = [pressed[key] for key in (K_UP, K_LEFT, K_RIGHT)]
 
                 if event.type == MOUSEMOTION:
                     # If the mouse moves, move the player where to the cursor.
