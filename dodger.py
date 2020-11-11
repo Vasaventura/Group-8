@@ -1,11 +1,11 @@
 import pygame, random, sys
 from pygame.locals import *
 
-WINDOWWIDTH = 1600 #Agrandir la taille en largeur de la fenêtre pour qu'elle match avec l'écran de l'ordinateur.
-WINDOWHEIGHT = 800 #Agrandir la taille en hauteur de la fenêtre pour qu'elle match avec l'écran de l'ordinateur.
+WINDOWWIDTH = 1500
+WINDOWHEIGHT = 800
 TEXTCOLOR = (0, 0, 0)
 BACKGROUNDCOLOR = (255, 255, 255)
-MENUBACKGROUNDCOLOR = ('tomato') #Couleur d'écran de start changée pour avoir quelque chose plus dans le thème
+MENUBACKGROUNDCOLOR = ('lavenderblush')
 FPS = 60
 BADDIEMINSIZE = 25 #ici le code a été modifié en suivant les conseils du livre (Ai Swegart) Ch. 20, Pg. 353-354
 BADDIEMAXSIZE = 60
