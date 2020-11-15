@@ -191,7 +191,7 @@ class GameLevel():
                 baddieAddCounter = 0
                 baddieSize = random.randint(BADDIEMINSIZE, BADDIEMAXSIZE)
                 newBaddie = {
-                    'rect': pygame.Rect(random.randint(0, WINDOWWIDTH - baddieSize), 0 - baddieSize, baddieSize,
+                    'rect': pygame.Rect(WINDOWWIDTH  - baddieSize, random.randint(0, WINDOWWIDTH - baddieSize), baddieSize,
                                         baddieSize),
                     'speed': random.randint(BADDIEMINSPEED, BADDIEMAXSPEED),
                     'surface': pygame.transform.scale(baddieImage, (baddieSize, baddieSize)),
@@ -212,7 +212,7 @@ class GameLevel():
             # Move the baddies down.
             for b in baddies:
                 if not reverseCheat and not slowCheat:
-                    b['rect'].move_ip(0, b['speed'])
+                    b['rect'].move_ip( -b['speed'],0 )
                 elif reverseCheat:
                     b['rect'].move_ip(0, -5)
                 elif slowCheat:
