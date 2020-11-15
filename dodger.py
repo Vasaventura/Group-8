@@ -1,7 +1,7 @@
 import pygame, random, sys
 from pygame.locals import *
 
-WINDOWWIDTH = 1500 #Agrandir la taille en largeur de la fenêtre pour qu'elle match avec l'écran de l'ordinateur.
+WINDOWWIDTH = 1600 #Agrandir la taille en largeur de la fenêtre pour qu'elle match avec l'écran de l'ordinateur.
 WINDOWHEIGHT = 800 #Agrandir la taille en hauteur de la fenêtre pour qu'elle match avec l'écran de l'ordinateur.
 TEXTCOLOR = (0, 0, 0)
 BACKGROUNDCOLOR = (255, 255, 255)
