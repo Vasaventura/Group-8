@@ -1,8 +1,8 @@
 import pygame, random, sys
 from pygame.locals import *
 
-WINDOWWIDTH = 1600 #Agrandir la taille en largeur de la fenêtre pour qu'elle match avec l'écran de l'ordinateur.
-WINDOWHEIGHT = 800 #Agrandir la taille en hauteur de la fenêtre pour qu'elle match avec l'écran de l'ordinateur.
+WINDOWWIDTH = 600
+WINDOWHEIGHT = 600
 TEXTCOLOR = (0, 0, 0)
 BACKGROUNDCOLOR = (255, 255, 255)
 MENUBACKGROUNDCOLOR = ('tomato') #Couleur d'écran de start changée pour avoir quelque chose plus dans le thème
@@ -80,6 +80,7 @@ windowSurface = pygame.display.set_mode((WINDOWWIDTH, WINDOWHEIGHT))
 pygame.display.set_caption('Dodger')
 pygame.mouse.set_visible(False)
 
+windowSurface = pygame.display.set_mode((WINDOWWIDTH, WINDOWHEIGHT), pygame.FULLSCREEN) #Changement de la taille de fenêtre pour qu'elle occupe tout l'écran
 
 # Set up the fonts.
 font = pygame.font.SysFont(None, 48)
