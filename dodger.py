@@ -501,7 +501,7 @@ while True: #level 1
                 windowSurface.blit(gameBackground, (-850, 0))
                 pygame.mixer.music.stop()
                 drawText("You WON!", font, windowSurface, (WINDOWWIDTH / 3) + 50, (WINDOWHEIGHT / 3))
-                drawText("Press key to play next level!", font, windowSurface, (WINDOWWIDTH / 3) + 30, (WINDOWHEIGHT / 3)-40)
+                drawText("Press key to play next level!", font, windowSurface, (WINDOWWIDTH / 3) -40, (WINDOWHEIGHT / 3) +50)
                 pygame.display.update()
                 waitForPlayerToPressKey()
                 while True:  # lvl 3 of the game
@@ -708,8 +708,9 @@ while True: #level 1
                         windowSurface.blit(gameBackground, (-850, 0))
                         pygame.mixer.music.stop()
                         drawText("Well Done!", font, windowSurface, (WINDOWWIDTH / 3) + 50, (WINDOWHEIGHT / 3))
-                        drawText("You Won!", font, windowSurface, (WINDOWWIDTH / 3) + 30,
-                                 (WINDOWHEIGHT / 3) - 40)
+                        drawText("You Won!", font, windowSurface, (WINDOWWIDTH / 3) - 40,
+                                 (WINDOWHEIGHT / 3) + 50)
                         pygame.display.update()
                         waitForPlayerToPressKey()
+
 #todo lvl2 (present collection) + lvl3 (present distribution)
