@@ -35,7 +35,6 @@ def waitForPlayerToPressKey():
                     terminate()
                 return
 
-
 def playerHasHitBaddie(playerRect, baddies):
     for b in baddies:
         if playerRect.colliderect(b['rect']):
@@ -60,7 +59,7 @@ def drawText(text, font, surface, x, y):
 pygame.init()
 mainClock = pygame.time.Clock()
 windowSurface = pygame.display.set_mode((WINDOWWIDTH, WINDOWHEIGHT))
-pygame.display.set_caption('Dodger')
+pygame.display.set_caption('X-Mas Dodger')
 pygame.mouse.set_visible(False)
 
 # Set up the fonts.
