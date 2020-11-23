@@ -25,15 +25,22 @@ def terminate():
     sys.exit()
 
 
+
 def waitForPlayerToPressKey():
     while True:
         for event in pygame.event.get():
             if event.type == QUIT:
                 terminate()
-            if event.type == KEYDOWN:
-                if event.key == K_ESCAPE:  # Pressing ESC quits.
-                    terminate()
-                return
+            if event.type== KEYDOWN:
+                if event.key == K_a:
+                    if event.key == K_ESCAPE:  # Pressing ESC quits.
+                        terminate()
+                    return
+
+                if event.key == K_d:
+                    if event.key == K_ESCAPE:  # Pressing ESC quits.
+                        terminate()
+                    return
 
 def playerHasHitBaddie(playerRect, baddies):
     for b in baddies:
@@ -74,7 +81,7 @@ musicPlaying = True
 
 # Set up images.
 # LIVES = pygame.image.load('hp.png')
-playerImage1 = pygame.image.load('santa-player.png')
+playerImage = pygame.image.load('santa-player.png')
 playerImage2=pygame.image.load("Mere_Noel.png")
 
 playerRect = playerImage.get_rect()
