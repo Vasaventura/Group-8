@@ -6,7 +6,7 @@ WINDOWHEIGHT = 800
 WIN = pygame.display.set_mode((WINDOWWIDTH, WINDOWHEIGHT))
 TEXTCOLOR = ('white')
 BACKGROUNDCOLOR = (255, 255, 255)
-MENUBACKGROUNDCOLOR = ('red')
+MENUBACKGROUNDCOLOR = ('tomato')
 # MenuGameBackground = pygame.image.load("snow.gif") #si vous voulez
 FPS = 60
 MINSIZE = 30  # ici le code a été modifié en suivant les conseils du livre (Ai Swegart) Ch. 20, Pg. 353-354
@@ -15,8 +15,8 @@ MAXSIZE = 60  # la taille max d'un caractere
 BADDIEMINSPEED = 1  # la vitesse minimale d'ennemi
 BADDIEMAXSPEED = 4  # la vitesse maximale d'ennemi
 ADDNEWBADDIERATE = 24  # le taux de reproduction de nouveaux ennemis
-ADDNEWLUTINRATE=48 # le taux de reproduction de lutins
-LUTINSPEED=1
+ADDNEWLUTINRATE = 48 # le taux de reproduction de lutins
+LUTINSPEED = 1
 PLAYERMOVERATE = 5  # la vitesse de déplacement de jouer
 
 
@@ -278,6 +278,8 @@ while True: #level 1
             if lives > 0:  # the player keeps playing if she/he has more than 0 lives
                 pass
             else:  # when the player has 0 lives the game stops
+                if scoreLutin > topLutinScore:
+                    topLutinScore = scoreLutin  # set new top score
                 break
 
         mainClock.tick(FPS)
@@ -508,10 +510,10 @@ while True: #level 1
                 windowSurface.blit(gameBackground_lvl3, (-850, 0))
                 pygame.mixer.music.stop()
                 drawText("You WON!", font, windowSurface, (WINDOWWIDTH / 3) + 50, (WINDOWHEIGHT / 3))
-                drawText("Press key to play next level!", font, windowSurface, (WINDOWWIDTH / 3) -40, (WINDOWHEIGHT / 3) +50)
+                drawText("Press key to play next level!", font, windowSurface, (WINDOWWIDTH / 3) -40, (WINDOWHEIGHT / 3) + 50)
                 pygame.display.update()
                 waitForPlayerToPressKey()
-                scoreCadeau=0
+                scoreCadeau = 0
                 while True:  # lvl 3 of the game
                     level += 1
                     # Debug code

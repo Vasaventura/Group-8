@@ -30,7 +30,7 @@ def waitForPlayerToPressKey():
                 terminate()
             if event.type == KEYDOWN:
                 if event.key == K_a:
-                    #choose pitch
+                    #choose peach
                     if event.key == K_ESCAPE:  # Pressing ESC quits.
                         terminate()
                     return
@@ -85,7 +85,7 @@ musicPlaying = True
 # Set up images.
 # LIVES = pygame.image.load('hp.png')
 playerImage = pygame.image.load('santa-player.png')
-Pitch=pygame.image.load("Mere_Noel.png")
+Peach = pygame.image.load("Mere_Noel.png")
 
 playerRect = playerImage.get_rect()
 baddieImage = pygame.image.load('gremlin.png')
