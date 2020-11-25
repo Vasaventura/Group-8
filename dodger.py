@@ -84,8 +84,6 @@ gameOverBackground = pygame.image.load("Grinch end game.png")
 
 # Show the "Start" screen.
 
-
-
 #Chargement image
 menu = pygame.image.load("background_snow.png").convert()
 img = pygame.transform.scale(menu, (800, 800))
@@ -101,7 +99,7 @@ while True :
             exit()
 
 pygame.display.update()
-WaitForPlayerTopPressKey()
+waitForPlayerTopPressKey()
 
 windowSurface.fill(MENUBACKGROUNDCOLOR)
 drawText('X-Mas Dodger', font, windowSurface, (WINDOWWIDTH / 3), (WINDOWHEIGHT / 3))
