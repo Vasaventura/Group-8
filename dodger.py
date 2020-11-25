@@ -86,24 +86,31 @@ musicPlaying = True
 # LIVES = pygame.image.load('hp.png')
 playerImage = pygame.image.load('santa-player.png')
 Peach = pygame.image.load("Mere_Noel.png")
-howtoplay=pygame.image.load("comment_jouer.png")
-choosePlayer=pygame.image.load("choisir_joueur.png")
+
 
 playerRect = playerImage.get_rect()
 baddieImage = pygame.image.load('gremlin.png')
 lutinImage = pygame.image.load('bonlutin.png')
 
+comment_jouer=pygame.image.load("comment_jouer.png")
+howtoplay = pygame.transform.scale(comment_jouer, (200,200))
+choix_Joueur=pygame.image.load("choisir_joueur.png")
+choosePlayer=pygame.transform.scale(choix_Joueur,(200,200))
 gameBackground = pygame.image.load("winter_background.png")
 gameBackground_lvl2 = pygame.image.load("night_sky.png")
 gameOverBackground = pygame.image.load("Grinch end game.png")
+
+
 
 # Show the "Start" screen.
 
 #Chargement image
 menu = pygame.image.load("background_snow.png").convert()
-img = pygame.transform.scale(menu, (800, 800))
-windowSurface.blit(img, (0,0))
+chargingBackground = pygame.transform.scale(menu, (800, 800))
+windowSurface.blit(chargingBackground, (0,0))
+windowSurface.blit(howtoplay, (400,400))
 pygame.display.flip()
+pygame.display.update()
 
 #Boucle perpétuelle qui permet de garder la fenêtre ouverte
 while True :
