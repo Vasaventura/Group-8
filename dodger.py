@@ -29,6 +29,10 @@ def waitForPlayerToPressKey():
             if event.type == QUIT:
                 terminate()
             if event.type == KEYDOWN:
+                if event.key == K_a:
+                    #choose mario
+                if event.key==K_d:
+                    #choose pitch
                 if event.key == K_ESCAPE:  # Pressing ESC quits.
                     terminate()
                 return
