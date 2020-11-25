@@ -7,7 +7,7 @@ WIN = pygame.display.set_mode((WINDOWWIDTH, WINDOWHEIGHT))
 TEXTCOLOR = ('white')
 BACKGROUNDCOLOR = (255, 255, 255)
 MENUBACKGROUNDCOLOR = ('red')
-# MenuGameBackground = pygame.image.load("snow.gif") #si vous voulez
+#MenuGameBackground = pygame.image.load("snow.gif") #si vous voulez
 FPS = 60
 MINSIZE = 30  # ici le code a été modifié en suivant les conseils du livre (Ai Swegart) Ch. 20, Pg. 353-354
 MEDSIZE = 45
@@ -19,11 +19,9 @@ ADDNEWLUTINRATE=48 # le taux de reproduction de lutins
 LUTINSPEED=1
 PLAYERMOVERATE = 5  # la vitesse de déplacement de jouer
 
-
 def terminate():
     pygame.quit()
     sys.exit()
-
 
 def waitForPlayerToPressKey():
     while True:
@@ -85,6 +83,26 @@ gameBackground_lvl2 = pygame.image.load("night_sky.png")
 gameOverBackground = pygame.image.load("Grinch end game.png")
 
 # Show the "Start" screen.
+
+
+
+#Chargement image
+menu = pygame.image.load("background_snow.png").convert()
+img = pygame.transform.scale(menu, (800, 800))
+windowSurface.blit(img, (0,0))
+pygame.display.flip()
+
+#Boucle perpétuelle qui permet de garder la fenêtre ouverte
+while True :
+    for event in pygame.event.get():
+        if event.type == QUIT :
+            running = 0
+            pygame.quit()
+            exit()
+
+pygame.display.update()
+WaitForPlayerTopPressKey()
+
 windowSurface.fill(MENUBACKGROUNDCOLOR)
 drawText('X-Mas Dodger', font, windowSurface, (WINDOWWIDTH / 3), (WINDOWHEIGHT / 3))
 drawText('Press a key to start', font, windowSurface, (WINDOWWIDTH / 3) - 40, (WINDOWHEIGHT / 3) + 50)
