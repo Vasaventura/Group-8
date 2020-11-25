@@ -86,6 +86,8 @@ musicPlaying = True
 # LIVES = pygame.image.load('hp.png')
 playerImage = pygame.image.load('santa-player.png')
 Peach = pygame.image.load("Mere_Noel.png")
+comment_jouer=pygame.image.load("comment_jouer.png")
+choisir_joueur=pygame.image.load("choisir_joueur.png")
 
 playerRect = playerImage.get_rect()
 baddieImage = pygame.image.load('gremlin.png')
