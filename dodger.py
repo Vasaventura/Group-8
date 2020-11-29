@@ -341,8 +341,6 @@ while True: #level 1
             if l['rect'].left > WINDOWWIDTH:
                 lutin.remove(l)
 
-        # Draw the game world on the window.
-        windowSurface.fill(BACKGROUNDCOLOR)
         # Set up the background
         windowSurface.blit(gameBackground_lvl1, (0, -100))
         # Draw the Lutin score and top score.
@@ -414,8 +412,6 @@ while True: #level 1
         waitForPlayerToPressKey()
         YaySound.stop()
         scoreLutin = 0
-        windowSurface.blit(gameBackground_lvl2, (-850, 0))
-        pygame.display.update()
         while True: #lvl 2 of the game
             level += 1
             #Debug code
@@ -557,8 +553,6 @@ while True: #level 1
                     if l['rect'].left > WINDOWWIDTH:
                         lutin.remove(l)
 
-                # Draw the game world on the window.
-                windowSurface.fill(BACKGROUNDCOLOR)
                 # Set up the background
                 windowSurface.blit(gameBackground_lvl2, (0, -100))
                 # Draw the Lutin score and top score.
@@ -631,14 +625,14 @@ while True: #level 1
                          (WINDOWHEIGHT / 3) + 200)
                 drawText("When approaching a chimney", font, windowSurface, (WINDOWWIDTH / 3) - 160,
                          (WINDOWHEIGHT / 3) + 250)
-                drawText("to send presents quickly click SPACE", font, windowSurface, (WINDOWWIDTH / 3) - 220,
+                drawText("to send presents", font, windowSurface, (WINDOWWIDTH / 3) - 120,
                          (WINDOWHEIGHT / 3) + 300)
+                drawText("quickly click on SPACE", font, windowSurface, (WINDOWWIDTH / 3) - 140,
+                         (WINDOWHEIGHT / 3) + 350)
 
                 pygame.display.update()
                 waitForPlayerToPressKey()
                 YaySound.stop()
-                windowSurface.blit(gameBackground_lvl3, (-850, 0))
-                pygame.display.update()
                 scoreCadeau=0
                 while True:  # lvl 3 of the game
                     level += 1
@@ -651,7 +645,7 @@ while True: #level 1
                     baddies = []
                     chimneys = []
                     scoreCadeaux_livrés = 0
-                    santaRect.topleft = (WINDOWWIDTH/2-300, WINDOWHEIGHT/2)
+                    santaRect.topleft = (WINDOWWIDTH/2-200, WINDOWHEIGHT/2)
                     moveLeft = moveRight = moveUp = moveDown = False
                     reverseCheat = slowCheat = False
                     baddieAddCounter = 0  # ajouter de baddies horizontalement
@@ -720,7 +714,7 @@ while True: #level 1
 
                         if chimneyAddCounter == ADDNEWCHIMNEYRATE:
                             chimneyAddCounter = 0
-                            chimneySize = random.randint(40, 700)
+                            chimneySize = random.randint(40, 750)
                             newChimney = {
                                 'rect': pygame.Rect(WINDOWWIDTH,
                                                     WINDOWHEIGHT - chimneySize + 8,
@@ -766,8 +760,6 @@ while True: #level 1
                             if c['rect'].left > WINDOWWIDTH:
                                 chimneys.remove(c)
 
-                        # Draw the game world on the window.
-                        windowSurface.fill(BACKGROUNDCOLOR)
                         # Set up the background
                         windowSurface.blit(gameBackground_lvl3, (0, -100))
                         # Draw the score, the number of lives remaining and the level of the game.
