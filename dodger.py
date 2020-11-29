@@ -105,24 +105,23 @@ gameOverBackground = pygame.image.load("Grinch end game.png")
 # Show the "Start" screen.
 
 #Chargement image
-menu = pygame.image.load("background_snow.png").convert()
-chargingBackground = pygame.transform.scale(menu, (800, 800))
-windowSurface.blit(chargingBackground, (0,0))
-windowSurface.blit(howtoplay, (300,300))
-windowSurface.blit(choosePlayer,(300,200))
-pygame.display.flip()
-pygame.display.update()
+#menu = pygame.image.load("background_snow.png").convert()
+#chargingBackground = pygame.transform.scale(menu, (800, 800))
+#windowSurface.blit(chargingBackground, (0,0))
+#windowSurface.blit(choosePlayer,(300,200))
+#pygame.display.flip()
+#pygame.display.update()
 
 #Boucle perpétuelle qui permet de garder la fenêtre ouverte
-while True :
-    for event in pygame.event.get():
-        if event.type == QUIT :
-            running = 0
-            pygame.quit()
-            exit()
+#while True :
+#    for event in pygame.event.get():
+ #       if event.type == QUIT :
+  #          running = 0
+   #         pygame.quit()
+    #        exit()
 
-pygame.display.update()
-waitForPlayerTopPressKey()
+#pygame.display.update()
+#waitForPlayerTopPressKey()
 
 windowSurface.fill(MENUBACKGROUNDCOLOR)
 drawText('X-Mas Dodger', font, windowSurface, (WINDOWWIDTH / 3), (WINDOWHEIGHT / 3))
