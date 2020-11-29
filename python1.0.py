@@ -174,6 +174,7 @@ windowSurface.fill(MENUBACKGROUNDCOLOR)
 drawText('X-Mas Dodger', font, windowSurface, (WINDOWWIDTH / 3), (WINDOWHEIGHT / 3))
 drawText('Press a key to start', font, windowSurface, (WINDOWWIDTH / 3) - 40, (WINDOWHEIGHT / 3) + 50)
 drawText('saving Christmas', font, windowSurface, (WINDOWWIDTH / 3) - 35, (WINDOWHEIGHT / 3) + 100)
+
 pygame.display.update()
 waitForPlayerToPressKey()
 
