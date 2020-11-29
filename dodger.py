@@ -6,6 +6,7 @@ WINDOWHEIGHT = 800
 WIN = pygame.display.set_mode((WINDOWWIDTH, WINDOWHEIGHT))
 TEXTCOLOR = ('white')
 BACKGROUNDCOLOR = (255, 255, 255)
+ENDGAMEBACKGROUNDCOLOR = ('black')
 MENUBACKGROUNDCOLOR = ('red')
 # MenuGameBackground = pygame.image.load("snow.gif") #si vous voulez
 FPS = 60
@@ -154,6 +155,8 @@ def drawText(text, font, surface, x, y):
 #pygame.display.update()
 #waitForPlayerTopPressKey()
 
+# Set up pygame, the window, and the mouse cursor.
+
 pygame.init()
 mainClock = pygame.time.Clock()
 windowSurface = pygame.display.set_mode((WINDOWWIDTH, WINDOWHEIGHT))
@@ -169,6 +172,7 @@ BellsSound = pygame.mixer.Sound('Bells Sound effect.mp3')
 PresentSound = pygame.mixer.Sound('Present_sound.mp3')
 PresentDelivered = pygame.mixer.Sound('presents_delivery.mp3')
 damageSound = pygame.mixer.Sound('damage.mp3')
+YaySound = pygame.mixer.Sound('Yay.mp3')
 musicPlaying = True
 
 # Set up images.
@@ -400,14 +404,18 @@ while True: #level 1
  #-----------------------------------------------------------------------------------------------------------------------
 
     elif scoreLutin >= 10:                  #level-up code to lvl 2
-        windowSurface.blit(gameBackground_lvl2, (-850, 0))
+        windowSurface.fill(ENDGAMEBACKGROUNDCOLOR)
         pygame.mixer.music.stop()
+        YaySound.play()
         drawText("You WON!", font, windowSurface, (WINDOWWIDTH / 3) + 20, (WINDOWHEIGHT / 3))
         drawText("Press any key to start next level", font, windowSurface, (WINDOWWIDTH / 3) - 150,
                  (WINDOWHEIGHT / 3) + 50)
         pygame.display.update()
         waitForPlayerToPressKey()
+        YaySound.stop()
         scoreLutin = 0
+        windowSurface.blit(gameBackground_lvl2, (-850, 0))
+        pygame.display.update()
         while True: #lvl 2 of the game
             level += 1
             #Debug code
@@ -424,6 +432,7 @@ while True: #level 1
             reverseCheat = slowCheat = False
             baddieAddCounter = 0  # ajouter de baddies horizontalement
             lutinAddCounter = 0  # ajouter des lutins horizontalement
+            pygame.mixer.music.load('Jingle_Bell_Rock_(Instrumental).mp3')
             pygame.mixer.music.play(-1, 0.0)
             # level1 = GameLevel(1, "winter_background.png", 'gremlin_baddie.png')
             # level2=GameLevel(2, "night_sky.png", "bonlutin.png")
@@ -610,8 +619,9 @@ while True: #level 1
             # -----------------------------------------------------------------------------------------------------------------------
             elif scoreCadeau >= 15:  #level-up code to lvl 3
                 santaRect
-                windowSurface.blit(gameBackground_lvl3, (-850, 0))
+                windowSurface.fill(ENDGAMEBACKGROUNDCOLOR)
                 pygame.mixer.music.stop()
+                YaySound.play()
                 drawText("You WON!", font, windowSurface, (WINDOWWIDTH / 3) + 20, (WINDOWHEIGHT / 3))
                 drawText("Press any key to start next level", font, windowSurface, (WINDOWWIDTH / 3) - 150,
                          (WINDOWHEIGHT / 3) + 50)
@@ -626,6 +636,9 @@ while True: #level 1
 
                 pygame.display.update()
                 waitForPlayerToPressKey()
+                YaySound.stop()
+                windowSurface.blit(gameBackground_lvl3, (-850, 0))
+                pygame.display.update()
                 scoreCadeau=0
                 while True:  # lvl 3 of the game
                     level += 1
@@ -813,13 +826,15 @@ while True: #level 1
 
                     # -----------------------------------------------------------------------------------------------------------------------
                     elif scoreCadeaux_livrés >= 25:  # End of the game
-                        windowSurface.blit(gameBackground_lvl1, (-850, 0))
+                        windowSurface.fill(ENDGAMEBACKGROUNDCOLOR)
                         pygame.mixer.music.stop()
+                        YaySound.play()
                         drawText("Well Done!", font, windowSurface, (WINDOWWIDTH / 3) + 30, (WINDOWHEIGHT / 3))
                         drawText("You have finished the game!", font, windowSurface, (WINDOWWIDTH / 3) -150,
                                  (WINDOWHEIGHT / 3) + 50)
-                        drawText("To restart press any key!", font, windowSurface, (WINDOWWIDTH / 3) -130,
+                        drawText("To restart press any key!", font, windowSurface, (WINDOWWIDTH / 3) -150,
                                  (WINDOWHEIGHT / 3) + 100)
                         pygame.display.update()
                         waitForPlayerToPressKey()
+                        YaySound.stop()
                         break
