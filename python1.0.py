@@ -44,7 +44,19 @@ def Chooseplayer():
     pygame.display.flip()
     waitForPlayerToPressKey()
     pygame.display.update()
+
+def Commentjouer():
+    fenetre = pygame.display.set_mode((WINDOWHEIGHT, WINDOWWIDTH))
+    menu = pygame.image.load("Comment_jouer.png").convert()
+    img = pygame.transform.scale(menu, (WINDOWHEIGHT, WINDOWWIDTH))
+    fenetre.blit(img, (0,0))
+    pygame.display.flip()
+    waitForPlayerToPressKey()
+    pygame.display.update()
+
 #def Chooseplayer_homme():
+    #if event.key == K_p:
+
 
 #def Chooseplayer_femme():
 
@@ -64,13 +76,13 @@ def waitForPlayerToPressKey():
                     terminate()
                 if event.key == K_j:
                     Chooseplayer()
-                   # if event.key == K_h:
+                   # if event.key == K_p:
                       #  chooseplayer_homme()
-                    #if event.key==K_F:
+                    #if event.key==K_n:
                      #   chooseplay_femme()
                     #return
-
-                #if event.key == K_h :
+                if event.key == K_q :
+                    Commentjouer()
                     return
 
 
