@@ -1,8 +1,8 @@
 import pygame, random, sys
 from pygame.locals import *
 
-WINDOWWIDTH = 800
-WINDOWHEIGHT = 800
+WINDOWWIDTH = 750
+WINDOWHEIGHT = 1000
 WIN = pygame.display.set_mode((WINDOWWIDTH, WINDOWHEIGHT))
 TEXTCOLOR = ('white')
 BACKGROUNDCOLOR = (255, 255, 255)
@@ -20,11 +20,16 @@ ADDNEWCHIMNEYRATE=384 # le taux de reproduction de cheminees
 LUTINSPEED=1
 PLAYERMOVERATE = 5  # la vitesse de déplacement de jouer
 
+########################### class ####################
+
+#class pour mouvement
+
+
 ##Créer une page de menu
 def Menu():
     pygame.init()
     fenetre = pygame.display.set_mode((WINDOWHEIGHT, WINDOWWIDTH))
-    menu = pygame.image.load("background_snow.png").convert()
+    menu = pygame.image.load("écran_start.png").convert()
     img = pygame.transform.scale(menu, (WINDOWHEIGHT, WINDOWWIDTH))
     fenetre.blit(img, (0,0))
     pygame.display.flip()
@@ -68,13 +73,13 @@ def waitForPlayerToPressKey():
                 #if event.key == K_h :
                     return
 
+
 def playerHasHitBaddie(playerRect, baddies):
     for b in baddies:
         if playerRect.colliderect(b['rect']):
             baddies.remove(b)
             return True
     return False
-
 
 def playerHasHitLutin(playerRect, lutin):    #code pour les lutins
    for l in lutin:
@@ -135,7 +140,6 @@ def send_Gift(playerRect, chimneys, score, feedback_sound):
                         return True
                     else:
                         return False
-
 
 def drawText(text, font, surface, x, y):
     textobj = font.render(text, 1, TEXTCOLOR)
@@ -822,4 +826,3 @@ while True: #level 1
                         pygame.display.update()
                         waitForPlayerToPressKey()
                         break
-
