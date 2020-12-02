@@ -38,7 +38,7 @@ def Menu():
 
 def Chooseplayer():
     fenetre = pygame.display.set_mode((WINDOWHEIGHT, WINDOWWIDTH))
-    menu = pygame.image.load("backgroundimagel2.png").convert()
+    menu = pygame.image.load("choix_joueur.png").convert()
     img = pygame.transform.scale(menu, (WINDOWHEIGHT, WINDOWWIDTH))
     fenetre.blit(img, (0,0))
     pygame.display.flip()
@@ -62,7 +62,7 @@ def waitForPlayerToPressKey():
             if event.type == KEYDOWN:
                 if event.key == K_ESCAPE:  # Pressing ESC quits.
                     terminate()
-                if event.key == K_c:
+                if event.key == K_j:
                     Chooseplayer()
                    # if event.key == K_h:
                       #  chooseplayer_homme()
