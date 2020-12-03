@@ -45,18 +45,17 @@ def Chooseplayer():
     waitForPlayerToPressKey()
     pygame.display.update()
 
-def Commentjouer():
+def Howtoplay ():
+    pygame.init()
     fenetre = pygame.display.set_mode((WINDOWHEIGHT, WINDOWWIDTH))
-    menu = pygame.image.load("Comment_jouer.png").convert()
+    menu = pygame.image.load("How_to_play.png").convert()
     img = pygame.transform.scale(menu, (WINDOWHEIGHT, WINDOWWIDTH))
-    fenetre.blit(img, (0,0))
+    fenetre.blit(img, (0, 0))
     pygame.display.flip()
     waitForPlayerToPressKey()
     pygame.display.update()
 
 #def Chooseplayer_homme():
-    #if event.key == K_p:
-
 
 #def Chooseplayer_femme():
 
@@ -76,14 +75,18 @@ def waitForPlayerToPressKey():
                     terminate()
                 if event.key == K_j:
                     Chooseplayer()
-                   # if event.key == K_p:
-                      #  chooseplayer_homme()
-                    #if event.key==K_n:
-                     #   chooseplay_femme()
-                    #return
-                if event.key == K_q :
-                    Commentjouer()
+                  #  if event.key == K_N:
+                        #Chooseplayer_homme() = Playerimage("santa-player.png")
+                        #Playerimage = playerImage.load("santa-player.png")
+                  #  if event.key==K_P:
+                        #Chooseplayer_femme() = Playerimage("Mere_Noël.png")
+                        #Playerimage = playerImage.load("Mere_Noël.png")
+                  #  return
+
+                #if event.key == K_h :
                     return
+                if event.key == K_q:
+                    Howtoplay()
 
 
 def playerHasHitBaddie(playerRect, baddies):
