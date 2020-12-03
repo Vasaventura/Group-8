@@ -87,6 +87,8 @@ def waitForPlayerToPressKey():
                     return
                 if event.key == K_q:
                     Howtoplay()
+                if event.key == K_t:
+                    Menu()
 
 
 def playerHasHitBaddie(playerRect, baddies):
