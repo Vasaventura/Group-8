@@ -56,9 +56,23 @@ def Howtoplay ():
     pygame.display.update()
 
 #def Chooseplayer_homme():
-
+    pygame.init()
+    fenetre = pygame.display.set_mode((WINDOWHEIGHT, WINDOWWIDTH))
+    menu = pygame.image.load("santa-player.png").convert()
+    img = pygame.transform.scale(menu, (WINDOWHEIGHT, WINDOWWIDTH))
+    fenetre.blit(img, (0, 0))
+    pygame.display.flip()
+    waitForPlayerToPressKey()
+    pygame.display.update()
 #def Chooseplayer_femme():
-
+    pygame.init()
+    fenetre = pygame.display.set_mode((WINDOWHEIGHT, WINDOWWIDTH))
+    menu = pygame.image.load("Mere_Noel.png").convert()
+    img = pygame.transform.scale(menu, (WINDOWHEIGHT, WINDOWWIDTH))
+    fenetre.blit(img, (0, 0))
+    pygame.display.flip()
+    waitForPlayerToPressKey()
+    pygame.display.update()
 
 def terminate():
     pygame.quit()
@@ -75,20 +89,14 @@ def waitForPlayerToPressKey():
                     terminate()
                 if event.key == K_j:
                     Chooseplayer()
-                  #  if event.key == K_N:
-                        #Chooseplayer_homme() = Playerimage("santa-player.png")
-                        #Playerimage = playerImage.load("santa-player.png")
-                  #  if event.key==K_P:
-                        #Chooseplayer_femme() = Playerimage("Mere_Noël.png")
-                        #Playerimage = playerImage.load("Mere_Noël.png")
-                  #  return
-
-                #if event.key == K_h :
+                if event.key == K_p:
                     return
-                if event.key == K_q:
-                    Howtoplay()
+                if event.key == K_n:
+                    return
                 if event.key == K_t:
                     Menu()
+
+
 
 
 def playerHasHitBaddie(playerRect, baddies):
@@ -204,6 +212,7 @@ musicPlaying = True
 #lives.set_colorkey("BLACK") #todo set up lives image
 
 playerImage = pygame.image.load('santa-player.png')
+playerImage2= pygame.image.load('Mere_Noel.png')
 Santa_on_Sleigh_Image = pygame.image.load('Santa_on_sleigh.png')
 santa = pygame.transform.scale(Santa_on_Sleigh_Image, (152, 96))
 santaRect = santa.get_rect()
@@ -368,6 +377,7 @@ while True: #level 1
 
         # Draw the player's rectangle.
         windowSurface.blit(playerImage, playerRect)
+
 
         # Draw each baddie.
         for b in baddies:
