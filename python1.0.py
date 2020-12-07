@@ -19,7 +19,10 @@ ADDNEWCHIMNEYRATE = 384 # le taux de reproduction de cheminees
 LUTINSPEED = 1
 PLAYERMOVERATE = 5  # la vitesse de déplacement de jouer
 player=["image pour jouer"]
+
 ########################### class ####################
+
+#mouv
 
 ##Créer une page de menu
 
@@ -166,8 +169,11 @@ musicPlaying = True
 
 playerImage = pygame.image.load('santa-player.png')
 playerImage2= pygame.image.load('Mere_Noel.png')
+peach=pygame.transform.scale(playerImage2, (152, 96))
+peachRect=peach.get_rect()
 Santa_on_Sleigh_Image = pygame.image.load('Santa_on_sleigh.png')
 santa = pygame.transform.scale(Santa_on_Sleigh_Image, (152, 96))
+
 santaRect = santa.get_rect()
 
 playerRect = playerImage.get_rect()
@@ -330,8 +336,10 @@ while True: #level 1
 
         # Draw the player's rectangle
         if player[0]=="mario":
+
             windowSurface.blit(playerImage, playerRect)
         if player[0]=="peach":
+            playerRect=peachRect
             windowSurface.blit(playerImage2, playerRect)
 
 
