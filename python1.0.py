@@ -7,7 +7,6 @@ WIN = pygame.display.set_mode((WINDOWWIDTH, WINDOWHEIGHT))
 TEXTCOLOR = ('black')
 BACKGROUNDCOLOR = (255, 255, 255)
 
-
 FPS = 60
 MINSIZE = 30  # ici le code a été modifié en suivant les conseils du livre (Ai Swegart) Ch. 20, Pg. 353-354
 MEDSIZE = 45
@@ -19,35 +18,11 @@ ADDNEWLUTINRATE = 48 # le taux de reproduction de lutins
 ADDNEWCHIMNEYRATE = 384 # le taux de reproduction de cheminees
 LUTINSPEED = 1
 PLAYERMOVERATE = 5  # la vitesse de déplacement de jouer
-
-
+player=["image pour jouer"]
 ########################### class ####################
 
-#class pour mouvement
-class Object():
-    def _init_(self, image):
-        self.image = pygame.image.load(image)
-        self.rect = self.image.get_rect()
-
-class Peach(object):
-    def _init_(self, x_pl, y_pl):
-        self.max_health = 3
-        self.player_move_rate = 5
-        self.image2 = pygame.image.load('Mere_Noel.png')
-        self.rect = self.image2.get_rect()
-        self.rect.x = x_pl
-        self.rect.y = y_pl
-
-class Mario(object):
-    def _init_(self, x_pl, y_pl):
-        self.max_health = 3
-        self.player_move_rate = 5
-        self.image = pygame.image.load('santa-player.png')
-        self.rect = self.image.get_rect()
-        self.rect.x = x_pl
-        self.rect.y = y_pl
-
 ##Créer une page de menu
+
 def Menu():
     pygame.init()
     fenetre = pygame.display.set_mode((WINDOWHEIGHT, WINDOWWIDTH))
@@ -55,7 +30,7 @@ def Menu():
     img = pygame.transform.scale(menu, (WINDOWHEIGHT, WINDOWWIDTH))
     fenetre.blit(img, (0,0))
     pygame.display.flip()
-    waitForPlayerToPressKey()
+    player[0]=waitForPlayerToPressKey()
     pygame.display.update()
 
 def Chooseplayer():
@@ -68,7 +43,6 @@ def Chooseplayer():
     pygame.display.update()
 
 def Howtoplay ():
-    pygame.init()
     fenetre = pygame.display.set_mode((WINDOWHEIGHT, WINDOWWIDTH))
     menu = pygame.image.load("How_to_play.png").convert()
     img = pygame.transform.scale(menu, (WINDOWHEIGHT, WINDOWWIDTH))
@@ -76,13 +50,6 @@ def Howtoplay ():
     pygame.display.flip()
     waitForPlayerToPressKey()
     pygame.display.update()
-
-class image_player():
-    def choosePlayer():
-        if event.key == K_p:
-            return
-        if event.key == K_n:
-            return
 
 def drawText(text, font, surface, x, y):
     textobj = font.render(text, 1, TEXTCOLOR)
@@ -97,17 +64,13 @@ def terminate():
 def waitForPlayerToPressKey():
     while True:
         for event in pygame.event.get():
-            if event.type == QUIT:
-                terminate()
             if event.type == KEYDOWN:
-                if event.key == K_ESCAPE:  # Pressing ESC quits.
-                    terminate()
                 if event.key == K_j:
                     Chooseplayer()
                 if event.key == K_p:
-                    return
+                    return "mario"
                 if event.key == K_n:
-                    return
+                    return "peach"
                 if event.key == K_t:
                     Menu()
                 if event.key == K_q:
@@ -131,7 +94,6 @@ def send_Gift(playerRect, chimneys, score, feedback_sound):
        if playerRect.colliderect(c['rect']):
             for event in pygame.event.get():
                 if event.type == KEYDOWN:
-
                     if event.key == K_SPACE:
                         feedback_sound.play()
                         score += 1
@@ -180,21 +142,6 @@ def send_Gift(playerRect, chimneys, score, feedback_sound):
                     else:
                         return False
 
-# draw lives
-#def draw_lives(surf, x_l, y_l, max_health_l, img_l):
-    #for i in range(max_health_l):
-    #    img_rect = img_l.get_rect()
-    #    img_rect.x = x_l + 45 * i
-    #    img_rect.y = y_l
-    #    surf.blit(img_l, img_rect)
-# on garde les rectangles au cas où on veut remettre ça
-# def drawHealthMeter(currentHealth):
-# for i in range(MAXHEALTH):
-# pygame.draw.rect(windowSurface, RED, (870 + (10 * currentHealth) - i * 30, 35, 29, 10))
-# for i in range(currentHealth):
-# pygame.draw.rect(windowSurface, WHITE, (870 + (10 * currentHealth) - i * 30, 35, 29, 10), 1)
-
-# Set up pygame, the window, and the mouse cursor.
 Menu()
 
 mainClock = pygame.time.Clock()
@@ -215,16 +162,10 @@ musicPlaying = True
 
 # Set up images.
 #todo set up lives image
-#livesImage = pygame.image.load('hp.png')
-#def draw_lives(surface, x, y, lives, image):
-#    for i in range(3):
-#        hp.png = image.get.rect()
-#        hp.png.x = x + 30 * i
-#        hp.png.y = y
-#        surface.blit(image,hp.png.rect)
+
 
 playerImage = pygame.image.load('santa-player.png')
-playerImage2 = pygame.image.load('Mere_Noel.png')
+playerImage2= pygame.image.load('Mere_Noel.png')
 Santa_on_Sleigh_Image = pygame.image.load('Santa_on_sleigh.png')
 santa = pygame.transform.scale(Santa_on_Sleigh_Image, (152, 96))
 santaRect = santa.get_rect()
@@ -387,8 +328,12 @@ while True: #level 1
         drawText('Lives: %s' % (lives), font, windowSurface, 10, 40)
         drawText('Level: %s' % (level), font, windowSurface, WINDOWWIDTH - 150, 0)
 
-        # Draw the player's rectangle.
-        windowSurface.blit(playerImage, playerRect)
+        # Draw the player's rectangle
+        if player[0]=="mario":
+            windowSurface.blit(playerImage, playerRect)
+        if player[0]=="peach":
+            windowSurface.blit(playerImage2, playerRect)
+        print(player[0])
 
         # Draw each baddie.
         for b in baddies:
@@ -590,7 +535,8 @@ while True: #level 1
 
                 # Draw the game world on the window.
                 windowSurface.fill(BACKGROUNDCOLOR)
-                # Set up the background
+
+             # Set up the background
                 windowSurface.blit(gameBackground_lvl2, (0, -100))
                 # Draw the Lutin score and top score.
                 drawText('Presents Caught: %s' % (scoreCadeau), font, windowSurface, 10, 0)
