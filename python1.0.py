@@ -49,7 +49,7 @@ def Howtoplay ():
     fenetre = pygame.display.set_mode((WINDOWHEIGHT, WINDOWWIDTH))
     menu = pygame.image.load("How_to_play.png").convert()
     img = pygame.transform.scale(menu, (WINDOWHEIGHT, WINDOWWIDTH))
-    fenetre.blit(img, (0, 0))
+    window.blit(img, (0, 0))
     pygame.display.flip()
     waitForPlayerToPressKey()
     pygame.display.update()
@@ -165,28 +165,20 @@ musicPlaying = True
 
 # Set up images.
 #todo set up lives image
-player_img = pygame.image.load(path.join(img_dir, "mère_noël.png")).convert()
-player_mini_img = pygame.transform.scale(player_img, (25, 19))
-player_mini_img.set_colorkey(BLACK)
-self.lives = 3
-self.hidden = False
-self.hide_timer = pygame.time.get_ticks()
-def hide(self):
-    self.hidden = True
-    self.hide_timer = pygame.time.get_ticks()
-    self.rect.center = (WIDTH / 2, HEIGHT + 200)
-def draw_lives(surf, x, y, lives, img):
-    for i in range(lives):
-        img_rect = img.get_rect()
-        img_rect.x = x + 30 * i
-        img_rect.y = y
-        surf.blit(img, img_rect)
-draw_lives(screen, WIDTH - 100, 5, player.lives, player_mini_img)
+def vie():
+    if lives!=0:
+        windowSurface.blit(coeur, (0, 0))
+    if lives>1:
+        windowSurface.blit(coeur, (50, 0))
+    if lives==3:
+        windowSurface.blit(coeur,(100,0))
+    pygame.display.update()
+
+
 
 playerImage = pygame.image.load('santa-player.png')
-playerImage2= pygame.image.load('Mere_Noel.png')
-peach=pygame.transform.scale(playerImage2, (152, 96))
-peachRect=peach.get_rect()
+playerImage2= pygame.transform.scale(pygame.image.load('Mere_Noel.png'),(10,10))
+peachRect=playerImage2.get_rect()
 Santa_on_Sleigh_Image = pygame.image.load('Santa_on_sleigh.png')
 santa = pygame.transform.scale(Santa_on_Sleigh_Image, (152, 96))
 
@@ -199,6 +191,8 @@ lutinImage = pygame.image.load('bonlutin.png')
 cadeauImage = pygame.image.load('cadeau.png')
 thundercloudImage = pygame.image.load('thundercloud.png')
 chimneyImage=pygame.image.load('chimney.png')
+coeur=pygame.transform.scale(pygame.image.load("coeur1.png"), (40,40))
+
 
 gameBackground_lvl1 = pygame.image.load("winter_background.png")
 gameBackground_lvl2 = pygame.image.load("lvl_2.png")
@@ -216,6 +210,7 @@ while True: #level 1
     lives = 3  # The number of lives at the start of the game
     level = 1  # We start with the first level
     playerRect.topleft = (WINDOWWIDTH / 2, WINDOWHEIGHT - 80)
+    vie()
     moveLeft = moveRight = moveUp = moveDown = False
     reverseCheat = slowCheat = False
     baddieAddCounter = 0  # ajouter de baddies horizontalement
@@ -345,10 +340,13 @@ while True: #level 1
         windowSurface.fill(BACKGROUNDCOLOR)
         # Set up the background
         windowSurface.blit(gameBackground_lvl1, (0, -100))
+        vie()
         # Draw the Lutin score and top score.
         drawText('Elves Caught: %s' % (scoreLutin), font, windowSurface, 10, 0)
         drawText('Lives: %s' % (lives), font, windowSurface, 10, 40)
         drawText('Level: %s' % (level), font, windowSurface, WINDOWWIDTH - 150, 0)
+        pygame.display.update()
+
 
         # Draw the player's rectangle
         if player[0]=="mario":
@@ -386,6 +384,7 @@ while True: #level 1
             for b in baddies:
                 baddies.remove(b)
             if lives > 0:  # the player keeps playing if she/he has more than 0 lives
+
                 pass
             else:  # when the player has 0 lives the game stops
                 break
