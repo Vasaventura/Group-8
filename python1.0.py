@@ -177,7 +177,7 @@ def vie():
 
 
 playerImage = pygame.image.load('santa-player.png')
-playerImage2= pygame.transform.scale(pygame.image.load('Mere_Noel.png'),(10,10))
+playerImage2= pygame.transform.scale(pygame.image.load('Mere_Noel.png'),(50,80))
 peachRect=playerImage2.get_rect()
 Santa_on_Sleigh_Image = pygame.image.load('Santa_on_sleigh.png')
 santa = pygame.transform.scale(Santa_on_Sleigh_Image, (152, 96))
