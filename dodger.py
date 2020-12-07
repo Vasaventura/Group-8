@@ -21,6 +21,7 @@ ADDNEWCHIMNEYRATE=316 # le taux de reproduction de cheminees
 LUTINSPEED=1
 CHIMNEYSPEED = 2
 PLAYERMOVERATE = 5  # la vitesse de déplacement de jouer
+player=["image pour jouer"]
 
 def Menu():
     pygame.init()
@@ -29,7 +30,7 @@ def Menu():
     img = pygame.transform.scale(menu, (WINDOWWIDTH, WINDOWHEIGHT))
     window.blit(img, (0,0))
     pygame.display.flip()
-    MenuPressKey()
+    player[0]=MenuPressKey()
     pygame.display.update()
 
 def Chooseplayer():
@@ -41,7 +42,7 @@ def Chooseplayer():
     MenuPressKey()
     pygame.display.update()
 
-def Howtoplay ():
+def Howtoplay():
     pygame.init()
     window = pygame.display.set_mode((WINDOWWIDTH, WINDOWHEIGHT))
     menu = pygame.image.load("How_to_play.png").convert()
@@ -82,9 +83,9 @@ def MenuPressKey():
                 if event.key == K_j:
                     Chooseplayer()
                 if event.key == K_p:
-                    return
+                    return "mario"
                 if event.key == K_n:
-                    return
+                    return "peach"
                 if event.key == K_t:
                     Menu()
                 if event.key == K_q:
@@ -276,11 +277,13 @@ musicPlaying = True
 #lives.set_colorkey("BLACK") #todo set up lives image
 
 playerImage = pygame.image.load('santa-player.png')
+playerImage2= pygame.transform.scale(pygame.image.load('Mere_Noel.png'),(45, 75))
 Santa_on_Sleigh_Image = pygame.image.load('Santa_on_sleigh.png')
 santa = pygame.transform.scale(Santa_on_Sleigh_Image, (152, 96))
 santaRect = santa.get_rect()
 
 playerRect = playerImage.get_rect()
+peachRect=playerImage2.get_rect()
 baddieImage = pygame.image.load('gremlin.png')
 charbonImage = pygame.image.load('Charbon.png')
 lutinImage = pygame.image.load('bonlutin.png')
@@ -406,7 +409,11 @@ while True: #level 1
         drawText('Level: %s' % (level), font, windowSurface, WINDOWWIDTH - 150, 0)
 
         # Draw the player's rectangle.
-        windowSurface.blit(playerImage, playerRect)
+        if player[0] == "mario":
+            windowSurface.blit(playerImage, playerRect)
+        if player[0] == "peach":
+            playerRect = peachRect
+            windowSurface.blit(playerImage2, peachRect)
 
         # Draw each baddie.
         for b in baddies:
@@ -586,7 +593,11 @@ while True: #level 1
                 drawText('Level: %s' % (level), font, windowSurface, WINDOWWIDTH - 150, 0)
 
                 # Draw the player's rectangle.
-                windowSurface.blit(playerImage, playerRect)
+                if player[0] == "mario":
+                    windowSurface.blit(playerImage, playerRect)
+                if player[0] == "peach":
+                    playerRect = peachRect
+                    windowSurface.blit(playerImage2, peachRect)
 
                 # Draw each baddie.
                 for b in baddies:
