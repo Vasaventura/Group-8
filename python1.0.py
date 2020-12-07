@@ -15,9 +15,9 @@ MAXSIZE = 60  # la taille max d'un caractere
 BADDIEMINSPEED = 1  # la vitesse minimale d'ennemi
 BADDIEMAXSPEED = 4  # la vitesse maximale d'ennemi
 ADDNEWBADDIERATE = 24  # le taux de reproduction de nouveaux ennemis
-ADDNEWLUTINRATE=48 # le taux de reproduction de lutins
-ADDNEWCHIMNEYRATE=384 # le taux de reproduction de cheminees
-LUTINSPEED=1
+ADDNEWLUTINRATE = 48 # le taux de reproduction de lutins
+ADDNEWCHIMNEYRATE = 384 # le taux de reproduction de cheminees
+LUTINSPEED = 1
 PLAYERMOVERATE = 5  # la vitesse de déplacement de jouer
 
 
@@ -45,9 +45,6 @@ class Mario(object):
         self.rect = self.image.get_rect()
         self.rect.x = x_pl
         self.rect.y = y_pl
-
-
-
 
 ##Créer une page de menu
 def Menu():
@@ -95,7 +92,6 @@ def drawText(text, font, surface, x, y):
 def terminate():
     pygame.quit()
     sys.exit()
-
 
 def waitForPlayerToPressKey():
     while True:
@@ -183,8 +179,6 @@ def send_Gift(playerRect, chimneys, score, feedback_sound):
                     else:
                         return False
 
-
-
 # draw lives
 #def draw_lives(surf, x_l, y_l, max_health_l, img_l):
     #for i in range(max_health_l):
@@ -219,9 +213,14 @@ damageSound = pygame.mixer.Sound('damage.mp3')
 musicPlaying = True
 
 # Set up images.
+#todo set up lives image
 #livesImage = pygame.image.load('hp.png')
-#lives = pygame.transform.scale(livesImage, (100, 76))
-#lives.set_colorkey("BLACK") #todo set up lives image
+#def draw_lives(surface, x, y, lives, image):
+#    for i in range(3):
+#        hp.png = image.get.rect()
+#        hp.png.x = x + 30 * i
+#        hp.png.y = y
+#        surface.blit(image,hp.png.rect)
 
 playerImage = pygame.image.load('santa-player.png')
 playerImage2= pygame.image.load('Mere_Noel.png')
@@ -409,7 +408,6 @@ while True: #level 1
                 #create method for levelling up
             else:
                 continue
-
 
         # Check if any of the baddies have hit the player.
         if playerHasHitBaddie(playerRect, baddies) == True:
@@ -638,8 +636,6 @@ while True: #level 1
                 windowSurface.blit(gameOverBackground, (-850, 0))
                 pygame.mixer.music.stop()
                 gameOverSound.play()
-
-
 
 ################################ niveau 3 ########################
             elif scoreCadeau >= 15:  #level-up code to lvl 3
