@@ -206,6 +206,13 @@ def good_character_movement(objects,WINDOWWIDTH):
             if o['rect'].left > WINDOWWIDTH:
                 objects.remove(o)
 
+def vie(lives):
+    if lives != 0:
+        windowSurface.blit(coeur, (10, WINDOWHEIGHT-40))
+    if lives > 1:
+        windowSurface.blit(coeur, (60, WINDOWHEIGHT-40))
+    if lives == 3:
+        windowSurface.blit(coeur, (110, WINDOWHEIGHT-40))
 
 
 def drawText(text, font, surface, x, y):
@@ -215,19 +222,6 @@ def drawText(text, font, surface, x, y):
     surface.blit(textobj, textrect)
 
 
-# draw lives
-#def draw_lives(surf, x_l, y_l, max_health_l, img_l):
-    #for i in range(max_health_l):
-    #    img_rect = img_l.get_rect()
-    #    img_rect.x = x_l + 45 * i
-    #    img_rect.y = y_l
-    #    surf.blit(img_l, img_rect)
-# on garde les rectangles au cas où on veut remettre ça
-# def drawHealthMeter(currentHealth):
-# for i in range(MAXHEALTH):
-# pygame.draw.rect(windowSurface, RED, (870 + (10 * currentHealth) - i * 30, 35, 29, 10))
-# for i in range(currentHealth):
-# pygame.draw.rect(windowSurface, WHITE, (870 + (10 * currentHealth) - i * 30, 35, 29, 10), 1)
 
 # Set up pygame, the window, and the mouse cursor.
 #comment_jouer=pygame.image.load("comment_jouer.png")
@@ -292,7 +286,9 @@ charbonImage = pygame.image.load('Charbon.png')
 lutinImage = pygame.image.load('bonlutin.png')
 cadeauImage = pygame.image.load('cadeau.png')
 thundercloudImage = pygame.image.load('thundercloud.png')
-chimneyImage=pygame.image.load('chimney.png')
+chimneyImage = pygame.image.load('chimney.png')
+hp = pygame.image.load('hp.png')
+coeur = pygame.transform.scale(hp, (30, 30))
 
 gameBackground_lvl1 = pygame.image.load("winter_background.png")
 gameBackground_lvl2 = pygame.image.load("lvl_2.png")
@@ -302,6 +298,7 @@ gameOverBackground = pygame.image.load("Grinch end game.png")
 
 #todo set up pct score instead of absolute numbers
 while True: #level 1
+
     # Set up the start of the game.
     baddies = []
     lutin = []
@@ -362,7 +359,6 @@ while True: #level 1
                     moveUp = False
                 if event.key == K_DOWN or event.key == K_s:
                     moveDown = False
-
             MouseControls(MOUSEMOTION)
         # Add new baddies at the top of the screen, if needed.
         if not reverseCheat and not slowCheat:
@@ -406,7 +402,7 @@ while True: #level 1
         windowSurface.blit(gameBackground_lvl1, (0, -100))
         # Draw the Lutin score and top score.
         drawText('Number of Elves Caught: %s' % (scoreLutin), font, windowSurface, 10, 0)
-        drawText('Lives: %s' % (lives), font, windowSurface, 10, 40)
+        vie(lives)
         drawText('Level: %s' % (level), font, windowSurface, WINDOWWIDTH - 150, 0)
 
         # Draw the player's rectangle.
@@ -551,7 +547,7 @@ while True: #level 1
                     baddieAddCounter = 0
                     baddieSize = random.randint(MEDSIZE, MAXSIZE)
                     newBaddie = {
-                        'rect': pygame.Rect(WINDOWWIDTH + 40 - baddieSize, random.randint(0, WINDOWWIDTH - baddieSize),
+                        'rect': pygame.Rect(WINDOWWIDTH + 40 - baddieSize, random.randint(0, WINDOWHEIGHT - baddieSize),
                                             baddieSize,
                                             baddieSize),
                         'speed': random.randint(BADDIEMINSPEED, BADDIEMAXSPEED),
@@ -564,7 +560,7 @@ while True: #level 1
                     lutinAddCounter = 0
                     lutinSize = random.randint(MINSIZE, MEDSIZE)
                     newLutin = {
-                        'rect': pygame.Rect(WINDOWWIDTH + 40 - lutinSize, random.randint(0, WINDOWWIDTH - lutinSize),
+                        'rect': pygame.Rect(WINDOWWIDTH + 40 - lutinSize, random.randint(0, WINDOWHEIGHT - lutinSize),
                                             lutinSize,
                                             lutinSize),
                         'speed': LUTINSPEED,
@@ -586,7 +582,7 @@ while True: #level 1
                 windowSurface.blit(gameBackground_lvl2, (0, -100))
                 # Draw the Lutin score and top score.
                 drawText('Number of Presents Caught: %s' % (scoreCadeau), font, windowSurface, 10, 0)
-                drawText('Lives: %s' % (lives), font, windowSurface, 10, 40)
+                vie(lives)
                 drawText('Level: %s' % (level), font, windowSurface, WINDOWWIDTH - 150, 0)
 
                 # Draw the player's rectangle.
@@ -768,7 +764,7 @@ while True: #level 1
                         windowSurface.blit(gameBackground_lvl3, (0, -100))
                         # Draw the score, the number of lives remaining and the level of the game.
                         drawText('Presents delivered: %s' % (scoreCadeaux_livrés), font, windowSurface, 10, 0)
-                        drawText('Lives: %s' % (lives), font, windowSurface, 10, 40)
+                        vie(lives)
                         drawText('Level: %s' % (level), font, windowSurface, WINDOWWIDTH - 150, 0)
 
                         # Draw the player's rectangle.

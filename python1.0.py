@@ -46,7 +46,7 @@ def Chooseplayer():
     pygame.display.update()
 
 def Howtoplay ():
-    fenetre = pygame.display.set_mode((WINDOWHEIGHT, WINDOWWIDTH))
+    window = pygame.display.set_mode((WINDOWHEIGHT, WINDOWWIDTH))
     menu = pygame.image.load("How_to_play.png").convert()
     img = pygame.transform.scale(menu, (WINDOWHEIGHT, WINDOWWIDTH))
     window.blit(img, (0, 0))
