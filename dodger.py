@@ -241,11 +241,6 @@ damageSound = pygame.mixer.Sound('damage.mp3')
 YaySound = pygame.mixer.Sound('Yay.mp3')
 musicPlaying = True
 
-# Set up images.
-#livesImage = pygame.image.load('hp.png')
-#lives = pygame.transform.scale(livesImage, (100, 76))
-#lives.set_colorkey("BLACK") #todo set up lives image
-
 playerImage = pygame.image.load('santa-player.png')
 playerImage2= pygame.transform.scale(pygame.image.load('Mere_Noel.png'),(45, 75))
 Santa_on_Sleigh_Image = pygame.image.load('Santa_on_sleigh.png')
@@ -410,6 +405,7 @@ while True: #level 1
         if playerHasHitBaddie(playerRect, baddies) == True:
             lives -= 1
             damageSound.play()
+            #todo add damage sound for peach
             for b in baddies:
                 baddies.remove(b)
             if lives > 0:  # the player keeps playing if she/he has more than 0 lives
