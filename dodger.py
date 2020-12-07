@@ -222,36 +222,6 @@ def drawText(text, font, surface, x, y):
     textrect.topleft = (x, y)
     surface.blit(textobj, textrect)
 
-
-
-# Set up pygame, the window, and the mouse cursor.
-#comment_jouer=pygame.image.load("comment_jouer.png")
-#howtoplay = pygame.transform.scale(comment_jouer, (200,35))
-#choix_Joueur=pygame.image.load("choisir_joueur.png")
-#choosePlayer=pygame.transform.scale(choix_Joueur,(200,35))
-
-# Show the "Start" screen.
-
-#Chargement image
-#menu = pygame.image.load("background_snow.png").convert()
-#chargingBackground = pygame.transform.scale(menu, (800, 800))
-#windowSurface.blit(chargingBackground, (0,0))
-#windowSurface.blit(howtoplay, (300,300))
-#windowSurface.blit(choosePlayer,(300,200))
-#pygame.display.flip()
-#pygame.display.update()
-
-#Boucle perpétuelle qui permet de garder la fenêtre ouverte
-#while True :
-    #for event in pygame.event.get():
-        #if event.type == QUIT :
-            #running = 0
-            #pygame.quit()
-            #exit()
-
-#pygame.display.update()
-#waitForPlayerTopPressKey()
-
 # Set up pygame, the window, and the mouse cursor.
 Menu()
 mainClock = pygame.time.Clock()
