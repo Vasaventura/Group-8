@@ -1,8 +1,8 @@
 import pygame, random, sys
 from pygame.locals import *
 
-WINDOWWIDTH = 800
-WINDOWHEIGHT = 800
+WINDOWWIDTH = 950
+WINDOWHEIGHT = 750
 WIN = pygame.display.set_mode((WINDOWWIDTH, WINDOWHEIGHT))
 TEXTCOLOR = ('white')
 BACKGROUNDCOLOR = (255, 255, 255)
@@ -22,11 +22,44 @@ LUTINSPEED=1
 CHIMNEYSPEED = 2
 PLAYERMOVERATE = 5  # la vitesse de déplacement de jouer
 
+def Menu():
+    pygame.init()
+    window = pygame.display.set_mode((WINDOWWIDTH,WINDOWHEIGHT))
+    menu = pygame.image.load("écran_start.png").convert()
+    img = pygame.transform.scale(menu, (WINDOWWIDTH, WINDOWHEIGHT))
+    window.blit(img, (0,0))
+    pygame.display.flip()
+    MenuPressKey()
+    pygame.display.update()
+
+def Chooseplayer():
+    window = pygame.display.set_mode((WINDOWWIDTH, WINDOWHEIGHT))
+    menu = pygame.image.load("choix_joueur.png").convert()
+    img = pygame.transform.scale(menu, (WINDOWWIDTH, WINDOWHEIGHT))
+    window.blit(img, (0,0))
+    pygame.display.flip()
+    MenuPressKey()
+    pygame.display.update()
+
+def Howtoplay ():
+    pygame.init()
+    window = pygame.display.set_mode((WINDOWWIDTH, WINDOWHEIGHT))
+    menu = pygame.image.load("How_to_play.png").convert()
+    img = pygame.transform.scale(menu, (WINDOWWIDTH, WINDOWHEIGHT))
+    window.blit(img, (0, 0))
+    pygame.display.flip()
+    MenuPressKey()
+    pygame.display.update()
+
+def drawText(text, font, surface, x, y):
+    textobj = font.render(text, 1, TEXTCOLOR)
+    textrect = textobj.get_rect()
+    textrect.topleft = (x, y)
+    surface.blit(textobj, textrect)
 
 def terminate():
     pygame.quit()
     sys.exit()
-
 
 def waitForPlayerToPressKey():
     while True:
@@ -37,6 +70,29 @@ def waitForPlayerToPressKey():
                 if event.key == K_ESCAPE:  # Pressing ESC quits.
                     terminate()
                 return
+
+def MenuPressKey():
+    while True:
+        for event in pygame.event.get():
+            if event.type == QUIT:
+                terminate()
+            if event.type == KEYDOWN:
+                if event.key == K_ESCAPE:  # Pressing ESC quits.
+                    terminate()
+                if event.key == K_j:
+                    Chooseplayer()
+                if event.key == K_p:
+                    return
+                if event.key == K_n:
+                    return
+                if event.key == K_t:
+                    Menu()
+                if event.key == K_q:
+                    Howtoplay()
+
+def terminate():
+    pygame.quit()
+    sys.exit()
 
 def playerHasHitBaddie(playerRect, baddies):
     for b in baddies:
@@ -202,8 +258,7 @@ def drawText(text, font, surface, x, y):
 #waitForPlayerTopPressKey()
 
 # Set up pygame, the window, and the mouse cursor.
-
-pygame.init()
+Menu()
 mainClock = pygame.time.Clock()
 windowSurface = pygame.display.set_mode((WINDOWWIDTH, WINDOWHEIGHT))
 pygame.display.set_caption('X-Mas Dodger')
@@ -244,14 +299,6 @@ gameBackground_lvl2 = pygame.image.load("lvl_2.png")
 gameBackground_lvl3 = pygame.image.load("night_sky.png")
 gameOverBackground = pygame.image.load("Grinch end game.png")
 
-# Show the "Start" screen.
-windowSurface.fill(MENUBACKGROUNDCOLOR)
-
-drawText('X-Mas Dodger', font, windowSurface, (WINDOWWIDTH / 3), (WINDOWHEIGHT / 3))
-drawText('Press a key to start', font, windowSurface, (WINDOWWIDTH / 3) - 40, (WINDOWHEIGHT / 3) + 50)
-drawText('saving Christmas', font, windowSurface, (WINDOWWIDTH / 3) - 35, (WINDOWHEIGHT / 3) + 100)
-pygame.display.update()
-waitForPlayerToPressKey()
 
 #todo set up pct score instead of absolute numbers
 while True: #level 1
@@ -326,7 +373,7 @@ while True: #level 1
             baddieAddCounter = 0
             baddieSize = random.randint(MINSIZE, MAXSIZE)
             newBaddie = {
-                'rect': pygame.Rect(WINDOWWIDTH + 40 - baddieSize, random.randint(0, WINDOWWIDTH - baddieSize),
+                'rect': pygame.Rect(WINDOWWIDTH + 40 - baddieSize, random.randint(0, WINDOWHEIGHT - baddieSize),
                                     baddieSize,
                                     baddieSize),
                 'speed': random.randint(BADDIEMINSPEED, BADDIEMAXSPEED),
@@ -338,7 +385,7 @@ while True: #level 1
         if lutinAddCounter == ADDNEWLUTINRATE:
             lutinAddCounter = 0
             lutinSize = random.randint(MINSIZE, MEDSIZE)
-            newLutin = {'rect': pygame.Rect(WINDOWWIDTH + 40 - lutinSize, random.randint(0, WINDOWWIDTH - lutinSize),
+            newLutin = {'rect': pygame.Rect(WINDOWWIDTH + 40 - lutinSize, random.randint(0, WINDOWHEIGHT - lutinSize),
                                              lutinSize,
                                              lutinSize),
                          'speed': LUTINSPEED,
@@ -740,7 +787,7 @@ while True: #level 1
                         # Check if any of the lutins have been collected by the player.
                         if send_Gift(santaRect, chimneys, scoreCadeaux_livrés, PresentDelivered) == True:
                             scoreCadeaux_livrés += 1
-                            if scoreCadeaux_livrés >= 25:  # the player moves to the next level
+                            if scoreCadeaux_livrés >= 15:  # the player moves to the next level
                                 break
                             else:
                                 continue
@@ -758,7 +805,7 @@ while True: #level 1
                                 # Stop the game and show the "Game Over" screen.
                         mainClock.tick(FPS)
 
-                    if scoreCadeaux_livrés < 25:
+                    if scoreCadeaux_livrés < 15:
                         windowSurface.blit(gameOverBackground, (-850, 0))
                         pygame.mixer.music.stop()
                         gameOverSound.play()
@@ -774,7 +821,7 @@ while True: #level 1
                         gameOverSound.stop()
 
                     # -----------------------------------------------------------------------------------------------------------------------
-                    elif scoreCadeaux_livrés >= 25:  # End of the game
+                    elif scoreCadeaux_livrés >= 15:  # End of the game
                         windowSurface.fill(ENDGAMEBACKGROUNDCOLOR)
                         pygame.mixer.music.stop()
                         YaySound.play()

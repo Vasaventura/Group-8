@@ -37,6 +37,7 @@ class Peach(object):
         self.rect = self.image2.get_rect()
         self.rect.x = x_pl
         self.rect.y = y_pl
+
 class Mario(object):
     def _init_(self, x_pl, y_pl):
         self.max_health = 3
@@ -223,7 +224,7 @@ musicPlaying = True
 #        surface.blit(image,hp.png.rect)
 
 playerImage = pygame.image.load('santa-player.png')
-playerImage2= pygame.image.load('Mere_Noel.png')
+playerImage2 = pygame.image.load('Mere_Noel.png')
 Santa_on_Sleigh_Image = pygame.image.load('Santa_on_sleigh.png')
 santa = pygame.transform.scale(Santa_on_Sleigh_Image, (152, 96))
 santaRect = santa.get_rect()
