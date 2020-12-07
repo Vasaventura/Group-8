@@ -162,7 +162,23 @@ musicPlaying = True
 
 # Set up images.
 #todo set up lives image
-
+player_img = pygame.image.load(path.join(img_dir, "mère_noël.png")).convert()
+player_mini_img = pygame.transform.scale(player_img, (25, 19))
+player_mini_img.set_colorkey(BLACK)
+self.lives = 3
+self.hidden = False
+self.hide_timer = pygame.time.get_ticks()
+def hide(self):
+    self.hidden = True
+    self.hide_timer = pygame.time.get_ticks()
+    self.rect.center = (WIDTH / 2, HEIGHT + 200)
+def draw_lives(surf, x, y, lives, img):
+    for i in range(lives):
+        img_rect = img.get_rect()
+        img_rect.x = x + 30 * i
+        img_rect.y = y
+        surf.blit(img, img_rect)
+draw_lives(screen, WIDTH - 100, 5, player.lives, player_mini_img)
 
 playerImage = pygame.image.load('santa-player.png')
 playerImage2= pygame.image.load('Mere_Noel.png')
@@ -333,7 +349,7 @@ while True: #level 1
             windowSurface.blit(playerImage, playerRect)
         if player[0]=="peach":
             windowSurface.blit(playerImage2, playerRect)
-
+        #print(player[0])
 
         # Draw each baddie.
         for b in baddies:
