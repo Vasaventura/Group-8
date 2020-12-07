@@ -4,9 +4,9 @@ from pygame.locals import *
 WINDOWWIDTH = 750
 WINDOWHEIGHT = 1000
 WIN = pygame.display.set_mode((WINDOWWIDTH, WINDOWHEIGHT))
-TEXTCOLOR = ('white')
+TEXTCOLOR = ('black')
 BACKGROUNDCOLOR = (255, 255, 255)
-MENUBACKGROUNDCOLOR = ('red')
+
 
 FPS = 60
 MINSIZE = 30  # ici le code a été modifié en suivant les conseils du livre (Ai Swegart) Ch. 20, Pg. 353-354
@@ -15,15 +15,36 @@ MAXSIZE = 60  # la taille max d'un caractere
 BADDIEMINSPEED = 1  # la vitesse minimale d'ennemi
 BADDIEMAXSPEED = 4  # la vitesse maximale d'ennemi
 ADDNEWBADDIERATE = 24  # le taux de reproduction de nouveaux ennemis
-ADDNEWLUTINRATE=48 # le taux de reproduction de lutins
-ADDNEWCHIMNEYRATE=384 # le taux de reproduction de cheminees
-LUTINSPEED=1
+ADDNEWLUTINRATE = 48 # le taux de reproduction de lutins
+ADDNEWCHIMNEYRATE = 384 # le taux de reproduction de cheminees
+LUTINSPEED = 1
 PLAYERMOVERATE = 5  # la vitesse de déplacement de jouer
+
 
 ########################### class ####################
 
 #class pour mouvement
+class Object():
+    def _init_(self, image):
+        self.image = pygame.image.load(image)
+        self.rect = self.image.get_rect()
 
+class Peach(object):
+    def _init_(self, x_pl, y_pl):
+        self.max_health = 3
+        self.player_move_rate = 5
+        self.image2 = pygame.image.load('Mere_Noel.png')
+        self.rect = self.image2.get_rect()
+        self.rect.x = x_pl
+        self.rect.y = y_pl
+class Mario(object):
+    def _init_(self, x_pl, y_pl):
+        self.max_health = 3
+        self.player_move_rate = 5
+        self.image = pygame.image.load('santa-player.png')
+        self.rect = self.image.get_rect()
+        self.rect.x = x_pl
+        self.rect.y = y_pl
 
 ##Créer une page de menu
 def Menu():
@@ -55,29 +76,22 @@ def Howtoplay ():
     waitForPlayerToPressKey()
     pygame.display.update()
 
-#def Chooseplayer_homme():
-    pygame.init()
-    fenetre = pygame.display.set_mode((WINDOWHEIGHT, WINDOWWIDTH))
-    menu = pygame.image.load("santa-player.png").convert()
-    img = pygame.transform.scale(menu, (WINDOWHEIGHT, WINDOWWIDTH))
-    fenetre.blit(img, (0, 0))
-    pygame.display.flip()
-    waitForPlayerToPressKey()
-    pygame.display.update()
-#def Chooseplayer_femme():
-    pygame.init()
-    fenetre = pygame.display.set_mode((WINDOWHEIGHT, WINDOWWIDTH))
-    menu = pygame.image.load("Mere_Noel.png").convert()
-    img = pygame.transform.scale(menu, (WINDOWHEIGHT, WINDOWWIDTH))
-    fenetre.blit(img, (0, 0))
-    pygame.display.flip()
-    waitForPlayerToPressKey()
-    pygame.display.update()
+class image_player():
+    def choosePlayer():
+        if event.key == K_p:
+            return
+        if event.key == K_n:
+            return
+
+def drawText(text, font, surface, x, y):
+    textobj = font.render(text, 1, TEXTCOLOR)
+    textrect = textobj.get_rect()
+    textrect.topleft = (x, y)
+    surface.blit(textobj, textrect)
 
 def terminate():
     pygame.quit()
     sys.exit()
-
 
 def waitForPlayerToPressKey():
     while True:
@@ -95,9 +109,8 @@ def waitForPlayerToPressKey():
                     return
                 if event.key == K_t:
                     Menu()
-
-
-
+                if event.key == K_q:
+                    Howtoplay()
 
 def playerHasHitBaddie(playerRect, baddies):
     for b in baddies:
@@ -166,13 +179,6 @@ def send_Gift(playerRect, chimneys, score, feedback_sound):
                     else:
                         return False
 
-def drawText(text, font, surface, x, y):
-    textobj = font.render(text, 1, TEXTCOLOR)
-    textrect = textobj.get_rect()
-    textrect.topleft = (x, y)
-    surface.blit(textobj, textrect)
-
-
 # draw lives
 #def draw_lives(surf, x_l, y_l, max_health_l, img_l):
     #for i in range(max_health_l):
@@ -207,9 +213,14 @@ damageSound = pygame.mixer.Sound('damage.mp3')
 musicPlaying = True
 
 # Set up images.
+#todo set up lives image
 #livesImage = pygame.image.load('hp.png')
-#lives = pygame.transform.scale(livesImage, (100, 76))
-#lives.set_colorkey("BLACK") #todo set up lives image
+#def draw_lives(surface, x, y, lives, image):
+#    for i in range(3):
+#        hp.png = image.get.rect()
+#        hp.png.x = x + 30 * i
+#        hp.png.y = y
+#        surface.blit(image,hp.png.rect)
 
 playerImage = pygame.image.load('santa-player.png')
 playerImage2= pygame.image.load('Mere_Noel.png')
@@ -371,13 +382,12 @@ while True: #level 1
         # Set up the background
         windowSurface.blit(gameBackground_lvl1, (0, -100))
         # Draw the Lutin score and top score.
-        drawText('Number of Elves Caught: %s' % (scoreLutin), font, windowSurface, 10, 0)
+        drawText('Elves Caught: %s' % (scoreLutin), font, windowSurface, 10, 0)
         drawText('Lives: %s' % (lives), font, windowSurface, 10, 40)
         drawText('Level: %s' % (level), font, windowSurface, WINDOWWIDTH - 150, 0)
 
         # Draw the player's rectangle.
         windowSurface.blit(playerImage, playerRect)
-
 
         # Draw each baddie.
         for b in baddies:
@@ -398,7 +408,6 @@ while True: #level 1
                 #create method for levelling up
             else:
                 continue
-
 
         # Check if any of the baddies have hit the player.
         if playerHasHitBaddie(playerRect, baddies) == True:
@@ -583,7 +592,7 @@ while True: #level 1
                 # Set up the background
                 windowSurface.blit(gameBackground_lvl2, (0, -100))
                 # Draw the Lutin score and top score.
-                drawText('Number of Presents Caught: %s' % (scoreCadeau), font, windowSurface, 10, 0)
+                drawText('Presents Caught: %s' % (scoreCadeau), font, windowSurface, 10, 0)
                 drawText('Lives: %s' % (lives), font, windowSurface, 10, 40)
                 drawText('Level: %s' % (level), font, windowSurface, WINDOWWIDTH - 150, 0)
 
@@ -627,15 +636,6 @@ while True: #level 1
                 windowSurface.blit(gameOverBackground, (-850, 0))
                 pygame.mixer.music.stop()
                 gameOverSound.play()
-
-                drawText('GAME OVER', font, windowSurface, (WINDOWWIDTH / 3), (WINDOWHEIGHT / 3))
-                drawText('Press a key to retry', font, windowSurface, (WINDOWWIDTH / 3) - 45,
-                         (WINDOWHEIGHT / 3) + 50)
-                drawText('to save Christmas', font, windowSurface, (WINDOWWIDTH / 3) - 45, (WINDOWHEIGHT / 3) + 100)
-                pygame.display.update()
-                waitForPlayerToPressKey()
-
-                gameOverSound.stop()
 
 ################################ niveau 3 ########################
             elif scoreCadeau >= 15:  #level-up code to lvl 3
