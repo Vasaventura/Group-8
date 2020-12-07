@@ -333,7 +333,7 @@ while True: #level 1
             windowSurface.blit(playerImage, playerRect)
         if player[0]=="peach":
             windowSurface.blit(playerImage2, playerRect)
-        print(player[0])
+
 
         # Draw each baddie.
         for b in baddies:
