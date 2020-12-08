@@ -90,7 +90,11 @@ def MenuPressKey():
                     Menu()
                 if event.key == K_q:
                     Howtoplay()
-
+            if event.type == KEYUP:
+                if event.key == K_p:
+                    return "mario"
+                if event.key == K_n:
+                    return "peach"
 def terminate():
     pygame.quit()
     sys.exit()
@@ -242,9 +246,9 @@ YaySound = pygame.mixer.Sound('Yay.mp3')
 musicPlaying = True
 
 playerImage = pygame.image.load('santa-player.png')
-playerImage2= pygame.transform.scale(pygame.image.load('Mere_Noel.png'),(45, 75))
+playerImage2= pygame.transform.scale(pygame.image.load('Mere_Noel.png'),(40, 70))
 Santa_on_Sleigh_Image = pygame.image.load('Santa_on_sleigh.png')
-santa = pygame.transform.scale(Santa_on_Sleigh_Image, (152, 96))
+santa = pygame.transform.scale(Santa_on_Sleigh_Image, (148, 92))
 santaRect = santa.get_rect()
 
 playerRect = playerImage.get_rect()
@@ -301,6 +305,9 @@ while True: #level 1
                 if event.key == K_DOWN or event.key == K_s:
                     moveUp = False
                     moveDown = True
+                if event.key == K_t:
+                    Menu() #pause
+                    break
                 # option mute pour enlever le son du jeu. Par contre le son du Game Over reste toujours
                 if event.key == K_m:
                     if musicPlaying:
@@ -483,6 +490,10 @@ while True: #level 1
                         if event.key == K_DOWN or event.key == K_s:
                             moveUp = False
                             moveDown = True
+                        if event.key == K_t:
+                            Menu()  # pause
+                            #todo define exit to menu function if player chooses to go back to menu at any point in the game
+                            break
                         # option mute pour enlever le son du jeu. Par contre le son du Game Over reste toujours
                         if event.key == K_m:
                             if musicPlaying:
@@ -670,6 +681,9 @@ while True: #level 1
                                 if event.key == K_DOWN or event.key == K_s:
                                     moveUp = False
                                     moveDown = True
+                                if event.key == K_t:
+                                    Menu()#pause
+                                    break
                                 # option mute pour enlever le son du jeu. Par contre le son du Game Over reste toujours
                                 if event.key == K_m:
                                     if musicPlaying:
@@ -700,7 +714,7 @@ while True: #level 1
                             baddieAddCounter += 1
                             chimneyAddCounter += 1
 
-                        if baddieAddCounter == 120:
+                        if baddieAddCounter == 104:
                             baddieAddCounter = 0
                             baddieSize = random.randint(MINSIZE, MAXSIZE)
                             newBaddie = {
@@ -799,9 +813,11 @@ while True: #level 1
                         pygame.mixer.music.stop()
                         YaySound.play()
                         drawText("Well Done!", font, windowSurface, (WINDOWWIDTH / 3) + 30, (WINDOWHEIGHT / 3))
-                        drawText("You have finished the game!", font, windowSurface, (WINDOWWIDTH / 3) -150,
+                        drawText("You have finished the game!", font, windowSurface, (WINDOWWIDTH / 3) -120,
                                  (WINDOWHEIGHT / 3) + 50)
-                        drawText("To restart press any key!", font, windowSurface, (WINDOWWIDTH / 3) -150,
+                        drawText("To restart press any key!", font, windowSurface, (WINDOWWIDTH / 3) -120,
+                                 (WINDOWHEIGHT / 3) + 100)
+                        drawText("To go to menu press T", font, windowSurface, (WINDOWWIDTH / 3) - 120,
                                  (WINDOWHEIGHT / 3) + 100)
                         pygame.display.update()
                         waitForPlayerToPressKey()
