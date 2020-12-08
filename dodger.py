@@ -817,9 +817,8 @@ while True: #level 1
                                  (WINDOWHEIGHT / 3) + 50)
                         drawText("To restart press any key!", font, windowSurface, (WINDOWWIDTH / 3) -120,
                                  (WINDOWHEIGHT / 3) + 100)
-                        drawText("To go to menu press T", font, windowSurface, (WINDOWWIDTH / 3) - 120,
-                                 (WINDOWHEIGHT / 3) + 100)
                         pygame.display.update()
                         waitForPlayerToPressKey()
                         YaySound.stop()
+                        Menu()
                         break
