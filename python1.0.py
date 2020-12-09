@@ -1,12 +1,14 @@
 import pygame, random, sys
 from pygame.locals import *
 
-WINDOWWIDTH = 750
-WINDOWHEIGHT = 1000
+WINDOWWIDTH = 950
+WINDOWHEIGHT = 650
 WIN = pygame.display.set_mode((WINDOWWIDTH, WINDOWHEIGHT))
-TEXTCOLOR = ('black')
+TEXTCOLOR = ('white')
 BACKGROUNDCOLOR = (255, 255, 255)
-
+ENDGAMEBACKGROUNDCOLOR = ('black')
+MENUBACKGROUNDCOLOR = ('red')
+# MenuGameBackground = pygame.image.load("snow.gif") #si vous voulez
 FPS = 60
 MINSIZE = 30  # ici le code a été modifié en suivant les conseils du livre (Ai Swegart) Ch. 20, Pg. 353-354
 MEDSIZE = 45
@@ -14,44 +16,79 @@ MAXSIZE = 60  # la taille max d'un caractere
 BADDIEMINSPEED = 1  # la vitesse minimale d'ennemi
 BADDIEMAXSPEED = 4  # la vitesse maximale d'ennemi
 ADDNEWBADDIERATE = 24  # le taux de reproduction de nouveaux ennemis
-ADDNEWLUTINRATE = 48 # le taux de reproduction de lutins
-ADDNEWCHIMNEYRATE = 384 # le taux de reproduction de cheminees
-LUTINSPEED = 1
+ADDNEWLUTINRATE=48 # le taux de reproduction de lutins
+ADDNEWCHIMNEYRATE=316 # le taux de reproduction de cheminees
+LUTINSPEED=1
+CHIMNEYSPEED = 2
 PLAYERMOVERATE = 5  # la vitesse de déplacement de jouer
 player=["image pour jouer"]
 
-########################### class ####################
+######importation############
+# Set up sounds.
+pygame.mixer.init()
+gameOverSound = pygame.mixer.Sound('grinch_gameoversound.mp3')
+BellsSound = pygame.mixer.Sound('Bells Sound effect.mp3')
+PresentSound = pygame.mixer.Sound('Present_sound.mp3')
+PresentDelivered = pygame.mixer.Sound('presents_delivery.mp3')
+damageSound = pygame.mixer.Sound('damage.mp3')
+YaySound = pygame.mixer.Sound('Yay.mp3')
+musicPlaying = True
 
-#mouv
+# Set up images.
 
-##Créer une page de menu
+playerImage = pygame.image.load('santa-player.png')
+playerImage2= pygame.transform.scale(pygame.image.load('Mere_Noel.png'),(45, 75))
+Santa_on_Sleigh_Image = pygame.image.load('Santa_on_sleigh.png')
+santa = pygame.transform.scale(Santa_on_Sleigh_Image, (152, 96))
+santaRect = santa.get_rect()
+
+playerRect = playerImage.get_rect()
+peachRect=playerImage2.get_rect()
+baddieImage = pygame.image.load('gremlin.png')
+charbonImage = pygame.image.load('Charbon.png')
+lutinImage = pygame.image.load('bonlutin.png')
+cadeauImage = pygame.image.load('cadeau.png')
+thundercloudImage = pygame.image.load('thundercloud.png')
+chimneyImage = pygame.image.load('chimney.png')
+hp = pygame.image.load('hp.png')
+coeur = pygame.transform.scale(hp, (30, 30))
+
+gameBackground_lvl1 = pygame.image.load("winter_background.png")
+gameBackground_lvl2 = pygame.image.load("lvl_2.png")
+gameBackground_lvl3 = pygame.image.load("night_sky.png")
+gameOverBackground = pygame.image.load("Grinch end game.png")
+
+
+
+#############################
 
 def Menu():
     pygame.init()
-    fenetre = pygame.display.set_mode((WINDOWHEIGHT, WINDOWWIDTH))
+    window = pygame.display.set_mode((WINDOWWIDTH,WINDOWHEIGHT))
     menu = pygame.image.load("écran_start.png").convert()
-    img = pygame.transform.scale(menu, (WINDOWHEIGHT, WINDOWWIDTH))
-    fenetre.blit(img, (0,0))
+    img = pygame.transform.scale(menu, (WINDOWWIDTH, WINDOWHEIGHT))
+    window.blit(img, (0,0))
     pygame.display.flip()
-    player[0]=waitForPlayerToPressKey()
+    player[0]=MenuPressKey()
     pygame.display.update()
 
 def Chooseplayer():
-    fenetre = pygame.display.set_mode((WINDOWHEIGHT, WINDOWWIDTH))
+    window = pygame.display.set_mode((WINDOWWIDTH, WINDOWHEIGHT))
     menu = pygame.image.load("choix_joueur.png").convert()
-    img = pygame.transform.scale(menu, (WINDOWHEIGHT, WINDOWWIDTH))
-    fenetre.blit(img, (0,0))
+    img = pygame.transform.scale(menu, (WINDOWWIDTH, WINDOWHEIGHT))
+    window.blit(img, (0,0))
     pygame.display.flip()
-    waitForPlayerToPressKey()
+    MenuPressKey()
     pygame.display.update()
 
-def Howtoplay ():
-    fenetre = pygame.display.set_mode((WINDOWHEIGHT, WINDOWWIDTH))
+def Howtoplay():
+    pygame.init()
+    window = pygame.display.set_mode((WINDOWWIDTH, WINDOWHEIGHT))
     menu = pygame.image.load("How_to_play.png").convert()
-    img = pygame.transform.scale(menu, (WINDOWHEIGHT, WINDOWWIDTH))
-    fenetre.blit(img, (0, 0))
+    img = pygame.transform.scale(menu, (WINDOWWIDTH, WINDOWHEIGHT))
+    window.blit(img, (0, 0))
     pygame.display.flip()
-    waitForPlayerToPressKey()
+    MenuPressKey()
     pygame.display.update()
 
 def drawText(text, font, surface, x, y):
@@ -61,11 +98,28 @@ def drawText(text, font, surface, x, y):
     surface.blit(textobj, textrect)
 
 def terminate():
-    pygame.quit()
-    sys.exit()
+    for event in pygame.event.get():
+        if event.type==QUIT or event.type==KEYDOWN and event.key==K_ESCAPE:
+            pygame.quit()
+            sys.exit()
+
 
 def waitForPlayerToPressKey():
     while True:
+        terminate()
+    return
+        #for event in pygame.event.get():
+         #   if event.type==QUIT:
+          #      terminate()
+           # if event.type==KEYDOWN:
+            #    if event.key==K_ESCAPE:
+             #       terminate()
+
+
+
+def MenuPressKey():
+    while True:
+        terminate()
         for event in pygame.event.get():
             if event.type == KEYDOWN:
                 if event.key == K_j:
@@ -79,12 +133,15 @@ def waitForPlayerToPressKey():
                 if event.key == K_q:
                     Howtoplay()
 
+
+
 def playerHasHitBaddie(playerRect, baddies):
     for b in baddies:
         if playerRect.colliderect(b['rect']):
             baddies.remove(b)
             return True
     return False
+
 
 def playerHasHitLutin(playerRect, lutin):    #code pour les lutins
    for l in lutin:
@@ -97,11 +154,12 @@ def send_Gift(playerRect, chimneys, score, feedback_sound):
        if playerRect.colliderect(c['rect']):
             for event in pygame.event.get():
                 if event.type == KEYDOWN:
+
                     if event.key == K_SPACE:
                         feedback_sound.play()
                         score += 1
                         c['rect'].move_ip(0, 1000)
-                        if event.key == K_z:
+                        if event.key == K_z:#ici
                             reverseCheat = True
                         if event.key == K_x:
                             slowCheat = True
@@ -136,7 +194,7 @@ def send_Gift(playerRect, chimneys, score, feedback_sound):
                             if event.key == K_UP or event.key == K_w:
                                 moveUp = False
                             if event.key == K_DOWN or event.key == K_s:
-                                moveDown = False
+                                moveDown = False#ici
 
                         if event.type == MOUSEMOTION:
                             # If the mouse moves, move the player where to the cursor.
@@ -145,8 +203,69 @@ def send_Gift(playerRect, chimneys, score, feedback_sound):
                     else:
                         return False
 
-Menu()
+def MouseControls(MOUSEMOTION):
+    if event.type == MOUSEMOTION:
+        # If the mouse moves, move the player where to the cursor.
+        playerRect.centerx = event.pos[0]
+        playerRect.centery = event.pos[1]
 
+def PlayerMouvement(playerRect):
+    # Move the player around.
+    if moveLeft and playerRect.left > 0:
+        playerRect.move_ip(-1 * PLAYERMOVERATE, 0)
+    if moveRight and playerRect.right < WINDOWWIDTH:
+        playerRect.move_ip(PLAYERMOVERATE, 0)
+    if moveUp and playerRect.top > 0:
+        playerRect.move_ip(0, -1 * PLAYERMOVERATE)
+    if moveDown and playerRect.bottom < WINDOWHEIGHT:
+        playerRect.move_ip(0, PLAYERMOVERATE)
+
+def bad_character_movement(objects,WINDOWWIDTH):
+    for o in objects:
+        if not reverseCheat and not slowCheat:
+            o['rect'].move_ip(-o['speed'], 0)
+        elif reverseCheat:
+            o['rect'].move_ip(5, 0)
+        elif slowCheat:
+            o['rect'].move_ip(-1, 0)
+
+    # Delete baddies that have come from the left.
+    for o in objects:
+        if o['rect'].left > WINDOWWIDTH:
+            objects.remove(o)
+def good_character_movement(objects,WINDOWWIDTH):
+        for o in objects:
+            if not reverseCheat and not slowCheat:
+                o['rect'].move_ip(-o['speed'], 0)
+            elif reverseCheat:
+                o['rect'].move_ip(-1, 0)
+            elif slowCheat:
+                o['rect'].move_ip(5, 0)
+
+        # Delete lutins that have come from the left.
+        for o in objects[:]:
+            if o['rect'].left > WINDOWWIDTH:
+                objects.remove(o)
+
+def vie(lives):
+    if lives != 0:
+        windowSurface.blit(coeur, (10, WINDOWHEIGHT-40))
+    if lives > 1:
+        windowSurface.blit(coeur, (60, WINDOWHEIGHT-40))
+    if lives == 3:
+        windowSurface.blit(coeur, (110, WINDOWHEIGHT-40))
+
+
+def drawText(text, font, surface, x, y):
+    textobj = font.render(text, 1, TEXTCOLOR)
+    textrect = textobj.get_rect()
+    textrect.topleft = (x, y)
+    surface.blit(textobj, textrect)
+
+
+
+# Set up pygame, the window, and the mouse cursor.
+Menu()
 mainClock = pygame.time.Clock()
 windowSurface = pygame.display.set_mode((WINDOWWIDTH, WINDOWHEIGHT))
 pygame.display.set_caption('X-Mas Dodger')
@@ -155,43 +274,11 @@ pygame.mouse.set_visible(False)
 # Set up the fonts.
 font = pygame.font.SysFont(None, 48, bold=True)
 
-# Set up sounds.
-gameOverSound = pygame.mixer.Sound('grinch_gameoversound.mp3')
-BellsSound = pygame.mixer.Sound('Bells Sound effect.mp3')
-PresentSound = pygame.mixer.Sound('Present_sound.mp3')
-PresentDelivered = pygame.mixer.Sound('presents_delivery.mp3')
-damageSound = pygame.mixer.Sound('damage.mp3')
-musicPlaying = True
 
-# Set up images.
-#todo set up lives image
-
-playerImage = pygame.image.load('santa-player.png')
-playerImage2= pygame.image.load('Mere_Noel.png')
-peach=pygame.transform.scale(playerImage2, (152, 96))
-peachRect=peach.get_rect()
-Santa_on_Sleigh_Image = pygame.image.load('Santa_on_sleigh.png')
-santa = pygame.transform.scale(Santa_on_Sleigh_Image, (152, 96))
-
-santaRect = santa.get_rect()
-
-playerRect = playerImage.get_rect()
-baddieImage = pygame.image.load('gremlin.png')
-charbonImage = pygame.image.load('Charbon.png')
-lutinImage = pygame.image.load('bonlutin.png')
-cadeauImage = pygame.image.load('cadeau.png')
-thundercloudImage = pygame.image.load('thundercloud.png')
-chimneyImage=pygame.image.load('chimney.png')
-
-gameBackground_lvl1 = pygame.image.load("winter_background.png")
-gameBackground_lvl2 = pygame.image.load("lvl_2.png")
-gameBackground_lvl3 = pygame.image.load("night_sky.png")
-gameOverBackground = pygame.image.load("Grinch end game.png")
-
-######################## Niveau 1 ############################
 
 #todo set up pct score instead of absolute numbers
 while True: #level 1
+
     # Set up the start of the game.
     baddies = []
     lutin = []
@@ -252,11 +339,7 @@ while True: #level 1
                     moveUp = False
                 if event.key == K_DOWN or event.key == K_s:
                     moveDown = False
-
-            if event.type == MOUSEMOTION:
-                # If the mouse moves, move the player where to the cursor.
-                playerRect.centerx = event.pos[0]
-                playerRect.centery = event.pos[1]
+            MouseControls(MOUSEMOTION)
         # Add new baddies at the top of the screen, if needed.
         if not reverseCheat and not slowCheat:
             lutinAddCounter += 1
@@ -265,19 +348,20 @@ while True: #level 1
         if baddieAddCounter == ADDNEWBADDIERATE:
             baddieAddCounter = 0
             baddieSize = random.randint(MINSIZE, MAXSIZE)
-            newBaddie = {'rect': pygame.Rect(WINDOWWIDTH + 40 - baddieSize, random.randint(0, WINDOWWIDTH - baddieSize),
-                                             baddieSize,
-                                             baddieSize),
-                         'speed': random.randint(BADDIEMINSPEED, BADDIEMAXSPEED),
-                         'surface': pygame.transform.scale(baddieImage, (baddieSize, baddieSize)),
-                         }
+            newBaddie = {
+                'rect': pygame.Rect(WINDOWWIDTH + 40 - baddieSize, random.randint(0, WINDOWHEIGHT - baddieSize),
+                                    baddieSize,
+                                    baddieSize),
+                'speed': random.randint(BADDIEMINSPEED, BADDIEMAXSPEED),
+                'surface': pygame.transform.scale(baddieImage, (baddieSize, baddieSize)),
+            }
 
             baddies.append(newBaddie)
 
         if lutinAddCounter == ADDNEWLUTINRATE:
             lutinAddCounter = 0
             lutinSize = random.randint(MINSIZE, MEDSIZE)
-            newLutin = {'rect': pygame.Rect(WINDOWWIDTH + 40 - lutinSize, random.randint(0, WINDOWWIDTH - lutinSize),
+            newLutin = {'rect': pygame.Rect(WINDOWWIDTH + 40 - lutinSize, random.randint(0, WINDOWHEIGHT - lutinSize),
                                              lutinSize,
                                              lutinSize),
                          'speed': LUTINSPEED,
@@ -286,61 +370,27 @@ while True: #level 1
 
             lutin.append(newLutin)
 
-        # Move the player around.
-        if moveLeft and playerRect.left > 0:
-            playerRect.move_ip(-1 * PLAYERMOVERATE, 0)
-        if moveRight and playerRect.right < WINDOWWIDTH:
-            playerRect.move_ip(PLAYERMOVERATE, 0)
-        if moveUp and playerRect.top > 0:
-            playerRect.move_ip(0, -1 * PLAYERMOVERATE)
-        if moveDown and playerRect.bottom < WINDOWHEIGHT:
-            playerRect.move_ip(0, PLAYERMOVERATE)
-
+        #Move the player around
+        PlayerMouvement(playerRect)
         # Move the baddies to the left.
-        for b in baddies:
-            if not reverseCheat and not slowCheat:
-                b['rect'].move_ip(-b['speed'], 0)
-            elif reverseCheat:
-                b['rect'].move_ip(5, 0)
-            elif slowCheat:
-                b['rect'].move_ip(-1, 0)
+        bad_character_movement(baddies, WINDOWWIDTH)
 
-        # Delete baddies that have come from the left.
-        for b in baddies[:]:
-            if b['rect'].left > WINDOWWIDTH:
-                baddies.remove(b)
+        # Move the elves to the left.
+        good_character_movement(lutin, WINDOWWIDTH)
 
-        # Move the lutins down.
-        for l in lutin:
-            if not reverseCheat and not slowCheat:
-                l['rect'].move_ip(-l['speed'], 0)
-            elif reverseCheat:
-                l['rect'].move_ip(-1, 0)
-            elif slowCheat:
-                l['rect'].move_ip(5, 0)
-
-        # Delete lutins that have come from the left.
-        for l in lutin[:]:
-            if l['rect'].left > WINDOWWIDTH:
-                lutin.remove(l)
-
-        # Draw the game world on the window.
-        windowSurface.fill(BACKGROUNDCOLOR)
         # Set up the background
         windowSurface.blit(gameBackground_lvl1, (0, -100))
         # Draw the Lutin score and top score.
-        drawText('Elves Caught: %s' % (scoreLutin), font, windowSurface, 10, 0)
-        drawText('Lives: %s' % (lives), font, windowSurface, 10, 40)
+        drawText('Number of Elves Caught: %s' % (scoreLutin), font, windowSurface, 10, 0)
+        vie(lives)
         drawText('Level: %s' % (level), font, windowSurface, WINDOWWIDTH - 150, 0)
 
-        # Draw the player's rectangle
-        if player[0]=="mario":
-
+        # Draw the player's rectangle.
+        if player[0] == "mario":
             windowSurface.blit(playerImage, playerRect)
-        if player[0]=="peach":
-            playerRect=peachRect
-            windowSurface.blit(playerImage2, playerRect)
-        #print(player[0])
+        if player[0] == "peach":
+            playerRect = peachRect
+            windowSurface.blit(playerImage2, peachRect)
 
         # Draw each baddie.
         for b in baddies:
@@ -356,11 +406,12 @@ while True: #level 1
         if playerHasHitLutin(playerRect, lutin) == True:
             scoreLutin += 1
             BellsSound.play()
-            if scoreLutin >= 10:  # the player moves to the next level (for now the game stops)
+            if scoreLutin >= 15:  # the player moves to the next level (for now the game stops)
                 break
                 #create method for levelling up
             else:
                 continue
+
 
         # Check if any of the baddies have hit the player.
         if playerHasHitBaddie(playerRect, baddies) == True:
@@ -376,7 +427,7 @@ while True: #level 1
         mainClock.tick(FPS)
 
     # Stop the game and show the "Game Over" screen.
-    if scoreLutin < 10:
+    if scoreLutin < 15:
         windowSurface.blit(gameOverBackground, (-850, 0))
         pygame.mixer.music.stop()
         gameOverSound.play()
@@ -389,16 +440,18 @@ while True: #level 1
 
         gameOverSound.stop()
 
- ############################ Niveaux 2 #################################
+ #-----------------------------------------------------------------------------------------------------------------------
 
-    elif scoreLutin >= 10:                  #level-up code to lvl 2
-        windowSurface.blit(gameBackground_lvl2, (-850, 0))
+    elif scoreLutin >=15 :                  #level-up code to lvl 2
+        windowSurface.fill(ENDGAMEBACKGROUNDCOLOR)
         pygame.mixer.music.stop()
+        YaySound.play()
         drawText("You WON!", font, windowSurface, (WINDOWWIDTH / 3) + 20, (WINDOWHEIGHT / 3))
         drawText("Press any key to start next level", font, windowSurface, (WINDOWWIDTH / 3) - 150,
                  (WINDOWHEIGHT / 3) + 50)
         pygame.display.update()
         waitForPlayerToPressKey()
+        YaySound.stop()
         scoreLutin = 0
         while True: #lvl 2 of the game
             level += 1
@@ -416,6 +469,7 @@ while True: #level 1
             reverseCheat = slowCheat = False
             baddieAddCounter = 0  # ajouter de baddies horizontalement
             lutinAddCounter = 0  # ajouter des lutins horizontalement
+            pygame.mixer.music.load('Jingle_Bell_Rock_(Instrumental).mp3')
             pygame.mixer.music.play(-1, 0.0)
             # level1 = GameLevel(1, "winter_background.png", 'gremlin_baddie.png')
             # level2=GameLevel(2, "night_sky.png", "bonlutin.png")
@@ -467,10 +521,7 @@ while True: #level 1
                         if event.key == K_DOWN or event.key == K_s:
                             moveDown = False
 
-                    if event.type == MOUSEMOTION:
-                        # If the mouse moves, move the player where to the cursor.
-                        playerRect.centerx = event.pos[0]
-                        playerRect.centery = event.pos[1]
+                    MouseControls(MOUSEMOTION)
                 # Add new baddies at the top of the screen, if needed.
                 if not reverseCheat and not slowCheat:
                     lutinAddCounter += 1
@@ -480,7 +531,7 @@ while True: #level 1
                     baddieAddCounter = 0
                     baddieSize = random.randint(MEDSIZE, MAXSIZE)
                     newBaddie = {
-                        'rect': pygame.Rect(WINDOWWIDTH + 40 - baddieSize, random.randint(0, WINDOWWIDTH - baddieSize),
+                        'rect': pygame.Rect(WINDOWWIDTH + 40 - baddieSize, random.randint(0, WINDOWHEIGHT - baddieSize),
                                             baddieSize,
                                             baddieSize),
                         'speed': random.randint(BADDIEMINSPEED, BADDIEMAXSPEED),
@@ -493,7 +544,7 @@ while True: #level 1
                     lutinAddCounter = 0
                     lutinSize = random.randint(MINSIZE, MEDSIZE)
                     newLutin = {
-                        'rect': pygame.Rect(WINDOWWIDTH + 40 - lutinSize, random.randint(0, WINDOWWIDTH - lutinSize),
+                        'rect': pygame.Rect(WINDOWWIDTH + 40 - lutinSize, random.randint(0, WINDOWHEIGHT - lutinSize),
                                             lutinSize,
                                             lutinSize),
                         'speed': LUTINSPEED,
@@ -503,55 +554,27 @@ while True: #level 1
                     lutin.append(newLutin)
 
                 # Move the player around.
-                if moveLeft and playerRect.left > 0:
-                    playerRect.move_ip(-1 * PLAYERMOVERATE, 0)
-                if moveRight and playerRect.right < WINDOWWIDTH:
-                    playerRect.move_ip(PLAYERMOVERATE, 0)
-                if moveUp and playerRect.top > 0:
-                    playerRect.move_ip(0, -1 * PLAYERMOVERATE)
-                if moveDown and playerRect.bottom < WINDOWHEIGHT:
-                    playerRect.move_ip(0, PLAYERMOVERATE)
+                PlayerMouvement(playerRect)
 
-                # Move the baddies to the left.
-                for b in baddies:
-                    if not reverseCheat and not slowCheat:
-                        b['rect'].move_ip(-b['speed'], 0)
-                    elif reverseCheat:
-                        b['rect'].move_ip(5, 0)
-                    elif slowCheat:
-                        b['rect'].move_ip(-1, 0)
+                # Move the charcoal to the left.
+                bad_character_movement(baddies, WINDOWWIDTH)
 
-                # Delete baddies that have come from the left.
-                for b in baddies[:]:
-                    if b['rect'].left > WINDOWWIDTH:
-                        baddies.remove(b)
+                # Move the presents to the left.
+                good_character_movement(lutin, WINDOWWIDTH)
 
-                # Move the lutins down.
-                for l in lutin:
-                    if not reverseCheat and not slowCheat:
-                        l['rect'].move_ip(-l['speed'], 0)
-                    elif reverseCheat:
-                        l['rect'].move_ip(-1, 0)
-                    elif slowCheat:
-                        l['rect'].move_ip(5, 0)
-
-                # Delete lutins that have come from the left.
-                for l in lutin[:]:
-                    if l['rect'].left > WINDOWWIDTH:
-                        lutin.remove(l)
-
-                # Draw the game world on the window.
-                windowSurface.fill(BACKGROUNDCOLOR)
-
-             # Set up the background
+                # Set up the background
                 windowSurface.blit(gameBackground_lvl2, (0, -100))
                 # Draw the Lutin score and top score.
-                drawText('Presents Caught: %s' % (scoreCadeau), font, windowSurface, 10, 0)
-                drawText('Lives: %s' % (lives), font, windowSurface, 10, 40)
+                drawText('Number of Presents Caught: %s' % (scoreCadeau), font, windowSurface, 10, 0)
+                vie(lives)
                 drawText('Level: %s' % (level), font, windowSurface, WINDOWWIDTH - 150, 0)
 
                 # Draw the player's rectangle.
-                windowSurface.blit(playerImage, playerRect)
+                if player[0] == "mario":
+                    windowSurface.blit(playerImage, playerRect)
+                if player[0] == "peach":
+                    playerRect = peachRect
+                    windowSurface.blit(playerImage2, peachRect)
 
                 # Draw each baddie.
                 for b in baddies:
@@ -591,11 +614,21 @@ while True: #level 1
                 pygame.mixer.music.stop()
                 gameOverSound.play()
 
-################################ niveau 3 ########################
+                drawText('GAME OVER', font, windowSurface, (WINDOWWIDTH / 3), (WINDOWHEIGHT / 3))
+                drawText('Press a key to retry', font, windowSurface, (WINDOWWIDTH / 3) - 45,
+                         (WINDOWHEIGHT / 3) + 50)
+                drawText('to save Christmas', font, windowSurface, (WINDOWWIDTH / 3) - 45, (WINDOWHEIGHT / 3) + 100)
+                pygame.display.update()
+                waitForPlayerToPressKey()
+
+                gameOverSound.stop()
+
+            # -----------------------------------------------------------------------------------------------------------------------
             elif scoreCadeau >= 15:  #level-up code to lvl 3
                 santaRect
-                windowSurface.blit(gameBackground_lvl3, (-850, 0))
+                windowSurface.fill(ENDGAMEBACKGROUNDCOLOR)
                 pygame.mixer.music.stop()
+                YaySound.play()
                 drawText("You WON!", font, windowSurface, (WINDOWWIDTH / 3) + 20, (WINDOWHEIGHT / 3))
                 drawText("Press any key to start next level", font, windowSurface, (WINDOWWIDTH / 3) - 150,
                          (WINDOWHEIGHT / 3) + 50)
@@ -605,11 +638,14 @@ while True: #level 1
                          (WINDOWHEIGHT / 3) + 200)
                 drawText("When approaching a chimney", font, windowSurface, (WINDOWWIDTH / 3) - 160,
                          (WINDOWHEIGHT / 3) + 250)
-                drawText("to send presents quickly click SPACE", font, windowSurface, (WINDOWWIDTH / 3) - 220,
+                drawText("to send presents", font, windowSurface, (WINDOWWIDTH / 3) - 120,
                          (WINDOWHEIGHT / 3) + 300)
+                drawText("quickly click on SPACE", font, windowSurface, (WINDOWWIDTH / 3) - 140,
+                         (WINDOWHEIGHT / 3) + 350)
 
                 pygame.display.update()
                 waitForPlayerToPressKey()
+                YaySound.stop()
                 scoreCadeau=0
                 while True:  # lvl 3 of the game
                     level += 1
@@ -622,7 +658,7 @@ while True: #level 1
                     baddies = []
                     chimneys = []
                     scoreCadeaux_livrés = 0
-                    santaRect.topleft = (WINDOWWIDTH/2-300, WINDOWHEIGHT/2)
+                    santaRect.topleft = (WINDOWWIDTH/2-200, WINDOWHEIGHT/2)
                     moveLeft = moveRight = moveUp = moveDown = False
                     reverseCheat = slowCheat = False
                     baddieAddCounter = 0  # ajouter de baddies horizontalement
@@ -691,59 +727,32 @@ while True: #level 1
 
                         if chimneyAddCounter == ADDNEWCHIMNEYRATE:
                             chimneyAddCounter = 0
-                            chimneySize = random.randint(40, 700)
+                            chimneySize = random.randint(40, 750)
                             newChimney = {
                                 'rect': pygame.Rect(WINDOWWIDTH,
                                                     WINDOWHEIGHT - chimneySize + 8,
                                                     chimneySize,
                                                     chimneySize),
-                                'speed': LUTINSPEED,
+                                'speed': CHIMNEYSPEED,
                                 'surface': pygame.transform.scale(chimneyImage, (MEDSIZE, chimneySize)),
                             }
 
                             chimneys.append(newChimney)
 
-                        # Move the player around vertically.
-                        if moveUp and santaRect.top > 0:
-                            santaRect.move_ip(0, -1 * PLAYERMOVERATE)
-                        if moveDown and santaRect.bottom < WINDOWHEIGHT:
-                            santaRect.move_ip(0, PLAYERMOVERATE)
+                        # Move the player vertically.
+                        PlayerMouvement(santaRect)
 
                         # Move the baddies to the left.
-                        for b in baddies:
-                            if not reverseCheat and not slowCheat:
-                                b['rect'].move_ip(-b['speed'], 0)
-                            elif reverseCheat:
-                                b['rect'].move_ip(5, 0)
-                            elif slowCheat:
-                                b['rect'].move_ip(-1, 0)
+                        bad_character_movement(baddies, WINDOWWIDTH)
 
-                        # Delete baddies that have come from the left.
-                        for b in baddies[:]:
-                            if b['rect'].left > WINDOWWIDTH:
-                                baddies.remove(b)
+                        # Move the chimneys to the left.
+                        good_character_movement(chimneys, WINDOWWIDTH)
 
-                        # Move the chimney to the left.
-                        for c in chimneys:
-                            if not reverseCheat and not slowCheat:
-                                c['rect'].move_ip(-c['speed'], 0)
-                            elif reverseCheat:
-                                c['rect'].move_ip(5, 0)
-                            elif slowCheat:
-                                c['rect'].move_ip(-1, 0)
-
-                        # Delete chimneys that have come from the left.
-                        for c in chimneys[:]:
-                            if c['rect'].left > WINDOWWIDTH:
-                                chimneys.remove(c)
-
-                        # Draw the game world on the window.
-                        windowSurface.fill(BACKGROUNDCOLOR)
                         # Set up the background
                         windowSurface.blit(gameBackground_lvl3, (0, -100))
                         # Draw the score, the number of lives remaining and the level of the game.
                         drawText('Presents delivered: %s' % (scoreCadeaux_livrés), font, windowSurface, 10, 0)
-                        drawText('Lives: %s' % (lives), font, windowSurface, 10, 40)
+                        vie(lives)
                         drawText('Level: %s' % (level), font, windowSurface, WINDOWWIDTH - 150, 0)
 
                         # Draw the player's rectangle.
@@ -762,7 +771,7 @@ while True: #level 1
                         # Check if any of the lutins have been collected by the player.
                         if send_Gift(santaRect, chimneys, scoreCadeaux_livrés, PresentDelivered) == True:
                             scoreCadeaux_livrés += 1
-                            if scoreCadeaux_livrés >= 25:  # the player moves to the next level
+                            if scoreCadeaux_livrés >= 15:  # the player moves to the next level
                                 break
                             else:
                                 continue
@@ -780,7 +789,7 @@ while True: #level 1
                                 # Stop the game and show the "Game Over" screen.
                         mainClock.tick(FPS)
 
-                    if scoreCadeaux_livrés < 25:
+                    if scoreCadeaux_livrés < 15:
                         windowSurface.blit(gameOverBackground, (-850, 0))
                         pygame.mixer.music.stop()
                         gameOverSound.play()
@@ -796,9 +805,10 @@ while True: #level 1
                         gameOverSound.stop()
 
                     # -----------------------------------------------------------------------------------------------------------------------
-                    elif scoreCadeaux_livrés >= 25:  # End of the game
-                        windowSurface.blit(gameBackground_lvl1, (-850, 0))
+                    elif scoreCadeaux_livrés >= 15:  # End of the game
+                        windowSurface.fill(ENDGAMEBACKGROUNDCOLOR)
                         pygame.mixer.music.stop()
+                        YaySound.play()
                         drawText("Well Done!", font, windowSurface, (WINDOWWIDTH / 3) + 30, (WINDOWHEIGHT / 3))
                         drawText("You have finished the game!", font, windowSurface, (WINDOWWIDTH / 3) -150,
                                  (WINDOWHEIGHT / 3) + 50)
@@ -806,4 +816,5 @@ while True: #level 1
                                  (WINDOWHEIGHT / 3) + 100)
                         pygame.display.update()
                         waitForPlayerToPressKey()
+                        YaySound.stop()
                         break
