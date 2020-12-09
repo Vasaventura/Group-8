@@ -34,13 +34,7 @@ def Menu():
 
 def Pause():
     pygame.init()
-    pygame.mixer.music.stop()
-    window = pygame.display.set_mode((WINDOWWIDTH, WINDOWHEIGHT))
-    pause = pygame.image.load("Pause screen.png").convert()
-    img = pygame.transform.scale(pause, (570, 450))
-    window.blit(img, (190,150))
-    pygame.display.flip()
-    pygame.display.update()
+    pygame.mixer.music.pause()
     paused = True
     while paused:
         for event in pygame.event.get():
@@ -49,12 +43,10 @@ def Pause():
             if event.type == KEYDOWN:
                 if event.key == K_ESCAPE:  # Pressing ESC quits.
                     terminate()
-                if event.key == K_r:
-                    pygame.mixer.music.play(-1, 0.0)
+                if event.key == K_p:
+                    pygame.mixer.music.unpause()
                     paused=False
-            if event.type == KEYUP:
-                if event.key == K_r:
-                    pygame.mixer.music.play(-1, 0.0)
+
 
 
 def Chooseplayer():
@@ -98,8 +90,9 @@ def waitForPlayerToPressKey():
 
 
 def restart():
+    Run=False
     waitForPlayerToPressKey() #todo define a restart function for player that can be called with the key U
-
+    return Run
 
 def MenuPressKey():
     MenuRun=True
@@ -223,12 +216,11 @@ def send_Gift(playerRect, chimneys, score, feedback_sound):
                         return True
                     else:
                         return False
-
 def MouseControls(MOUSEMOTION):
-    if event.type == MOUSEMOTION:
-        # If the mouse moves, move the player where to the cursor.
-        playerRect.centerx = event.pos[0]
-        playerRect.centery = event.pos[1]
+        if event.type == MOUSEMOTION:
+             #If the mouse moves, move the player where to the cursor.
+            playerRect.centerx = event.pos[0]
+            playerRect.centery = event.pos[1]
 
 def PlayerMouvement(playerRect):
     # Move the player around.
@@ -275,7 +267,6 @@ def vie(lives):
         windowSurface.blit(coeur, (60, WINDOWHEIGHT-40))
     if lives == 3:
         windowSurface.blit(coeur, (110, WINDOWHEIGHT-40))
-
 
 def drawText(text, font, surface, x, y):
     textobj = font.render(text, 1, TEXTCOLOR)
@@ -325,8 +316,8 @@ gameBackground_lvl2 = pygame.image.load("lvl_2.png")
 gameBackground_lvl3 = pygame.image.load("night_sky.png")
 gameOverBackground = pygame.image.load("Grinch end game.png")
 
-
 #todo set up pct score instead of absolute numbers
+
 while True: #level 1
 
     # Set up the start of the game.
@@ -342,7 +333,8 @@ while True: #level 1
     lutinAddCounter = 0  # ajouter des lutins horizontalement
     pygame.mixer.music.load('Jingle_Bells-Kevin_MacLeod.mp3')
     pygame.mixer.music.play(-1, 0.0)
-    while True:  # The game loop runs while the game part is playing.
+    Run=True
+    while Run:  # The game loop runs while the game part is playing.
         for event in pygame.event.get():
             if event.type == QUIT:
                 terminate()
@@ -363,8 +355,10 @@ while True: #level 1
                 if event.key == K_DOWN or event.key == K_s:
                     moveUp = False
                     moveDown = True
-                if event.key == K_t:
-                    Pause() #pause
+                if event.key == K_t: #main menu screen
+                    Run = False
+                if event.key == K_p:
+                    Pause()  # pause
                     break
                 # option mute pour enlever le son du jeu. Par contre le son du Game Over reste toujours
                 if event.key == K_m:
@@ -392,6 +386,7 @@ while True: #level 1
                     moveUp = False
                 if event.key == K_DOWN or event.key == K_s:
                     moveDown = False
+
             MouseControls(MOUSEMOTION)
         # Add new baddies at the top of the screen, if needed.
         if not reverseCheat and not slowCheat:
@@ -482,8 +477,9 @@ while True: #level 1
 
         mainClock.tick(FPS)
 
-    # Stop the game and show the "Game Over" screen.
-    if scoreLutin < 10:
+
+    if lives==0 :
+        # Stop the game and show the "Game Over" screen.
         windowSurface.blit(gameOverBackground, (-850, 0))
         pygame.mixer.music.stop()
         gameOverSound.play()
@@ -491,11 +487,13 @@ while True: #level 1
         drawText('GAME OVER', font, windowSurface, (WINDOWWIDTH / 3), (WINDOWHEIGHT / 3))
         drawText('Press key to retry', font, windowSurface, (WINDOWWIDTH / 3) - 45, (WINDOWHEIGHT / 3) + 50)
         drawText('to save Christmas', font, windowSurface, (WINDOWWIDTH / 3) - 45, (WINDOWHEIGHT / 3) + 100)
-        #drawText('or x to go to Menu', font, windowSurface, (WINDOWWIDTH / 3) - 45, (WINDOWHEIGHT / 3) + 150)
+        # drawText('or x to go to Menu', font, windowSurface, (WINDOWWIDTH / 3) - 45, (WINDOWHEIGHT / 3) + 150)
         pygame.display.update()
         waitForPlayerToPressKey()
         gameOverSound.stop()
-
+    if Run == False:
+        pygame.mixer.music.stop()
+        Menu()
 
  #-----------------------------------------------------------------------------------------------------------------------
 
@@ -510,7 +508,7 @@ while True: #level 1
         waitForPlayerToPressKey()
         YaySound.stop()
         scoreLutin = 0
-        while True: #lvl 2 of the game
+        while Run: #lvl 2 of the game
             level += 1
             #Debug code
             if lives <= 0:  #this code helps to debug the previous problems
@@ -528,7 +526,7 @@ while True: #level 1
             lutinAddCounter = 0  # ajouter des lutins horizontalement
             pygame.mixer.music.load('Jingle_Bell_Rock_(Instrumental).mp3')
             pygame.mixer.music.play(-1, 0.0)
-            while True:  # The game loop runs while the game part is playing.
+            while Run:  # The game loop runs while the game part is playing.
                 for event in pygame.event.get():
                     if event.type == QUIT:
                         terminate()
@@ -550,8 +548,9 @@ while True: #level 1
                             moveUp = False
                             moveDown = True
                         if event.key == K_t:
+                            Run = False
+                        if event.key == K_p:
                             Pause()  # pause
-                            #todo define exit to menu function if player chooses to go back to menu at any point in the game
                             break
                         # option mute pour enlever le son du jeu. Par contre le son du Game Over reste toujours
                         if event.key == K_m:
@@ -564,10 +563,10 @@ while True: #level 1
                     if event.type == KEYUP:
                         if event.key == K_z:
                             reverseCheat = False
-                            scoreCadeau = 0
+                            scoreLutin = 0
                         if event.key == K_x:
                             slowCheat = False
-                            scoreCadeau = 0
+                            scoreLutin = 0
                         if event.key == K_ESCAPE:
                             terminate()
 
@@ -672,7 +671,9 @@ while True: #level 1
                         # Stop the game and show the "Game Over" screen.
                 mainClock.tick(FPS)
 
-            if scoreCadeau < 15:
+
+            if lives == 0:
+                # Stop the game and show the "Game Over" screen.
                 windowSurface.blit(gameOverBackground, (-850, 0))
                 pygame.mixer.music.stop()
                 gameOverSound.play()
@@ -685,7 +686,9 @@ while True: #level 1
                 waitForPlayerToPressKey()
 
                 gameOverSound.stop()
-
+            if Run==False:
+                pygame.mixer.music.stop()
+                Menu()
             # -----------------------------------------------------------------------------------------------------------------------
             elif scoreCadeau >= 15:  #level-up code to lvl 3
                 santaRect
@@ -710,7 +713,7 @@ while True: #level 1
                 waitForPlayerToPressKey()
                 YaySound.stop()
                 scoreCadeau=0
-                while True:  # lvl 3 of the game
+                while Run:  # lvl 3 of the game
                     level += 1
                     # Debug code
                     if lives <= 0:    # this code helps to debug the previous problems
@@ -729,7 +732,7 @@ while True: #level 1
                     lutinAddCounter = 0  # ajouter des lutins horizontalement
                     pygame.mixer.music.load('Katy Perry-CozyLittleChristmas.mp3')
                     pygame.mixer.music.play(-1, 0.0)
-                    while True:  # The game loop runs while the game part is playing.
+                    while Run:  # The game loop runs while the game part is playing.
                         for event in pygame.event.get():
                             if event.type == QUIT:
                                 terminate()
@@ -745,7 +748,9 @@ while True: #level 1
                                     moveUp = False
                                     moveDown = True
                                 if event.key == K_t:
-                                    Pause()#pause
+                                    Run = False
+                                if event.key == K_p:
+                                    Pause()  # pause
                                     break
                                 # option mute pour enlever le son du jeu. Par contre le son du Game Over reste toujours
                                 if event.key == K_m:
@@ -855,7 +860,8 @@ while True: #level 1
                                 # Stop the game and show the "Game Over" screen.
                         mainClock.tick(FPS)
 
-                    if scoreCadeaux_livrés < 15:
+
+                    if lives == 0:
                         windowSurface.blit(gameOverBackground, (-850, 0))
                         pygame.mixer.music.stop()
                         gameOverSound.play()
@@ -869,7 +875,9 @@ while True: #level 1
 
                         waitForPlayerToPressKey()
                         gameOverSound.stop()
-
+                    if Run==False:
+                        pygame.mixer.music.stop()
+                        Menu()
                     # -----------------------------------------------------------------------------------------------------------------------
                     elif scoreCadeaux_livrés >= 15:  # End of the game
                         windowSurface.fill(ENDGAMEBACKGROUNDCOLOR)
