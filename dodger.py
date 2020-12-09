@@ -565,7 +565,8 @@ while True: #level 1
                 # Set up the background
                 windowSurface.blit(gameBackground_lvl2, (0, -100))
                 # Draw the Lutin score and top score.
-                drawText('Presents Caught: %s' % (scoreCadeau), font, windowSurface, 10, 0)
+                drawText(''
+                         'Presents Caught: %s' % (scoreCadeau), font, windowSurface, 10, 0)
                 vie(lives)
                 drawText('Level: %s' % (level), font, windowSurface, WINDOWWIDTH - 150, 0)
 
