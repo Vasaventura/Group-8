@@ -7,8 +7,6 @@ WIN = pygame.display.set_mode((WINDOWWIDTH, WINDOWHEIGHT))
 TEXTCOLOR = ('white')
 BACKGROUNDCOLOR = (255, 255, 255)
 ENDGAMEBACKGROUNDCOLOR = ('black')
-MENUBACKGROUNDCOLOR = ('red')
-# MenuGameBackground = pygame.image.load("snow.gif") #si vous voulez
 FPS = 60
 MINSIZE = 30  # ici le code a été modifié en suivant les conseils du livre (Ai Swegart) Ch. 20, Pg. 353-354
 MEDSIZE = 45
@@ -21,7 +19,8 @@ ADDNEWCHIMNEYRATE=316 # le taux de reproduction de cheminees
 LUTINSPEED=1
 CHIMNEYSPEED = 2
 PLAYERMOVERATE = 5  # la vitesse de déplacement de jouer
-player=["image pour jouer"]
+player = ["image pour jouer"]
+
 
 def Menu():
     pygame.init()
@@ -30,8 +29,33 @@ def Menu():
     img = pygame.transform.scale(menu, (WINDOWWIDTH, WINDOWHEIGHT))
     window.blit(img, (0,0))
     pygame.display.flip()
-    player[0]=MenuPressKey()
+    MenuPressKey()
     pygame.display.update()
+
+def Pause():
+    pygame.init()
+    pygame.mixer.music.stop()
+    window = pygame.display.set_mode((WINDOWWIDTH, WINDOWHEIGHT))
+    pause = pygame.image.load("Pause screen.png").convert()
+    img = pygame.transform.scale(pause, (570, 450))
+    window.blit(img, (190,150))
+    pygame.display.flip()
+    pygame.display.update()
+    paused = True
+    while paused:
+        for event in pygame.event.get():
+            if event.type == QUIT:
+                terminate()
+            if event.type == KEYDOWN:
+                if event.key == K_ESCAPE:  # Pressing ESC quits.
+                    terminate()
+                if event.key == K_r:
+                    pygame.mixer.music.play(-1, 0.0)
+                    paused=False
+            if event.type == KEYUP:
+                if event.key == K_r:
+                    pygame.mixer.music.play(-1, 0.0)
+
 
 def Chooseplayer():
     window = pygame.display.set_mode((WINDOWWIDTH, WINDOWHEIGHT))
@@ -39,7 +63,7 @@ def Chooseplayer():
     img = pygame.transform.scale(menu, (WINDOWWIDTH, WINDOWHEIGHT))
     window.blit(img, (0,0))
     pygame.display.flip()
-    MenuPressKey()
+    player[0] = ChoosePlayerPressKey()
     pygame.display.update()
 
 def Howtoplay():
@@ -49,7 +73,7 @@ def Howtoplay():
     img = pygame.transform.scale(menu, (WINDOWWIDTH, WINDOWHEIGHT))
     window.blit(img, (0, 0))
     pygame.display.flip()
-    MenuPressKey()
+    HowtoPlayPressKey()
     pygame.display.update()
 
 def drawText(text, font, surface, x, y):
@@ -72,8 +96,14 @@ def waitForPlayerToPressKey():
                     terminate()
                 return
 
+
+def restart():
+    waitForPlayerToPressKey() #todo define a restart function for player that can be called with the key U
+
+
 def MenuPressKey():
-    while True:
+    MenuRun=True
+    while MenuRun:
         for event in pygame.event.get():
             if event.type == QUIT:
                 terminate()
@@ -82,19 +112,46 @@ def MenuPressKey():
                     terminate()
                 if event.key == K_j:
                     Chooseplayer()
+                    MenuRun = False
+                if event.key == K_t:
+                    Menu()
+                if event.key == K_q:
+                    Howtoplay()
+                    MenuRun=False
+
+def ChoosePlayerPressKey():
+    Choose = True
+    while Choose:
+        for event in pygame.event.get():
+            if event.type == QUIT:
+                terminate()
+            if event.type == KEYDOWN:
                 if event.key == K_p:
                     return "mario"
                 if event.key == K_n:
                     return "peach"
                 if event.key == K_t:
                     Menu()
-                if event.key == K_q:
-                    Howtoplay()
             if event.type == KEYUP:
                 if event.key == K_p:
+                    Choose = False
                     return "mario"
                 if event.key == K_n:
+                    Choose = False
                     return "peach"
+
+def HowtoPlayPressKey():
+    How=True
+    while How:
+        for event in pygame.event.get():
+            if event.type == QUIT:
+                terminate()
+            if event.type == KEYDOWN:
+                if event.key == K_t:
+                    How=False
+                    Menu()
+
+
 def terminate():
     pygame.quit()
     sys.exit()
@@ -242,6 +299,7 @@ BellsSound = pygame.mixer.Sound('Bells Sound effect.mp3')
 PresentSound = pygame.mixer.Sound('Present_sound.mp3')
 PresentDelivered = pygame.mixer.Sound('presents_delivery.mp3')
 damageSound = pygame.mixer.Sound('damage.mp3')
+GSdamageSound = pygame.mixer.Sound('peachDamageSound.mp3')
 YaySound = pygame.mixer.Sound('Yay.mp3')
 musicPlaying = True
 
@@ -306,7 +364,7 @@ while True: #level 1
                     moveUp = False
                     moveDown = True
                 if event.key == K_t:
-                    Menu() #pause
+                    Pause() #pause
                     break
                 # option mute pour enlever le son du jeu. Par contre le son du Game Over reste toujours
                 if event.key == K_m:
@@ -411,8 +469,10 @@ while True: #level 1
         # Check if any of the baddies have hit the player.
         if playerHasHitBaddie(playerRect, baddies) == True:
             lives -= 1
-            damageSound.play()
-            #todo add damage sound for peach
+            if player[0] == "peach":
+                GSdamageSound.play()
+            else:
+                damageSound.play()
             for b in baddies:
                 baddies.remove(b)
             if lives > 0:  # the player keeps playing if she/he has more than 0 lives
@@ -429,12 +489,13 @@ while True: #level 1
         gameOverSound.play()
 
         drawText('GAME OVER', font, windowSurface, (WINDOWWIDTH / 3), (WINDOWHEIGHT / 3))
-        drawText('Press a key to retry', font, windowSurface, (WINDOWWIDTH / 3) - 45, (WINDOWHEIGHT / 3) + 50)
+        drawText('Press key to retry', font, windowSurface, (WINDOWWIDTH / 3) - 45, (WINDOWHEIGHT / 3) + 50)
         drawText('to save Christmas', font, windowSurface, (WINDOWWIDTH / 3) - 45, (WINDOWHEIGHT / 3) + 100)
+        #drawText('or x to go to Menu', font, windowSurface, (WINDOWWIDTH / 3) - 45, (WINDOWHEIGHT / 3) + 150)
         pygame.display.update()
         waitForPlayerToPressKey()
-
         gameOverSound.stop()
+
 
  #-----------------------------------------------------------------------------------------------------------------------
 
@@ -467,8 +528,6 @@ while True: #level 1
             lutinAddCounter = 0  # ajouter des lutins horizontalement
             pygame.mixer.music.load('Jingle_Bell_Rock_(Instrumental).mp3')
             pygame.mixer.music.play(-1, 0.0)
-            # level1 = GameLevel(1, "winter_background.png", 'gremlin_baddie.png')
-            # level2=GameLevel(2, "night_sky.png", "bonlutin.png")
             while True:  # The game loop runs while the game part is playing.
                 for event in pygame.event.get():
                     if event.type == QUIT:
@@ -491,7 +550,7 @@ while True: #level 1
                             moveUp = False
                             moveDown = True
                         if event.key == K_t:
-                            Menu()  # pause
+                            Pause()  # pause
                             #todo define exit to menu function if player chooses to go back to menu at any point in the game
                             break
                         # option mute pour enlever le son du jeu. Par contre le son du Game Over reste toujours
@@ -600,7 +659,10 @@ while True: #level 1
                 # Check if any of the baddies have hit the player.
                 if playerHasHitBaddie(playerRect, baddies) == True:
                     lives -= 1
-                    damageSound.play()
+                    if player[0] == "peach":
+                        GSdamageSound.play()
+                    else:
+                        damageSound.play()
                     for b in baddies:
                         baddies.remove(b)
                     if lives > 0:  # the player keeps playing if she/he has more than 0 lives
@@ -683,7 +745,7 @@ while True: #level 1
                                     moveUp = False
                                     moveDown = True
                                 if event.key == K_t:
-                                    Menu()#pause
+                                    Pause()#pause
                                     break
                                 # option mute pour enlever le son du jeu. Par contre le son du Game Over reste toujours
                                 if event.key == K_m:
