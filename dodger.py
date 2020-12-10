@@ -106,9 +106,9 @@ def MenuPressKey():
                 if event.key == K_j:
                     Chooseplayer()
                     MenuRun = False
-                if event.key == K_t:
-                    Menu()
                 if event.key == K_q:
+                    Menu()
+                if event.key == K_h:
                     Howtoplay()
                     MenuRun=False
 
@@ -123,7 +123,7 @@ def ChoosePlayerPressKey():
                     return "mario"
                 if event.key == K_n:
                     return "peach"
-                if event.key == K_t:
+                if event.key == K_q:
                     Menu()
             if event.type == KEYUP:
                 if event.key == K_p:
@@ -140,7 +140,7 @@ def HowtoPlayPressKey():
             if event.type == QUIT:
                 terminate()
             if event.type == KEYDOWN:
-                if event.key == K_t:
+                if event.key == K_q:
                     How=False
                     Menu()
 
@@ -312,7 +312,11 @@ hp = pygame.image.load('hp.png')
 coeur = pygame.transform.scale(hp, (30, 30))
 
 gameBackground_lvl1 = pygame.image.load("winter_background.png")
+lvl1_lvl2 = pygame.image.load("lv1-2.png")
+levelOverBackground_lvl1 = pygame.transform.scale(lvl1_lvl2, (WINDOWWIDTH, WINDOWHEIGHT))
 gameBackground_lvl2 = pygame.image.load("lvl_2.png")
+lvl2_lvl3 = pygame.image.load("lv2-3.png")
+levelOverBackground_lvl2 = pygame.transform.scale(lvl2_lvl3, (WINDOWWIDTH, WINDOWHEIGHT))
 gameBackground_lvl3 = pygame.image.load("night_sky.png")
 gameOverBackground = pygame.image.load("Grinch end game.png")
 
@@ -355,7 +359,7 @@ while True: #level 1
                 if event.key == K_DOWN or event.key == K_s:
                     moveUp = False
                     moveDown = True
-                if event.key == K_t: #main menu screen
+                if event.key == K_q: #main menu screen - quit the game
                     Run = False
                 if event.key == K_p:
                     Pause()  # pause
@@ -498,12 +502,9 @@ while True: #level 1
  #-----------------------------------------------------------------------------------------------------------------------
 
     elif scoreLutin >= 10:                  #level-up code to lvl 2
-        windowSurface.fill(ENDGAMEBACKGROUNDCOLOR)
+        windowSurface.blit(levelOverBackground_lvl1, (0,0))
         pygame.mixer.music.stop()
         YaySound.play()
-        drawText("You WON!", font, windowSurface, (WINDOWWIDTH / 3) + 20, (WINDOWHEIGHT / 3))
-        drawText("Press any key to start next level", font, windowSurface, (WINDOWWIDTH / 3) - 150,
-                 (WINDOWHEIGHT / 3) + 50)
         pygame.display.update()
         waitForPlayerToPressKey()
         YaySound.stop()
@@ -547,7 +548,7 @@ while True: #level 1
                         if event.key == K_DOWN or event.key == K_s:
                             moveUp = False
                             moveDown = True
-                        if event.key == K_t:
+                        if event.key == K_q:
                             Run = False
                         if event.key == K_p:
                             Pause()  # pause
@@ -692,23 +693,9 @@ while True: #level 1
             # -----------------------------------------------------------------------------------------------------------------------
             elif scoreCadeau >= 15:  #level-up code to lvl 3
                 santaRect
-                windowSurface.fill(ENDGAMEBACKGROUNDCOLOR)
+                windowSurface.blit(levelOverBackground_lvl2, (0,0))
                 pygame.mixer.music.stop()
                 YaySound.play()
-                drawText("You WON!", font, windowSurface, (WINDOWWIDTH / 3) + 20, (WINDOWHEIGHT / 3))
-                drawText("Press any key to start next level", font, windowSurface, (WINDOWWIDTH / 3) - 150,
-                         (WINDOWHEIGHT / 3) + 50)
-                drawText("GAME RULES FOR LEVEL 3:", font, windowSurface, (WINDOWWIDTH / 3) - 250,
-                         (WINDOWHEIGHT / 3) + 150)
-                drawText("In level 3 use only up and down controls", font, windowSurface, (WINDOWWIDTH / 3) - 250,
-                         (WINDOWHEIGHT / 3) + 200)
-                drawText("When approaching a chimney", font, windowSurface, (WINDOWWIDTH / 3) - 160,
-                         (WINDOWHEIGHT / 3) + 250)
-                drawText("to send presents", font, windowSurface, (WINDOWWIDTH / 3) - 120,
-                         (WINDOWHEIGHT / 3) + 300)
-                drawText("quickly click on SPACE", font, windowSurface, (WINDOWWIDTH / 3) - 140,
-                         (WINDOWHEIGHT / 3) + 350)
-
                 pygame.display.update()
                 waitForPlayerToPressKey()
                 YaySound.stop()
@@ -747,7 +734,7 @@ while True: #level 1
                                 if event.key == K_DOWN or event.key == K_s:
                                     moveUp = False
                                     moveDown = True
-                                if event.key == K_t:
+                                if event.key == K_q:
                                     Run = False
                                 if event.key == K_p:
                                     Pause()  # pause
