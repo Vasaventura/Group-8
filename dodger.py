@@ -5,8 +5,6 @@ WINDOWWIDTH = 950
 WINDOWHEIGHT = 750
 WIN = pygame.display.set_mode((WINDOWWIDTH, WINDOWHEIGHT))
 TEXTCOLOR = ('white')
-BACKGROUNDCOLOR = (255, 255, 255)
-ENDGAMEBACKGROUNDCOLOR = ('black')
 FPS = 60
 MINSIZE = 30  # ici le code a été modifié en suivant les conseils du livre (Ai Swegart) Ch. 20, Pg. 353-354
 MEDSIZE = 45
@@ -163,6 +161,7 @@ def playerHasHitLutin(playerRect, lutin):    #code pour les lutins
             lutin.remove(l)
             return True
 
+
 def send_Gift(playerRect, chimneys, score, feedback_sound):
     for c in chimneys:
        if playerRect.colliderect(c['rect']):
@@ -318,6 +317,8 @@ gameBackground_lvl2 = pygame.image.load("lvl_2.png")
 lvl2_lvl3 = pygame.image.load("lv2-3.png")
 levelOverBackground_lvl2 = pygame.transform.scale(lvl2_lvl3, (WINDOWWIDTH, WINDOWHEIGHT))
 gameBackground_lvl3 = pygame.image.load("night_sky.png")
+lvl3 = pygame.image.load("ecran_final.png")
+EndGameBackground = pygame.transform.scale(lvl3, (WINDOWWIDTH, WINDOWHEIGHT))
 gameOverBackground = pygame.image.load("Grinch end game.png")
 
 #todo set up pct score instead of absolute numbers
@@ -651,7 +652,7 @@ while True: #level 1
                     scoreCadeau += 1
                     PresentSound.play()
 
-                    if scoreCadeau >= 15:  # the player moves to the next level
+                    if scoreCadeau >= 3:  # the player moves to the next level
                         break
                     else:
                         continue
@@ -691,7 +692,7 @@ while True: #level 1
                 pygame.mixer.music.stop()
                 Menu()
             # -----------------------------------------------------------------------------------------------------------------------
-            elif scoreCadeau >= 15:  #level-up code to lvl 3
+            elif scoreCadeau >= 3:  #level-up code to lvl 3
                 santaRect
                 windowSurface.blit(levelOverBackground_lvl2, (0,0))
                 pygame.mixer.music.stop()
@@ -710,13 +711,15 @@ while True: #level 1
                     # Set up the start of the game.
                     baddies = []
                     chimneys = []
+                    cadeaux = []
+
                     scoreCadeaux_livrés = 0
                     santaRect.topleft = (WINDOWWIDTH/2-200, WINDOWHEIGHT/2)
                     moveLeft = moveRight = moveUp = moveDown = False
                     reverseCheat = slowCheat = False
                     baddieAddCounter = 0  # ajouter de baddies horizontalement
                     chimneyAddCounter = 0 #ajouter les cheminees en bas d'ecran
-                    lutinAddCounter = 0  # ajouter des lutins horizontalement
+                    PresentsAddCounter = 0  # ajouter des cadeaux
                     pygame.mixer.music.load('Katy Perry-CozyLittleChristmas.mp3')
                     pygame.mixer.music.play(-1, 0.0)
                     while Run:  # The game loop runs while the game part is playing.
@@ -739,6 +742,8 @@ while True: #level 1
                                 if event.key == K_p:
                                     Pause()  # pause
                                     break
+                                #if event.key == K_SPACE:
+                                    #cadeaux.append(newPresent)
                                 # option mute pour enlever le son du jeu. Par contre le son du Game Over reste toujours
                                 if event.key == K_m:
                                     if musicPlaying:
@@ -746,6 +751,7 @@ while True: #level 1
                                     else:
                                         pygame.mixer.music.play(-1, 0.0)
                                 musicPlaying = not musicPlaying  # le code a ete adapte depuis le livre de cours (Ai Swegart) Ch. 19 Page 325-326
+
 
                             if event.type == KEYUP:
                                 if event.key == K_z:
@@ -823,6 +829,10 @@ while True: #level 1
                         # Draw each chimney.
                         for c in chimneys:
                             windowSurface.blit(c['surface'], c['rect'])
+                        # Draw each present
+                        for p in cadeaux:
+                            windowSurface.blit(p['surface'], p['rect'])
+
 
                         pygame.display.update()
 
@@ -867,14 +877,9 @@ while True: #level 1
                         Menu()
                     # -----------------------------------------------------------------------------------------------------------------------
                     elif scoreCadeaux_livrés >= 15:  # End of the game
-                        windowSurface.fill(ENDGAMEBACKGROUNDCOLOR)
+                        windowSurface.blit(EndGameBackground,(0,0))
                         pygame.mixer.music.stop()
                         YaySound.play()
-                        drawText("Well Done!", font, windowSurface, (WINDOWWIDTH / 3) + 30, (WINDOWHEIGHT / 3))
-                        drawText("You have finished the game!", font, windowSurface, (WINDOWWIDTH / 3) -120,
-                                 (WINDOWHEIGHT / 3) + 50)
-                        drawText("To restart press any key!", font, windowSurface, (WINDOWWIDTH / 3) -120,
-                                 (WINDOWHEIGHT / 3) + 100)
                         pygame.display.update()
                         waitForPlayerToPressKey()
                         YaySound.stop()
