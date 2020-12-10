@@ -172,8 +172,6 @@ def send_Gift(playerRect, chimneys, score, feedback_sound):
                         feedback_sound.play()
                         score += 1
                         c['rect'].move_ip(0, 1000)
-                        if event.key == K_z:
-                            reverseCheat = True
                         if event.key == K_x:
                             slowCheat = True
                         if event.key == K_LEFT or event.key == K_a:
@@ -191,9 +189,6 @@ def send_Gift(playerRect, chimneys, score, feedback_sound):
                             # option mute pour enlever le son du jeu. Par contre le son du Game Over reste toujours
 
                         if event.type == KEYUP:
-                            if event.key == K_z:
-                                reverseCheat = False
-                                scoreLutin = 0
                             if event.key == K_x:
                                 slowCheat = False
                                 scoreLutin = 0
@@ -234,10 +229,8 @@ def PlayerMouvement(playerRect):
 
 def bad_character_movement(objects,WINDOWWIDTH):
     for o in objects:
-        if not reverseCheat and not slowCheat:
+        if not slowCheat:
             o['rect'].move_ip(-o['speed'], 0)
-        elif reverseCheat:
-            o['rect'].move_ip(5, 0)
         elif slowCheat:
             o['rect'].move_ip(-1, 0)
 
@@ -247,12 +240,10 @@ def bad_character_movement(objects,WINDOWWIDTH):
             objects.remove(o)
 def good_character_movement(objects,WINDOWWIDTH):
         for o in objects:
-            if not reverseCheat and not slowCheat:
+            if not slowCheat:
                 o['rect'].move_ip(-o['speed'], 0)
-            elif reverseCheat:
-                o['rect'].move_ip(-1, 0)
             elif slowCheat:
-                o['rect'].move_ip(5, 0)
+                o['rect'].move_ip(-2, 0)
 
         # Delete lutins that have come from the left.
         for o in objects[:]:
@@ -333,7 +324,7 @@ while True: #level 1
     level = 1  # We start with the first level
     playerRect.topleft = (WINDOWWIDTH / 2, WINDOWHEIGHT - 80)
     moveLeft = moveRight = moveUp = moveDown = False
-    reverseCheat = slowCheat = False
+    slowCheat = False
     baddieAddCounter = 0  # ajouter de baddies horizontalement
     lutinAddCounter = 0  # ajouter des lutins horizontalement
     pygame.mixer.music.load('Jingle_Bells-Kevin_MacLeod.mp3')
@@ -344,8 +335,6 @@ while True: #level 1
             if event.type == QUIT:
                 terminate()
             if event.type == KEYDOWN:
-                if event.key == K_z:
-                    reverseCheat = True
                 if event.key == K_x:
                     slowCheat = True
                 if event.key == K_LEFT or event.key == K_a:
@@ -374,9 +363,6 @@ while True: #level 1
                 musicPlaying = not musicPlaying  # le code a ete adapte depuis le livre de cours (Ai Swegart) Ch. 19 Page 325-326
 
             if event.type == KEYUP:
-                if event.key == K_z:
-                    reverseCheat = False
-                    scoreLutin = 0
                 if event.key == K_x:
                     slowCheat = False
                     scoreLutin = 0
@@ -394,7 +380,7 @@ while True: #level 1
 
             MouseControls(MOUSEMOTION)
         # Add new baddies at the top of the screen, if needed.
-        if not reverseCheat and not slowCheat:
+        if not slowCheat:
             lutinAddCounter += 1
             baddieAddCounter += 1
 
@@ -523,7 +509,7 @@ while True: #level 1
             scoreCadeau = 0
             playerRect.topleft = (WINDOWWIDTH / 2, WINDOWHEIGHT - 80)
             moveLeft = moveRight = moveUp = moveDown = False
-            reverseCheat = slowCheat = False
+            slowCheat = False
             baddieAddCounter = 0  # ajouter de baddies horizontalement
             lutinAddCounter = 0  # ajouter des lutins horizontalement
             pygame.mixer.music.load('Jingle_Bell_Rock_(Instrumental).mp3')
@@ -533,8 +519,6 @@ while True: #level 1
                     if event.type == QUIT:
                         terminate()
                     if event.type == KEYDOWN:
-                        if event.key == K_z:
-                            reverseCheat = True
                         if event.key == K_x:
                             slowCheat = True
                         if event.key == K_LEFT or event.key == K_a:
@@ -563,9 +547,6 @@ while True: #level 1
                         musicPlaying = not musicPlaying  # le code a ete adapte depuis le livre de cours (Ai Swegart) Ch. 19 Page 325-326
 
                     if event.type == KEYUP:
-                        if event.key == K_z:
-                            reverseCheat = False
-                            scoreLutin = 0
                         if event.key == K_x:
                             slowCheat = False
                             scoreLutin = 0
@@ -583,7 +564,7 @@ while True: #level 1
 
                     MouseControls(MOUSEMOTION)
                 # Add new baddies at the top of the screen, if needed.
-                if not reverseCheat and not slowCheat:
+                if not slowCheat:
                     lutinAddCounter += 1
                     baddieAddCounter += 1
 
@@ -716,7 +697,7 @@ while True: #level 1
                     scoreCadeaux_livrés = 0
                     santaRect.topleft = (WINDOWWIDTH/2-200, WINDOWHEIGHT/2)
                     moveLeft = moveRight = moveUp = moveDown = False
-                    reverseCheat = slowCheat = False
+                    slowCheat = False
                     baddieAddCounter = 0  # ajouter de baddies horizontalement
                     chimneyAddCounter = 0 #ajouter les cheminees en bas d'ecran
                     PresentsAddCounter = 0  # ajouter des cadeaux
@@ -727,8 +708,6 @@ while True: #level 1
                             if event.type == QUIT:
                                 terminate()
                             if event.type == KEYDOWN:
-                                if event.key == K_z:
-                                    reverseCheat = True
                                 if event.key == K_x:
                                     slowCheat = True
                                 if event.key == K_UP or event.key == K_w:
@@ -754,9 +733,6 @@ while True: #level 1
 
 
                             if event.type == KEYUP:
-                                if event.key == K_z:
-                                    reverseCheat = False
-                                    scoreCadeaux_livrés = 0
                                 if event.key == K_x:
                                     slowCheat = False
                                     scoreCadeaux_livrés = 0
@@ -771,7 +747,7 @@ while True: #level 1
                                 # If the mouse moves, move the player vertically with the cursor.
                                 santaRect.centery = event.pos[1]
                         # Add new baddies at the top of the screen, if needed.
-                        if not reverseCheat and not slowCheat:
+                        if not slowCheat:
                             baddieAddCounter += 1
                             chimneyAddCounter += 1
 
