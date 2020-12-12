@@ -356,7 +356,7 @@ while True: #level 1
                     break
                 # option mute pour enlever le son du jeu. Par contre le son du Game Over reste toujours
                 if event.key == K_m:
-                    if musicPlaying:
+                    if  musicPlaying:
                         pygame.mixer.music.stop()
                     else:
                         pygame.mixer.music.play(-1, 0.0)
@@ -476,8 +476,8 @@ while True: #level 1
         gameOverSound.play()
 
         drawText('GAME OVER', font, windowSurface, (WINDOWWIDTH / 3), (WINDOWHEIGHT / 3))
-        drawText('Press key to retry', font, windowSurface, (WINDOWWIDTH / 3) - 45, (WINDOWHEIGHT / 3) + 50)
-        drawText('to save Christmas', font, windowSurface, (WINDOWWIDTH / 3) - 45, (WINDOWHEIGHT / 3) + 100)
+        drawText('Presse une touche', font, windowSurface, (WINDOWWIDTH / 3) - 45, (WINDOWHEIGHT / 3) + 50)
+        drawText('pour sauver Noël', font, windowSurface, (WINDOWWIDTH / 3) - 45, (WINDOWHEIGHT / 3) + 100)
         # drawText('or x to go to Menu', font, windowSurface, (WINDOWWIDTH / 3) - 45, (WINDOWHEIGHT / 3) + 150)
         pygame.display.update()
         waitForPlayerToPressKey()
@@ -662,9 +662,9 @@ while True: #level 1
                 gameOverSound.play()
 
                 drawText('GAME OVER', font, windowSurface, (WINDOWWIDTH / 3), (WINDOWHEIGHT / 3))
-                drawText('Press a key to retry', font, windowSurface, (WINDOWWIDTH / 3) - 45,
+                drawText('Presse une touche', font, windowSurface, (WINDOWWIDTH / 3) - 45,
                          (WINDOWHEIGHT / 3) + 50)
-                drawText('to save Christmas', font, windowSurface, (WINDOWWIDTH / 3) - 45, (WINDOWHEIGHT / 3) + 100)
+                drawText('pour sauver Noël', font, windowSurface, (WINDOWWIDTH / 3) - 45, (WINDOWHEIGHT / 3) + 100)
                 pygame.display.update()
                 waitForPlayerToPressKey()
 
@@ -840,9 +840,9 @@ while True: #level 1
                         gameOverSound.play()
 
                         drawText('GAME OVER', font, windowSurface, (WINDOWWIDTH / 3), (WINDOWHEIGHT / 3))
-                        drawText('Press a key to retry', font, windowSurface, (WINDOWWIDTH / 3) - 45,
+                        drawText('Presse une touche ', font, windowSurface, (WINDOWWIDTH / 3) - 45,
                                  (WINDOWHEIGHT / 3) + 50)
-                        drawText('to save Christmas', font, windowSurface, (WINDOWWIDTH / 3) - 45,
+                        drawText('pour sauver Noël', font, windowSurface, (WINDOWWIDTH / 3) - 45,
                                  (WINDOWHEIGHT / 3) + 100)
                         pygame.display.update()
 
