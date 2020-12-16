@@ -1,6 +1,5 @@
 import pygame, random, sys
 from pygame.locals import *
-
 WINDOWWIDTH = 950
 WINDOWHEIGHT = 750
 WIN = pygame.display.set_mode((WINDOWWIDTH, WINDOWHEIGHT))
@@ -18,8 +17,6 @@ LUTINSPEED=1
 CHIMNEYSPEED = 2
 PLAYERMOVERATE = 5  # la vitesse de déplacement de jouer
 player = ["image pour jouer"]
-
-
 def Menu():
     pygame.init()
     window = pygame.display.set_mode((WINDOWWIDTH,WINDOWHEIGHT))
@@ -29,7 +26,6 @@ def Menu():
     pygame.display.flip()
     MenuPressKey()
     pygame.display.update()
-
 def Pause():
     pygame.init()
     pygame.mixer.music.pause()
@@ -44,9 +40,6 @@ def Pause():
                 if event.key == K_p:
                     pygame.mixer.music.unpause()
                     paused=False
-
-
-
 def Chooseplayer():
     window = pygame.display.set_mode((WINDOWWIDTH, WINDOWHEIGHT))
     menu = pygame.image.load("choix_joueur.png").convert()
@@ -55,7 +48,6 @@ def Chooseplayer():
     pygame.display.flip()
     player[0] = ChoosePlayerPressKey()
     pygame.display.update()
-
 def Howtoplay():
     pygame.init()
     window = pygame.display.set_mode((WINDOWWIDTH, WINDOWHEIGHT))
@@ -65,17 +57,14 @@ def Howtoplay():
     pygame.display.flip()
     HowtoPlayPressKey()
     pygame.display.update()
-
 def drawText(text, font, surface, x, y):
     textobj = font.render(text, 1, TEXTCOLOR)
     textrect = textobj.get_rect()
     textrect.topleft = (x, y)
     surface.blit(textobj, textrect)
-
 def terminate():
     pygame.quit()
     sys.exit()
-
 def waitForPlayerToPressKey():
     while True:
         for event in pygame.event.get():
@@ -85,13 +74,10 @@ def waitForPlayerToPressKey():
                 if event.key == K_ESCAPE:  # Pressing ESC quits.
                     terminate()
                 return
-
-
 def restart():
     Run=False
     waitForPlayerToPressKey()
     return Run
-
 def MenuPressKey():
     MenuRun=True
     while MenuRun:
@@ -109,7 +95,6 @@ def MenuPressKey():
                 if event.key == K_h:
                     Howtoplay()
                     MenuRun=False
-
 def ChoosePlayerPressKey():
     Choose = True
     while Choose:
@@ -130,7 +115,6 @@ def ChoosePlayerPressKey():
                 if event.key == K_n:
                     Choose = False
                     return "peach"
-
 def HowtoPlayPressKey():
     How=True
     while How:
@@ -141,27 +125,20 @@ def HowtoPlayPressKey():
                 if event.key == K_q:
                     How=False
                     Menu()
-
-
 def terminate():
     pygame.quit()
     sys.exit()
-
 def playerHasHitBaddie(playerRect, baddies):
     for b in baddies:
         if playerRect.colliderect(b['rect']):
             baddies.remove(b)
             return True
     return False
-
-
 def playerHasHitLutin(playerRect, lutin):    #code pour les lutins
    for l in lutin:
         if playerRect.colliderect(l['rect']):
             lutin.remove(l)
             return True
-
-
 def send_Gift(playerRect, chimneys, score, feedback_sound):
     for c in chimneys:
        if playerRect.colliderect(c['rect']):
@@ -187,14 +164,12 @@ def send_Gift(playerRect, chimneys, score, feedback_sound):
                             moveUp = False
                             moveDown = True
                             # option mute pour enlever le son du jeu. Par contre le son du Game Over reste toujours
-
                         if event.type == KEYUP:
                             if event.key == K_x:
                                 slowCheat = False
                                 scoreLutin = 0
                             if event.key == K_ESCAPE:
                                 terminate()
-
                             if event.key == K_LEFT or event.key == K_a:
                                 moveLeft = False
                             if event.key == K_RIGHT or event.key == K_d:
@@ -203,7 +178,6 @@ def send_Gift(playerRect, chimneys, score, feedback_sound):
                                 moveUp = False
                             if event.key == K_DOWN or event.key == K_s:
                                 moveDown = False
-
                         if event.type == MOUSEMOTION:
                             # If the mouse moves, move the player where to the cursor.
                             playerRect.centery = event.pos[1]
@@ -215,7 +189,6 @@ def MouseControls(MOUSEMOTION):
              #If the mouse moves, move the player where to the cursor.
             playerRect.centerx = event.pos[0]
             playerRect.centery = event.pos[1]
-
 def PlayerMouvement(playerRect):
     # Move the player around.
     if moveLeft and playerRect.left > 0:
@@ -226,14 +199,12 @@ def PlayerMouvement(playerRect):
         playerRect.move_ip(0, -1 * PLAYERMOVERATE)
     if moveDown and playerRect.bottom < WINDOWHEIGHT:
         playerRect.move_ip(0, PLAYERMOVERATE)
-
 def bad_character_movement(objects,WINDOWWIDTH):
     for o in objects:
         if not slowCheat:
             o['rect'].move_ip(-o['speed'], 0)
         elif slowCheat:
             o['rect'].move_ip(-1, 0)
-
     # Delete baddies that have come from the left.
     for o in objects:
         if o['rect'].left > WINDOWWIDTH:
@@ -244,12 +215,10 @@ def good_character_movement(objects,WINDOWWIDTH):
                 o['rect'].move_ip(-o['speed'], 0)
             elif slowCheat:
                 o['rect'].move_ip(-2, 0)
-
         # Delete lutins that have come from the left.
         for o in objects[:]:
             if o['rect'].left > WINDOWWIDTH:
                 objects.remove(o)
-
 def vie(lives):
     if lives != 0:
         windowSurface.blit(coeur, (10, WINDOWHEIGHT-40))
@@ -257,23 +226,19 @@ def vie(lives):
         windowSurface.blit(coeur, (60, WINDOWHEIGHT-40))
     if lives == 3:
         windowSurface.blit(coeur, (110, WINDOWHEIGHT-40))
-
 def drawText(text, font, surface, x, y):
     textobj = font.render(text, 1, TEXTCOLOR)
     textrect = textobj.get_rect()
     textrect.topleft = (x, y)
     surface.blit(textobj, textrect)
-
 # Set up pygame, the window, and the mouse cursor.
 Menu()
 mainClock = pygame.time.Clock()
 windowSurface = pygame.display.set_mode((WINDOWWIDTH, WINDOWHEIGHT))
 pygame.display.set_caption('X-Mas Dodger')
 pygame.mouse.set_visible(False)
-
 # Set up the fonts.
 font = pygame.font.SysFont(None, 48, bold=True)
-
 # Set up sounds.
 gameOverSound = pygame.mixer.Sound('grinch_gameoversound.mp3')
 BellsSound = pygame.mixer.Sound('Bells Sound effect.mp3')
@@ -283,13 +248,11 @@ damageSound = pygame.mixer.Sound('damage.mp3')
 GSdamageSound = pygame.mixer.Sound('peachDamageSound.mp3')
 YaySound = pygame.mixer.Sound('Yay.mp3')
 musicPlaying = True
-
 playerImage = pygame.image.load('santa-player.png')
 playerImage2= pygame.transform.scale(pygame.image.load('Mere_Noel.png'),(40, 70))
 Santa_on_Sleigh_Image = pygame.image.load('Santa_on_sleigh.png')
 santa = pygame.transform.scale(Santa_on_Sleigh_Image, (148, 92))
 santaRect = santa.get_rect()
-
 playerRect = playerImage.get_rect()
 peachRect=playerImage2.get_rect()
 baddieImage = pygame.image.load('gremlin.png')
@@ -300,7 +263,6 @@ thundercloudImage = pygame.image.load('thundercloud.png')
 chimneyImage = pygame.image.load('chimney.png')
 hp = pygame.image.load('hp.png')
 coeur = pygame.transform.scale(hp, (30, 30))
-
 gameBackground_lvl1 = pygame.image.load("winter_background.png")
 lvl1_lvl2 = pygame.image.load("lv1-2.png")
 levelOverBackground_lvl1 = pygame.transform.scale(lvl1_lvl2, (WINDOWWIDTH, WINDOWHEIGHT))
@@ -311,9 +273,7 @@ gameBackground_lvl3 = pygame.image.load("night_sky.png")
 lvl3 = pygame.image.load("ecran_final.png")
 EndGameBackground = pygame.transform.scale(lvl3, (WINDOWWIDTH, WINDOWHEIGHT))
 gameOverBackground = pygame.image.load("Grinch end game.png")
-
 while True: #level 1
-
     # Set up the start of the game.
     baddies = []
     lutin = []
@@ -352,21 +312,19 @@ while True: #level 1
                 if event.key == K_p:
                     Pause()  # pause
                     break
-                # option mute pour enlever le son du jeu. Par contre le son du Game Over reste toujours
+                    # option mute pour enlever le son du jeu. Par contre le son du Game Over reste toujours
                 if event.key == K_m:
                     if  musicPlaying:
                         pygame.mixer.music.stop()
                     else:
                         pygame.mixer.music.play(-1, 0.0)
                 musicPlaying = not musicPlaying  # le code a ete adapte depuis le livre de cours (Ai Swegart) Ch. 19 Page 325-326
-
             if event.type == KEYUP:
                 if event.key == K_x:
                     slowCheat = False
                     scoreLutin = 0
                 if event.key == K_ESCAPE:
                     terminate()
-
                 if event.key == K_LEFT or event.key == K_a:
                     moveLeft = False
                 if event.key == K_RIGHT or event.key == K_d:
@@ -375,13 +333,11 @@ while True: #level 1
                     moveUp = False
                 if event.key == K_DOWN or event.key == K_s:
                     moveDown = False
-
             MouseControls(MOUSEMOTION)
         # Add new baddies at the top of the screen, if needed.
         if not slowCheat:
             lutinAddCounter += 1
             baddieAddCounter += 1
-
         if baddieAddCounter == ADDNEWBADDIERATE:
             baddieAddCounter = 0
             baddieSize = random.randint(MINSIZE, MAXSIZE)
@@ -392,9 +348,7 @@ while True: #level 1
                 'speed': random.randint(BADDIEMINSPEED, BADDIEMAXSPEED),
                 'surface': pygame.transform.scale(baddieImage, (baddieSize, baddieSize)),
             }
-
             baddies.append(newBaddie)
-
         if lutinAddCounter == ADDNEWLUTINRATE:
             lutinAddCounter = 0
             lutinSize = random.randint(MINSIZE, MEDSIZE)
@@ -404,41 +358,30 @@ while True: #level 1
                          'speed': LUTINSPEED,
                          'surface': pygame.transform.scale(lutinImage, (lutinSize, lutinSize)),
                          }
-
             lutin.append(newLutin)
-
         #Move the player around
-        PlayerMouvement(playerRect)
-        # Move the baddies to the left.
-        bad_character_movement(baddies, WINDOWWIDTH)
-
-        # Move the elves to the left.
+        PlayerMouvement(playerRect)# Move the baddies to the left.
+        bad_character_movement(baddies, WINDOWWIDTH) # Move the elves to the left.
         good_character_movement(lutin, WINDOWWIDTH)
-
         # Set up the background
         windowSurface.blit(gameBackground_lvl1, (0, -100))
         # Draw the Lutin score and top score.
         drawText('Elves Caught: %s' % (scoreLutin), font, windowSurface, 10, 0)
         vie(lives)
         drawText('Level: %s' % (level), font, windowSurface, WINDOWWIDTH - 150, 0)
-
         # Draw the player's rectangle.
         if player[0] == "mario":
             windowSurface.blit(playerImage, playerRect)
         if player[0] == "peach":
             playerRect = peachRect
             windowSurface.blit(playerImage2, peachRect)
-
         # Draw each baddie.
         for b in baddies:
             windowSurface.blit(b['surface'], b['rect'])
-
         # Draw each lutin.
         for l in lutin:
             windowSurface.blit(l['surface'], l['rect'])
-
         pygame.display.update()
-
         # Check if any of the lutins have been collected by the player.
         if playerHasHitLutin(playerRect, lutin) == True:
             scoreLutin += 1
@@ -448,8 +391,6 @@ while True: #level 1
                 #create method for levelling up
             else:
                 continue
-
-
         # Check if any of the baddies have hit the player.
         if playerHasHitBaddie(playerRect, baddies) == True:
             lives -= 1
@@ -463,16 +404,12 @@ while True: #level 1
                 pass
             else:  # when the player has 0 lives the game stops
                 break
-
         mainClock.tick(FPS)
-
-
     if lives==0 :
         # Stop the game and show the "Game Over" screen.
         windowSurface.blit(gameOverBackground, (-850, 0))
         pygame.mixer.music.stop()
         gameOverSound.play()
-
         drawText('GAME OVER', font, windowSurface, (WINDOWWIDTH / 3), (WINDOWHEIGHT / 3))
         drawText('Presse une touche', font, windowSurface, (WINDOWWIDTH / 3) - 45, (WINDOWHEIGHT / 3) + 50)
         drawText('pour sauver Noël', font, windowSurface, (WINDOWWIDTH / 3) - 45, (WINDOWHEIGHT / 3) + 100)
@@ -483,9 +420,7 @@ while True: #level 1
     if Run == False:
         pygame.mixer.music.stop()
         Menu()
-
  #-----------------------------------------------------------------------------------------------------------------------
-
     elif scoreLutin >= 10:                  #level-up code to lvl 2
         windowSurface.blit(levelOverBackground_lvl1, (0,0))
         pygame.mixer.music.stop()
@@ -543,14 +478,12 @@ while True: #level 1
                             else:
                                 pygame.mixer.music.play(-1, 0.0)
                         musicPlaying = not musicPlaying  # le code a ete adapte depuis le livre de cours (Ai Swegart) Ch. 19 Page 325-326
-
                     if event.type == KEYUP:
                         if event.key == K_x:
                             slowCheat = False
                             scoreLutin = 0
                         if event.key == K_ESCAPE:
                             terminate()
-
                         if event.key == K_LEFT or event.key == K_a:
                             moveLeft = False
                         if event.key == K_RIGHT or event.key == K_d:
@@ -559,13 +492,11 @@ while True: #level 1
                             moveUp = False
                         if event.key == K_DOWN or event.key == K_s:
                             moveDown = False
-
                     MouseControls(MOUSEMOTION)
                 # Add new baddies at the top of the screen, if needed.
                 if not slowCheat:
                     lutinAddCounter += 1
                     baddieAddCounter += 1
-
                 if baddieAddCounter == ADDNEWBADDIERATE:
                     baddieAddCounter = 0
                     baddieSize = random.randint(MEDSIZE, MAXSIZE)
@@ -576,9 +507,7 @@ while True: #level 1
                         'speed': random.randint(BADDIEMINSPEED, BADDIEMAXSPEED),
                         'surface': pygame.transform.scale(charbonImage, (baddieSize, baddieSize)),
                         }
-
                     baddies.append(newBaddie)
-
                 if lutinAddCounter == ADDNEWLUTINRATE:
                     lutinAddCounter = 0
                     lutinSize = random.randint(MINSIZE, MEDSIZE)
@@ -589,18 +518,13 @@ while True: #level 1
                         'speed': LUTINSPEED,
                         'surface': pygame.transform.scale(cadeauImage, (lutinSize, lutinSize)),
                         }
-
                     lutin.append(newLutin)
-
                 # Move the player around.
                 PlayerMouvement(playerRect)
-
                 # Move the charcoal to the left.
                 bad_character_movement(baddies, WINDOWWIDTH)
-
                 # Move the presents to the left.
                 good_character_movement(lutin, WINDOWWIDTH)
-
                 # Set up the background
                 windowSurface.blit(gameBackground_lvl2, (0, -100))
                 # Draw the Lutin score and top score.
@@ -608,34 +532,27 @@ while True: #level 1
                          'Presents Caught: %s' % (scoreCadeau), font, windowSurface, 10, 0)
                 vie(lives)
                 drawText('Level: %s' % (level), font, windowSurface, WINDOWWIDTH - 150, 0)
-
                 # Draw the player's rectangle.
                 if player[0] == "mario":
                     windowSurface.blit(playerImage, playerRect)
                 if player[0] == "peach":
                     playerRect = peachRect
                     windowSurface.blit(playerImage2, peachRect)
-
                 # Draw each baddie.
                 for b in baddies:
                     windowSurface.blit(b['surface'], b['rect'])
-
                 # Draw each lutin.
                 for l in lutin:
                     windowSurface.blit(l['surface'], l['rect'])
-
                 pygame.display.update()
-
                 # Check if any of the lutins have been collected by the player.
                 if playerHasHitLutin(playerRect, lutin) == True:
                     scoreCadeau += 1
                     PresentSound.play()
-
-                    if scoreCadeau >= 3:  # the player moves to the next level
+                    if scoreCadeau >= 10:  # the player moves to the next level
                         break
                     else:
                         continue
-
                 # Check if any of the baddies have hit the player.
                 if playerHasHitBaddie(playerRect, baddies) == True:
                     lives -= 1
@@ -651,27 +568,23 @@ while True: #level 1
                         break
                         # Stop the game and show the "Game Over" screen.
                 mainClock.tick(FPS)
-
-
             if lives == 0:
                 # Stop the game and show the "Game Over" screen.
                 windowSurface.blit(gameOverBackground, (-850, 0))
                 pygame.mixer.music.stop()
                 gameOverSound.play()
-
                 drawText('GAME OVER', font, windowSurface, (WINDOWWIDTH / 3), (WINDOWHEIGHT / 3))
                 drawText('Presse une touche', font, windowSurface, (WINDOWWIDTH / 3) - 45,
                          (WINDOWHEIGHT / 3) + 50)
                 drawText('pour sauver Noël', font, windowSurface, (WINDOWWIDTH / 3) - 45, (WINDOWHEIGHT / 3) + 100)
                 pygame.display.update()
                 waitForPlayerToPressKey()
-
                 gameOverSound.stop()
             if Run==False:
                 pygame.mixer.music.stop()
                 Menu()
-            # -----------------------------------------------------------------------------------------------------------------------
-            elif scoreCadeau >= 3:  #level-up code to lvl 3
+# -----------------------------------------------------------------------------------------------------------------------
+            elif scoreCadeau >= 10:  #level-up code to lvl 3
                 santaRect
                 windowSurface.blit(levelOverBackground_lvl2, (0,0))
                 pygame.mixer.music.stop()
@@ -691,7 +604,6 @@ while True: #level 1
                     baddies = []
                     chimneys = []
                     cadeaux = []
-
                     scoreCadeaux_livrés = 0
                     santaRect.topleft = (WINDOWWIDTH/2-200, WINDOWHEIGHT/2)
                     moveLeft = moveRight = moveUp = moveDown = False
@@ -719,8 +631,6 @@ while True: #level 1
                                 if event.key == K_p:
                                     Pause()  # pause
                                     break
-                                #if event.key == K_SPACE:
-                                    #cadeaux.append(newPresent)
                                 # option mute pour enlever le son du jeu. Par contre le son du Game Over reste toujours
                                 if event.key == K_m:
                                     if musicPlaying:
@@ -728,15 +638,12 @@ while True: #level 1
                                     else:
                                         pygame.mixer.music.play(-1, 0.0)
                                 musicPlaying = not musicPlaying  # le code a ete adapte depuis le livre de cours (Ai Swegart) Ch. 19 Page 325-326
-
-
                             if event.type == KEYUP:
                                 if event.key == K_x:
                                     slowCheat = False
                                     scoreCadeaux_livrés = 0
                                 if event.key == K_ESCAPE:
                                     terminate()
-
                                 if event.key == K_UP or event.key == K_w:
                                     moveUp = False
                                 if event.key == K_DOWN or event.key == K_s:
@@ -748,7 +655,6 @@ while True: #level 1
                         if not slowCheat:
                             baddieAddCounter += 1
                             chimneyAddCounter += 1
-
                         if baddieAddCounter == 104:
                             baddieAddCounter = 0
                             baddieSize = random.randint(MINSIZE, MAXSIZE)
@@ -760,9 +666,7 @@ while True: #level 1
                                 'speed': random.randint(BADDIEMINSPEED, BADDIEMAXSPEED),
                                 'surface': pygame.transform.scale(thundercloudImage, (baddieSize, baddieSize)),
                             }
-
                             baddies.append(newBaddie)
-
                         if chimneyAddCounter == ADDNEWCHIMNEYRATE:
                             chimneyAddCounter = 0
                             chimneySize = random.randint(40, 750)
@@ -776,48 +680,37 @@ while True: #level 1
                             }
 
                             chimneys.append(newChimney)
-
                         # Move the player vertically.
                         PlayerMouvement(santaRect)
-
                         # Move the baddies to the left.
                         bad_character_movement(baddies, WINDOWWIDTH)
-
                         # Move the chimneys to the left.
                         good_character_movement(chimneys, WINDOWWIDTH)
-
                         # Set up the background
                         windowSurface.blit(gameBackground_lvl3, (0, -100))
                         # Draw the score, the number of lives remaining and the level of the game.
                         drawText('Presents delivered: %s' % (scoreCadeaux_livrés), font, windowSurface, 10, 0)
                         vie(lives)
                         drawText('Level: %s' % (level), font, windowSurface, WINDOWWIDTH - 150, 0)
-
                         # Draw the player's rectangle.
                         windowSurface.blit(santa, santaRect) #santaImage
-
                         # Draw each baddie.
                         for b in baddies:
                             windowSurface.blit(b['surface'], b['rect'])
-
                         # Draw each chimney.
                         for c in chimneys:
                             windowSurface.blit(c['surface'], c['rect'])
                         # Draw each present
                         for p in cadeaux:
                             windowSurface.blit(p['surface'], p['rect'])
-
-
                         pygame.display.update()
-
                         # Check if any of the lutins have been collected by the player.
                         if send_Gift(santaRect, chimneys, scoreCadeaux_livrés, PresentDelivered) == True:
                             scoreCadeaux_livrés += 1
-                            if scoreCadeaux_livrés >= 15:  # the player moves to the next level
+                            if scoreCadeaux_livrés >= 10:  # the player moves to the next level
                                 break
                             else:
                                 continue
-
                         # Check if any of the baddies have hit the player.
                         if playerHasHitBaddie(santaRect, baddies) == True:
                             lives -= 1
@@ -830,27 +723,23 @@ while True: #level 1
                                 break
                                 # Stop the game and show the "Game Over" screen.
                         mainClock.tick(FPS)
-
-
                     if lives == 0:
                         windowSurface.blit(gameOverBackground, (-850, 0))
                         pygame.mixer.music.stop()
                         gameOverSound.play()
-
                         drawText('GAME OVER', font, windowSurface, (WINDOWWIDTH / 3), (WINDOWHEIGHT / 3))
                         drawText('Presse une touche ', font, windowSurface, (WINDOWWIDTH / 3) - 45,
                                  (WINDOWHEIGHT / 3) + 50)
                         drawText('pour sauver Noël', font, windowSurface, (WINDOWWIDTH / 3) - 45,
                                  (WINDOWHEIGHT / 3) + 100)
                         pygame.display.update()
-
                         waitForPlayerToPressKey()
                         gameOverSound.stop()
                     if Run==False:
                         pygame.mixer.music.stop()
                         Menu()
-                    # -----------------------------------------------------------------------------------------------------------------------
-                    elif scoreCadeaux_livrés >= 15:  # End of the game
+# -----------------------------------------------------------------------------------------------------------------------
+                    elif scoreCadeaux_livrés >= 10:  # End of the game
                         windowSurface.blit(EndGameBackground,(0,0))
                         pygame.mixer.music.stop()
                         YaySound.play()
