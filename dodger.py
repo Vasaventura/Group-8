@@ -89,7 +89,7 @@ def waitForPlayerToPressKey():
 
 def restart():
     Run=False
-    waitForPlayerToPressKey() #todo define a restart function for player that can be called with the key U
+    waitForPlayerToPressKey()
     return Run
 
 def MenuPressKey():
@@ -311,8 +311,6 @@ gameBackground_lvl3 = pygame.image.load("night_sky.png")
 lvl3 = pygame.image.load("ecran_final.png")
 EndGameBackground = pygame.transform.scale(lvl3, (WINDOWWIDTH, WINDOWHEIGHT))
 gameOverBackground = pygame.image.load("Grinch end game.png")
-
-#todo set up pct score instead of absolute numbers
 
 while True: #level 1
 
@@ -633,7 +631,7 @@ while True: #level 1
                     scoreCadeau += 1
                     PresentSound.play()
 
-                    if scoreCadeau >= 10:  # the player moves to the next level
+                    if scoreCadeau >= 3:  # the player moves to the next level
                         break
                     else:
                         continue
@@ -673,7 +671,7 @@ while True: #level 1
                 pygame.mixer.music.stop()
                 Menu()
             # -----------------------------------------------------------------------------------------------------------------------
-            elif scoreCadeau >= 10:  #level-up code to lvl 3
+            elif scoreCadeau >= 3:  #level-up code to lvl 3
                 santaRect
                 windowSurface.blit(levelOverBackground_lvl2, (0,0))
                 pygame.mixer.music.stop()
@@ -815,7 +813,7 @@ while True: #level 1
                         # Check if any of the lutins have been collected by the player.
                         if send_Gift(santaRect, chimneys, scoreCadeaux_livrés, PresentDelivered) == True:
                             scoreCadeaux_livrés += 1
-                            if scoreCadeaux_livrés >= 10:  # the player finishes the game
+                            if scoreCadeaux_livrés >= 15:  # the player moves to the next level
                                 break
                             else:
                                 continue
@@ -852,7 +850,7 @@ while True: #level 1
                         pygame.mixer.music.stop()
                         Menu()
                     # -----------------------------------------------------------------------------------------------------------------------
-                    elif scoreCadeaux_livrés >= 10:  # End of the game
+                    elif scoreCadeaux_livrés >= 15:  # End of the game
                         windowSurface.blit(EndGameBackground,(0,0))
                         pygame.mixer.music.stop()
                         YaySound.play()
