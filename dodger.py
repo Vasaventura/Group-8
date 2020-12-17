@@ -360,9 +360,9 @@ while True: #level 1
                          }
             lutin.append(newLutin)
         #Move the player around
-        PlayerMouvement(playerRect)# Move the baddies to the left.
-        bad_character_movement(baddies, WINDOWWIDTH) # Move the elves to the left.
-        good_character_movement(lutin, WINDOWWIDTH)
+        PlayerMouvement(playerRect)
+        bad_character_movement(baddies, WINDOWWIDTH) # Move the baddies to the left.
+        good_character_movement(lutin, WINDOWWIDTH) # Move the elves to the left.
         # Set up the background
         windowSurface.blit(gameBackground_lvl1, (0, -100))
         # Draw the Lutin score and top score.
