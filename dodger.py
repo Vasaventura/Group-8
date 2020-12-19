@@ -219,6 +219,20 @@ def good_character_movement(objects,WINDOWWIDTH):
         for o in objects[:]:
             if o['rect'].left > WINDOWWIDTH:
                 objects.remove(o)
+#ici on montre qu'on a essayé de créer une classe mais malheureusement le code ne s'intègrent pas bien dans le jeu
+#class vie:
+#   def __init__(self, lives):
+#        self.lives = lives
+#    def drawLives(self,coeur):
+#            if self.lives != 0:
+#                windowSurface.blit(coeur, (10, WINDOWHEIGHT-40))
+#                return self.lives
+#           if self.lives > 1:
+#                windowSurface.blit(coeur, (60, WINDOWHEIGHT-40))
+#                return self.lives
+#            if self.lives == 3:
+#                windowSurface.blit(coeur, (110, WINDOWHEIGHT-40))
+#                return self.lives
 def vie(lives):
     if lives != 0:
         windowSurface.blit(coeur, (10, WINDOWHEIGHT-40))
@@ -226,6 +240,7 @@ def vie(lives):
         windowSurface.blit(coeur, (60, WINDOWHEIGHT-40))
     if lives == 3:
         windowSurface.blit(coeur, (110, WINDOWHEIGHT-40))
+
 def drawText(text, font, surface, x, y):
     textobj = font.render(text, 1, TEXTCOLOR)
     textrect = textobj.get_rect()
