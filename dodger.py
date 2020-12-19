@@ -4,6 +4,7 @@ WINDOWWIDTH = 950
 WINDOWHEIGHT = 750
 WIN = pygame.display.set_mode((WINDOWWIDTH, WINDOWHEIGHT))
 TEXTCOLOR = ('white')
+PAUSETEXTCOLOR=('seagreen')
 FPS = 60
 MINSIZE = 30  # ici le code a été modifié en suivant les conseils du livre (Ai Swegart) Ch. 20, Pg. 353-354
 MEDSIZE = 45
@@ -26,9 +27,17 @@ def Menu():
     pygame.display.flip()
     MenuPressKey()
     pygame.display.update()
+def drawPauseText(text, font, surface, x, y):
+    textobj = font.render(text, 1, PAUSETEXTCOLOR)
+    textrect = textobj.get_rect()
+    textrect.topleft = (x, y)
+    surface.blit(textobj, textrect)
 def Pause():
     pygame.init()
     pygame.mixer.music.pause()
+    drawPauseText("PAUSE",PauseFont, windowSurface, (WINDOWWIDTH / 2)-75, (WINDOWHEIGHT / 3))
+    drawPauseText("Pour reprendre le jeu, presser (P)", PauseFont, windowSurface, (WINDOWWIDTH / 3) - 200, (WINDOWHEIGHT / 3)+50)
+    pygame.display.update()
     paused = True
     while paused:
         for event in pygame.event.get():
@@ -57,11 +66,6 @@ def Howtoplay():
     pygame.display.flip()
     HowtoPlayPressKey()
     pygame.display.update()
-def drawText(text, font, surface, x, y):
-    textobj = font.render(text, 1, TEXTCOLOR)
-    textrect = textobj.get_rect()
-    textrect.topleft = (x, y)
-    surface.blit(textobj, textrect)
 def terminate():
     pygame.quit()
     sys.exit()
@@ -254,6 +258,7 @@ pygame.display.set_caption('X-Mas Dodger')
 pygame.mouse.set_visible(False)
 # Set up the fonts.
 font = pygame.font.SysFont(None, 48, bold=True)
+PauseFont=pygame.font.SysFont(None, 55, bold=True)
 # Set up sounds.
 gameOverSound = pygame.mixer.Sound('grinch_gameoversound.mp3')
 BellsSound = pygame.mixer.Sound('Bells Sound effect.mp3')
