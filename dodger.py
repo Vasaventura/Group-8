@@ -263,12 +263,7 @@ def vie(lives):# cette fonctionne dessine des coeurs qui représente les "vie" d
         windowSurface.blit(coeur, (60, WINDOWHEIGHT-40))
     if lives == 3:
         windowSurface.blit(coeur, (110, WINDOWHEIGHT-40))
-
-def drawText(text, font, surface, x, y, colour):
-    textobj = font.render(text, 1, colour)
-    textrect = textobj.get_rect()
-    textrect.topleft = (x, y)
-    surface.blit(textobj, textrect)
+##########fin définition##################
 # Set up pygame, the window, and the mouse cursor.
 Menu()
 mainClock = pygame.time.Clock()
@@ -287,6 +282,7 @@ damageSound = pygame.mixer.Sound('damage.mp3')
 GSdamageSound = pygame.mixer.Sound('peachDamageSound.mp3')
 YaySound = pygame.mixer.Sound('Yay.mp3')
 musicPlaying = True
+#setup image
 playerImage = pygame.image.load('santa-player.png')
 playerImage2= pygame.transform.scale(pygame.image.load('Mere_Noel.png'),(40, 70))
 Santa_on_Sleigh_Image = pygame.image.load('Santa_on_sleigh.png')
@@ -312,6 +308,7 @@ gameBackground_lvl3 = pygame.image.load("night_sky.png")
 lvl3 = pygame.image.load("ecran_final.png")
 EndGameBackground = pygame.transform.scale(lvl3, (WINDOWWIDTH, WINDOWHEIGHT))
 gameOverBackground = pygame.image.load("Grinch end game.png")
+####game####
 while True: #level 1
     # Set up the start of the game.
     baddies = []
