@@ -1,5 +1,7 @@
 import pygame, random, sys
 from pygame.locals import *
+
+####parametres de bases####
 WINDOWWIDTH = 950
 WINDOWHEIGHT = 750
 WIN = pygame.display.set_mode((WINDOWWIDTH, WINDOWHEIGHT))
@@ -18,7 +20,10 @@ LUTINSPEED=1
 CHIMNEYSPEED = 2
 PLAYERMOVERATE = 5  # la vitesse de déplacement de jouer
 player = ["image pour jouer"]
-def Menu():
+##################
+
+####definition####
+def Menu(): #initie la page du menu principal où on peut aller sur "choix, du joueur" et "règle du jeu"
     pygame.init()
     window = pygame.display.set_mode((WINDOWWIDTH,WINDOWHEIGHT))
     menu = pygame.image.load("écran_start.png").convert()
@@ -27,12 +32,33 @@ def Menu():
     pygame.display.flip()
     MenuPressKey()
     pygame.display.update()
+
+def Chooseplayer():#page qui permet de choisir le joueur soit p: pour mario ou n pour pitch
+    window = pygame.display.set_mode((WINDOWWIDTH, WINDOWHEIGHT))
+    menu = pygame.image.load("choix_joueur.png").convert()
+    img = pygame.transform.scale(menu, (WINDOWWIDTH, WINDOWHEIGHT))
+    window.blit(img, (0,0))
+    pygame.display.flip()
+    player[0] = ChoosePlayerPressKey()
+    pygame.display.update()
+
+def Howtoplay():# page qui permet au user de voir les règles du jeu et les touches pour y jouer.
+    pygame.init()
+    window = pygame.display.set_mode((WINDOWWIDTH, WINDOWHEIGHT))
+    menu = pygame.image.load("How_to_play.png").convert()
+    img = pygame.transform.scale(menu, (WINDOWWIDTH, WINDOWHEIGHT))
+    window.blit(img, (0, 0))
+    pygame.display.flip()
+    HowtoPlayPressKey()
+    pygame.display.update()
+
 def drawPauseText(text, font, surface, x, y):
     textobj = font.render(text, 1, PAUSETEXTCOLOR)
     textrect = textobj.get_rect()
     textrect.topleft = (x, y)
     surface.blit(textobj, textrect)
-def Pause():
+
+def Pause(): #permet au joueur de pouvoir mettre le jeu sur pause en pressant la touche p
     pygame.init()
     pygame.mixer.music.pause()
     drawPauseText("PAUSE",PauseFont, windowSurface, (WINDOWWIDTH / 2)-75, (WINDOWHEIGHT / 3))
@@ -49,26 +75,12 @@ def Pause():
                 if event.key == K_p:
                     pygame.mixer.music.unpause()
                     paused=False
-def Chooseplayer():
-    window = pygame.display.set_mode((WINDOWWIDTH, WINDOWHEIGHT))
-    menu = pygame.image.load("choix_joueur.png").convert()
-    img = pygame.transform.scale(menu, (WINDOWWIDTH, WINDOWHEIGHT))
-    window.blit(img, (0,0))
-    pygame.display.flip()
-    player[0] = ChoosePlayerPressKey()
-    pygame.display.update()
-def Howtoplay():
-    pygame.init()
-    window = pygame.display.set_mode((WINDOWWIDTH, WINDOWHEIGHT))
-    menu = pygame.image.load("How_to_play.png").convert()
-    img = pygame.transform.scale(menu, (WINDOWWIDTH, WINDOWHEIGHT))
-    window.blit(img, (0, 0))
-    pygame.display.flip()
-    HowtoPlayPressKey()
-    pygame.display.update()
-def terminate():
+
+
+def terminate():# fonction qui arrête le jeu
     pygame.quit()
     sys.exit()
+
 def waitForPlayerToPressKey():
     while True:
         for event in pygame.event.get():
@@ -106,6 +118,8 @@ def ChoosePlayerPressKey():
             if event.type == QUIT:
                 terminate()
             if event.type == KEYDOWN:
+                if event.key==K_ESCAPE:
+                    terminate()
                 if event.key == K_p:
                     return "mario"
                 if event.key == K_n:
