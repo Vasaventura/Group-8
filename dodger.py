@@ -149,18 +149,19 @@ def waitForPlayerToPressKey(): # permet le passage d'un niveau à l'autre lorsqu
                     terminate()
                 return
 
-def playerHasHitBaddie(playerRect, baddies):
+def playerHasHitBaddie(playerRect, baddies): # enlève des méchant lorsque le toucheur en a touché un
     for b in baddies:
         if playerRect.colliderect(b['rect']):
             baddies.remove(b)
             return True
     return False
-def playerHasHitLutin(playerRect, lutin):    #code pour les lutins
+def playerHasHitLutin(playerRect, lutin):    #enlève le lutin lorsque le joueur en l'a touché
    for l in lutin:
         if playerRect.colliderect(l['rect']):
             lutin.remove(l)
             return True
-def send_Gift(playerRect, chimneys, score, feedback_sound):
+
+def send_Gift(playerRect, chimneys, score, feedback_sound):# initialise les touches pour le level 3 et le lancement des cadeaux
     for c in chimneys:
        if playerRect.colliderect(c['rect']):
             for event in pygame.event.get():
