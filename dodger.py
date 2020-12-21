@@ -185,13 +185,13 @@ def PlayerMouvement(playerRect):
         playerRect.move_ip(0, -1 * PLAYERMOVERATE)
     if moveDown and playerRect.bottom < WINDOWHEIGHT:
         playerRect.move_ip(0, PLAYERMOVERATE)
-def character_movement(objects,WINDOWWIDTH):
+def item_movement(objects, WINDOWWIDTH):
     for o in objects:
         if not slowCheat:
             o['rect'].move_ip(-o['speed'], 0)
         elif slowCheat:
             o['rect'].move_ip(-2, 0)
-    # Delete baddies that have come from the left.
+    # Delete item that have come from the left.
     for o in objects:
         if o['rect'].left > WINDOWWIDTH:
             objects.remove(o)
@@ -351,8 +351,8 @@ while True: #level 1
             lutin.append(newLutin)
         #Move the player around
         PlayerMouvement(playerRect)
-        character_movement(baddies, WINDOWWIDTH) # Move the baddies to the left.
-        character_movement(lutin, WINDOWWIDTH) # Move the elves to the left.
+        item_movement(baddies, WINDOWWIDTH) # Move the baddies to the left.
+        item_movement(lutin, WINDOWWIDTH) # Move the elves to the left.
         # Set up the background
         windowSurface.blit(gameBackground_lvl1, (0, -100))
         # Draw the Lutin score and top score.
@@ -511,9 +511,9 @@ while True: #level 1
                 # Move the player around.
                 PlayerMouvement(playerRect)
                 # Move the charcoal to the left.
-                character_movement(baddies, WINDOWWIDTH)
+                item_movement(baddies, WINDOWWIDTH)
                 # Move the presents to the left.
-                character_movement(lutin, WINDOWWIDTH)
+                item_movement(lutin, WINDOWWIDTH)
                 # Set up the background
                 windowSurface.blit(gameBackground_lvl2, (0, -100))
                 # Draw the Lutin score and top score.
@@ -672,9 +672,9 @@ while True: #level 1
                         # Move the player vertically.
                         PlayerMouvement(santaRect)
                         # Move the baddies to the left.
-                        character_movement(baddies, WINDOWWIDTH)
+                        item_movement(baddies, WINDOWWIDTH)
                         # Move the chimneys to the left.
-                        character_movement(chimneys, WINDOWWIDTH)
+                        item_movement(chimneys, WINDOWWIDTH)
                         # Set up the background
                         windowSurface.blit(gameBackground_lvl3, (0, -100))
                         # Draw the score, the number of lives remaining and the level of the game.
