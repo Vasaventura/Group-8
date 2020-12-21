@@ -23,6 +23,8 @@ player = ["image pour jouer"]
 ##################
 
 ####definition####
+
+#### page d'accueil####
 def Menu(): #initie la page du menu principal où on peut aller sur "choix, du joueur" et "règle du jeu"
     pygame.init()
     window = pygame.display.set_mode((WINDOWWIDTH,WINDOWHEIGHT))
@@ -33,6 +35,26 @@ def Menu(): #initie la page du menu principal où on peut aller sur "choix, du j
     MenuPressKey()
     pygame.display.update()
 
+def MenuPressKey(): # permet, en pressant esc, j, h, q de respectivement: quitter le jeux, choisir un joueur, voir les règles de jeu, aller au menu.
+    MenuRun=True
+    while MenuRun:
+        for event in pygame.event.get():
+            if event.type == QUIT:
+                terminate()
+            if event.type == KEYDOWN:
+                if event.key == K_ESCAPE:  # Pressing ESC quits.
+                    terminate()
+                if event.key == K_j:
+                    Chooseplayer()
+                    MenuRun = False
+                if event.key == K_q:
+                    Menu()
+                if event.key == K_h:
+                    Howtoplay()
+                    MenuRun=False
+#############
+######Choix du joueur#####
+
 def Chooseplayer():#page qui permet de choisir le joueur soit p: pour mario ou n pour pitch
     window = pygame.display.set_mode((WINDOWWIDTH, WINDOWHEIGHT))
     menu = pygame.image.load("choix_joueur.png").convert()
@@ -42,6 +64,30 @@ def Chooseplayer():#page qui permet de choisir le joueur soit p: pour mario ou n
     player[0] = ChoosePlayerPressKey()
     pygame.display.update()
 
+def ChoosePlayerPressKey():# initialise les touches pour permettre le choix du joueur.
+    Choose = True
+    while Choose:
+        for event in pygame.event.get():
+            if event.type == QUIT:
+                terminate()
+            if event.type == KEYDOWN:
+                if event.key==K_ESCAPE:
+                    terminate()
+                if event.key == K_p:
+                    return "mario"
+                if event.key == K_n:
+                    return "peach"
+                if event.key == K_q:
+                    Menu()
+            if event.type == KEYUP:
+                if event.key == K_p:
+                    Choose = False
+                    return "mario"
+                if event.key == K_n:
+                    Choose = False
+                    return "peach"
+###############
+####comment jouer#####
 def Howtoplay():# page qui permet au user de voir les règles du jeu et les touches pour y jouer.
     pygame.init()
     window = pygame.display.set_mode((WINDOWWIDTH, WINDOWHEIGHT))
@@ -52,7 +98,19 @@ def Howtoplay():# page qui permet au user de voir les règles du jeu et les touc
     HowtoPlayPressKey()
     pygame.display.update()
 
-def drawPauseText(text, font, surface, x, y):
+def HowtoPlayPressKey(): #initialise les touches pour l'écran comment how to play.
+    How=True
+    while How:
+        for event in pygame.event.get():
+            if event.type == QUIT:
+                terminate()
+            if event.type == KEYDOWN:
+                if event.key == K_q:
+                    How=False
+                    Menu()
+####################
+#### mettre pause sur le jeu######
+def drawPauseText(text, font, surface, x, y):#### permis d'écrire le text qui apparait lorsqu'on met pause####
     textobj = font.render(text, 1, PAUSETEXTCOLOR)
     textrect = textobj.get_rect()
     textrect.topleft = (x, y)
@@ -75,13 +133,13 @@ def Pause(): #permet au joueur de pouvoir mettre le jeu sur pause en pressant la
                 if event.key == K_p:
                     pygame.mixer.music.unpause()
                     paused=False
-
-
+###############################
+####fonction autre dans le jeu####
 def terminate():# fonction qui arrête le jeu
     pygame.quit()
     sys.exit()
 
-def waitForPlayerToPressKey():
+def waitForPlayerToPressKey(): # permet le passage d'un niveau à l'autre lorsque l'user presse sur une touche
     while True:
         for event in pygame.event.get():
             if event.type == QUIT:
@@ -90,62 +148,11 @@ def waitForPlayerToPressKey():
                 if event.key == K_ESCAPE:  # Pressing ESC quits.
                     terminate()
                 return
-def restart():
+def restart():# est ce qu'on doit la laisser?
     Run=False
     waitForPlayerToPressKey()
     return Run
-def MenuPressKey():
-    MenuRun=True
-    while MenuRun:
-        for event in pygame.event.get():
-            if event.type == QUIT:
-                terminate()
-            if event.type == KEYDOWN:
-                if event.key == K_ESCAPE:  # Pressing ESC quits.
-                    terminate()
-                if event.key == K_j:
-                    Chooseplayer()
-                    MenuRun = False
-                if event.key == K_q:
-                    Menu()
-                if event.key == K_h:
-                    Howtoplay()
-                    MenuRun=False
-def ChoosePlayerPressKey():
-    Choose = True
-    while Choose:
-        for event in pygame.event.get():
-            if event.type == QUIT:
-                terminate()
-            if event.type == KEYDOWN:
-                if event.key==K_ESCAPE:
-                    terminate()
-                if event.key == K_p:
-                    return "mario"
-                if event.key == K_n:
-                    return "peach"
-                if event.key == K_q:
-                    Menu()
-            if event.type == KEYUP:
-                if event.key == K_p:
-                    Choose = False
-                    return "mario"
-                if event.key == K_n:
-                    Choose = False
-                    return "peach"
-def HowtoPlayPressKey():
-    How=True
-    while How:
-        for event in pygame.event.get():
-            if event.type == QUIT:
-                terminate()
-            if event.type == KEYDOWN:
-                if event.key == K_q:
-                    How=False
-                    Menu()
-def terminate():
-    pygame.quit()
-    sys.exit()
+
 def playerHasHitBaddie(playerRect, baddies):
     for b in baddies:
         if playerRect.colliderect(b['rect']):
