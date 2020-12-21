@@ -148,10 +148,6 @@ def waitForPlayerToPressKey(): # permet le passage d'un niveau à l'autre lorsqu
                 if event.key == K_ESCAPE:  # Pressing ESC quits.
                     terminate()
                 return
-def restart():# est ce qu'on doit la laisser?
-    Run=False
-    waitForPlayerToPressKey()
-    return Run
 
 def playerHasHitBaddie(playerRect, baddies):
     for b in baddies:
