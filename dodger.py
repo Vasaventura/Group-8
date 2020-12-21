@@ -110,17 +110,12 @@ def HowtoPlayPressKey(): #initialise les touches pour l'écran comment how to pl
                     Menu()
 ####################
 #### mettre pause sur le jeu######
-def drawPauseText(text, font, surface, x, y):#### permis d'écrire le text qui apparait lorsqu'on met pause####
-    textobj = font.render(text, 1, PAUSETEXTCOLOR)
-    textrect = textobj.get_rect()
-    textrect.topleft = (x, y)
-    surface.blit(textobj, textrect)
 
 def Pause(): #permet au joueur de pouvoir mettre le jeu sur pause en pressant la touche p
     pygame.init()
     pygame.mixer.music.pause()
-    drawPauseText("PAUSE",PauseFont, windowSurface, (WINDOWWIDTH / 2)-75, (WINDOWHEIGHT / 3))
-    drawPauseText("Pour reprendre le jeu, presser (P)", PauseFont, windowSurface, (WINDOWWIDTH / 3) - 200, (WINDOWHEIGHT / 3)+50)
+    drawText("PAUSE",PauseFont, windowSurface, (WINDOWWIDTH / 2)-75, (WINDOWHEIGHT / 3),PAUSETEXTCOLOR)
+    drawText("Pour reprendre le jeu, presser (P)", PauseFont, windowSurface, (WINDOWWIDTH / 3) - 200, (WINDOWHEIGHT / 3)+50,PAUSETEXTCOLOR)
     pygame.display.update()
     paused = True
     while paused:
@@ -138,6 +133,12 @@ def Pause(): #permet au joueur de pouvoir mettre le jeu sur pause en pressant la
 def terminate():# fonction qui arrête le jeu
     pygame.quit()
     sys.exit()
+
+def drawText(text, font, surface, x, y, colour):#### permis d'écrire le text qui apparait lorsqu'on met pause####
+    textobj = font.render(text, 1, colour)
+    textrect = textobj.get_rect()
+    textrect.topleft = (x, y)
+    surface.blit(textobj, textrect)
 
 def waitForPlayerToPressKey(): # permet le passage d'un niveau à l'autre lorsque l'user presse sur une touche
     while True:
@@ -206,7 +207,7 @@ def send_Gift(playerRect, chimneys, score, feedback_sound):# initialise les touc
                         return True
                     else:
                         return False
-def MouseControls(MOUSEMOTION):
+def MouseControls(MOUSEMOTION):# permet au user de bouger le joueur avec la souris$
         if event.type == MOUSEMOTION:
              #If the mouse moves, move the player where to the cursor.
             playerRect.centerx = event.pos[0]
@@ -241,7 +242,7 @@ def good_character_movement(objects,WINDOWWIDTH):
         for o in objects[:]:
             if o['rect'].left > WINDOWWIDTH:
                 objects.remove(o)
-#ici on montre qu'on a essayé de créer une classe mais malheureusement le code ne s'intègrent pas bien dans le jeu
+#on a essayé de créer une classe mais malheureusement le code ne s'intègrent pas bien dans le jeu
 #class vie:
 #   def __init__(self, lives):
 #        self.lives = lives
@@ -255,7 +256,7 @@ def good_character_movement(objects,WINDOWWIDTH):
 #            if self.lives == 3:
 #                windowSurface.blit(coeur, (110, WINDOWHEIGHT-40))
 #                return self.lives
-def vie(lives):
+def vie(lives):# cette fonctionne dessine des coeurs qui représente les "vie" du joueur en fonction du nombre de lives qui lui reste
     if lives != 0:
         windowSurface.blit(coeur, (10, WINDOWHEIGHT-40))
     if lives > 1:
@@ -263,8 +264,8 @@ def vie(lives):
     if lives == 3:
         windowSurface.blit(coeur, (110, WINDOWHEIGHT-40))
 
-def drawText(text, font, surface, x, y):
-    textobj = font.render(text, 1, TEXTCOLOR)
+def drawText(text, font, surface, x, y, colour):
+    textobj = font.render(text, 1, colour)
     textrect = textobj.get_rect()
     textrect.topleft = (x, y)
     surface.blit(textobj, textrect)
@@ -404,9 +405,9 @@ while True: #level 1
         # Set up the background
         windowSurface.blit(gameBackground_lvl1, (0, -100))
         # Draw the Lutin score and top score.
-        drawText('Elves Caught: %s' % (scoreLutin), font, windowSurface, 10, 0)
+        drawText('Elves Caught: %s' % (scoreLutin), font, windowSurface, 10, 0,TEXTCOLOR)
         vie(lives)
-        drawText('Level: %s' % (level), font, windowSurface, WINDOWWIDTH - 150, 0)
+        drawText('Level: %s' % (level), font, windowSurface, WINDOWWIDTH - 150, 0,TEXTCOLOR)
         # Draw the player's rectangle.
         if player[0] == "mario":
             windowSurface.blit(playerImage, playerRect)
@@ -448,10 +449,9 @@ while True: #level 1
         windowSurface.blit(gameOverBackground, (-850, 0))
         pygame.mixer.music.stop()
         gameOverSound.play()
-        drawText('GAME OVER', font, windowSurface, (WINDOWWIDTH / 3), (WINDOWHEIGHT / 3))
-        drawText('Presse une touche', font, windowSurface, (WINDOWWIDTH / 3) - 45, (WINDOWHEIGHT / 3) + 50)
-        drawText('pour sauver Noël', font, windowSurface, (WINDOWWIDTH / 3) - 45, (WINDOWHEIGHT / 3) + 100)
-        # drawText('or x to go to Menu', font, windowSurface, (WINDOWWIDTH / 3) - 45, (WINDOWHEIGHT / 3) + 150)
+        drawText('GAME OVER', font, windowSurface, (WINDOWWIDTH / 3), (WINDOWHEIGHT / 3),TEXTCOLOR)
+        drawText('Presse une touche', font, windowSurface, (WINDOWWIDTH / 3) - 45, (WINDOWHEIGHT / 3) + 50,TEXTCOLOR)
+        drawText('pour sauver Noël', font, windowSurface, (WINDOWWIDTH / 3) - 45, (WINDOWHEIGHT / 3) + 100,TEXTCOLOR)
         pygame.display.update()
         waitForPlayerToPressKey()
         gameOverSound.stop()
@@ -567,9 +567,9 @@ while True: #level 1
                 windowSurface.blit(gameBackground_lvl2, (0, -100))
                 # Draw the Lutin score and top score.
                 drawText(''
-                         'Presents Caught: %s' % (scoreCadeau), font, windowSurface, 10, 0)
+                         'Presents Caught: %s' % (scoreCadeau), font, windowSurface, 10, 0,TEXTCOLOR)
                 vie(lives)
-                drawText('Level: %s' % (level), font, windowSurface, WINDOWWIDTH - 150, 0)
+                drawText('Level: %s' % (level), font, windowSurface, WINDOWWIDTH - 150, 0,TEXTCOLOR)
                 # Draw the player's rectangle.
                 if player[0] == "mario":
                     windowSurface.blit(playerImage, playerRect)
@@ -611,10 +611,10 @@ while True: #level 1
                 windowSurface.blit(gameOverBackground, (-850, 0))
                 pygame.mixer.music.stop()
                 gameOverSound.play()
-                drawText('GAME OVER', font, windowSurface, (WINDOWWIDTH / 3), (WINDOWHEIGHT / 3))
+                drawText('GAME OVER', font, windowSurface, (WINDOWWIDTH / 3), (WINDOWHEIGHT / 3),TEXTCOLOR)
                 drawText('Presse une touche', font, windowSurface, (WINDOWWIDTH / 3) - 45,
                          (WINDOWHEIGHT / 3) + 50)
-                drawText('pour sauver Noël', font, windowSurface, (WINDOWWIDTH / 3) - 45, (WINDOWHEIGHT / 3) + 100)
+                drawText('pour sauver Noël', font, windowSurface, (WINDOWWIDTH / 3) - 45, (WINDOWHEIGHT / 3) + 100,TEXTCOLOR)
                 pygame.display.update()
                 waitForPlayerToPressKey()
                 gameOverSound.stop()
@@ -727,9 +727,9 @@ while True: #level 1
                         # Set up the background
                         windowSurface.blit(gameBackground_lvl3, (0, -100))
                         # Draw the score, the number of lives remaining and the level of the game.
-                        drawText('Presents delivered: %s' % (scoreCadeaux_livrés), font, windowSurface, 10, 0)
+                        drawText('Presents delivered: %s' % (scoreCadeaux_livrés), font, windowSurface, 10, 0,TEXTCOLOR)
                         vie(lives)
-                        drawText('Level: %s' % (level), font, windowSurface, WINDOWWIDTH - 150, 0)
+                        drawText('Level: %s' % (level), font, windowSurface, WINDOWWIDTH - 150, 0,TEXTCOLOR)
                         # Draw the player's rectangle.
                         windowSurface.blit(santa, santaRect) #santaImage
                         # Draw each baddie.
@@ -765,11 +765,11 @@ while True: #level 1
                         windowSurface.blit(gameOverBackground, (-850, 0))
                         pygame.mixer.music.stop()
                         gameOverSound.play()
-                        drawText('GAME OVER', font, windowSurface, (WINDOWWIDTH / 3), (WINDOWHEIGHT / 3))
+                        drawText('GAME OVER', font, windowSurface, (WINDOWWIDTH / 3), (WINDOWHEIGHT / 3),TEXTCOLOR)
                         drawText('Presse une touche ', font, windowSurface, (WINDOWWIDTH / 3) - 45,
-                                 (WINDOWHEIGHT / 3) + 50)
+                                 (WINDOWHEIGHT / 3) + 50,TEXTCOLOR)
                         drawText('pour sauver Noël', font, windowSurface, (WINDOWWIDTH / 3) - 45,
-                                 (WINDOWHEIGHT / 3) + 100)
+                                 (WINDOWHEIGHT / 3) + 100,TEXTCOLOR)
                         pygame.display.update()
                         waitForPlayerToPressKey()
                         gameOverSound.stop()
