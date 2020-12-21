@@ -162,7 +162,6 @@ def send_Gift(playerRect, chimneys, score, feedback_sound):# initialise les touc
        if playerRect.colliderect(c['rect']):
             for event in pygame.event.get():
                 if event.type == KEYDOWN:
-
                     if event.key == K_SPACE:
                         feedback_sound.play()
                         score += 1
@@ -199,7 +198,9 @@ def item_movement(objects, WINDOWWIDTH):
 #class vie:
 #   def __init__(self, lives):
 #        self.lives = lives
-#    def drawLives(self,coeur):
+#    def drawLives(self):
+#            hp = pygame.image.load('hp.png')
+#               coeur = pygame.transform.scale(hp, (30, 30))
 #            if self.lives != 0:
 #                windowSurface.blit(coeur, (10, WINDOWHEIGHT-40))
 #                return self.lives
@@ -308,7 +309,8 @@ while True: #level 1
                         pygame.mixer.music.stop()
                     else:
                         pygame.mixer.music.play(-1, 0.0)
-                musicPlaying = not musicPlaying  # le code a ete adapte depuis le livre de cours (Ai Swegart) Ch. 19 Page 325-326
+                musicPlaying = not musicPlaying
+                # le code a ete adapte depuis le livre de cours (Ai Swegart) Ch. 19 Page 325-326
             if event.type == KEYUP:
                 if event.key == K_x:
                     slowCheat = False
@@ -667,7 +669,6 @@ while True: #level 1
                                 'speed': CHIMNEYSPEED,
                                 'surface': pygame.transform.scale(chimneyImage, (MEDSIZE, chimneySize)),
                             }
-
                             chimneys.append(newChimney)
                         # Move the player vertically.
                         PlayerMouvement(santaRect)
