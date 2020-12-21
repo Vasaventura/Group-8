@@ -150,17 +150,12 @@ def waitForPlayerToPressKey(): # permet le passage d'un niveau à l'autre lorsqu
                     terminate()
                 return
 
-def playerHasHitBaddie(playerRect, baddies): # enlève des méchant lorsque le toucheur en a touché un
-    for b in baddies:
-        if playerRect.colliderect(b['rect']):
-            baddies.remove(b)
+def playerHasHitItem(playerRect, item): # enlève des méchant lorsque le toucheur en a touché un
+    for i in item:
+        if playerRect.colliderect(i['rect']):
+            item.remove(i)
             return True
     return False
-def playerHasHitLutin(playerRect, lutin):    #enlève le lutin lorsque le joueur en l'a touché
-   for l in lutin:
-        if playerRect.colliderect(l['rect']):
-            lutin.remove(l)
-            return True
 
 def send_Gift(playerRect, chimneys, score, feedback_sound):# initialise les touches pour le level 3 et le lancement des cadeaux
     for c in chimneys:
@@ -378,7 +373,7 @@ while True: #level 1
             windowSurface.blit(l['surface'], l['rect'])
         pygame.display.update()
         # Check if any of the lutins have been collected by the player.
-        if playerHasHitLutin(playerRect, lutin) == True:
+        if playerHasHitItem(playerRect, lutin) == True:
             scoreLutin += 1
             BellsSound.play()
             if scoreLutin >= 10:  # the player moves to the next level (for now the game stops)
@@ -387,7 +382,7 @@ while True: #level 1
             else:
                 continue
         # Check if any of the baddies have hit the player.
-        if playerHasHitBaddie(playerRect, baddies) == True:
+        if playerHasHitItem(playerRect, baddies) == True:
             lives -= 1
             if player[0] == "peach":
                 GSdamageSound.play()
@@ -540,7 +535,7 @@ while True: #level 1
                     windowSurface.blit(l['surface'], l['rect'])
                 pygame.display.update()
                 # Check if any of the lutins have been collected by the player.
-                if playerHasHitLutin(playerRect, lutin) == True:
+                if playerHasHitItem(playerRect, lutin) == True:
                     scoreCadeau += 1
                     PresentSound.play()
                     if scoreCadeau >= 10:  # the player moves to the next level
@@ -548,7 +543,7 @@ while True: #level 1
                     else:
                         continue
                 # Check if any of the baddies have hit the player.
-                if playerHasHitBaddie(playerRect, baddies) == True:
+                if playerHasHitItem(playerRect, baddies) == True:
                     lives -= 1
                     if player[0] == "peach":
                         GSdamageSound.play()
@@ -706,7 +701,7 @@ while True: #level 1
                             else:
                                 continue
                         # Check if any of the baddies have hit the player.
-                        if playerHasHitBaddie(santaRect, baddies) == True:
+                        if playerHasHitItem(santaRect, baddies) == True:
                             lives -= 1
                             damageSound.play()
                             for b in baddies:
