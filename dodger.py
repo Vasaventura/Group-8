@@ -190,26 +190,16 @@ def PlayerMouvement(playerRect):
         playerRect.move_ip(0, -1 * PLAYERMOVERATE)
     if moveDown and playerRect.bottom < WINDOWHEIGHT:
         playerRect.move_ip(0, PLAYERMOVERATE)
-def bad_character_movement(objects,WINDOWWIDTH):
+def character_movement(objects,WINDOWWIDTH):
     for o in objects:
         if not slowCheat:
             o['rect'].move_ip(-o['speed'], 0)
         elif slowCheat:
-            o['rect'].move_ip(-1, 0)
+            o['rect'].move_ip(-2, 0)
     # Delete baddies that have come from the left.
     for o in objects:
         if o['rect'].left > WINDOWWIDTH:
             objects.remove(o)
-def good_character_movement(objects,WINDOWWIDTH):
-        for o in objects:
-            if not slowCheat:
-                o['rect'].move_ip(-o['speed'], 0)
-            elif slowCheat:
-                o['rect'].move_ip(-2, 0)
-        # Delete lutins that have come from the left.
-        for o in objects[:]:
-            if o['rect'].left > WINDOWWIDTH:
-                objects.remove(o)
 #on a essayé de créer une classe mais malheureusement le code ne s'intègrent pas bien dans le jeu
 #class vie:
 #   def __init__(self, lives):
@@ -366,8 +356,8 @@ while True: #level 1
             lutin.append(newLutin)
         #Move the player around
         PlayerMouvement(playerRect)
-        bad_character_movement(baddies, WINDOWWIDTH) # Move the baddies to the left.
-        good_character_movement(lutin, WINDOWWIDTH) # Move the elves to the left.
+        character_movement(baddies, WINDOWWIDTH) # Move the baddies to the left.
+        character_movement(lutin, WINDOWWIDTH) # Move the elves to the left.
         # Set up the background
         windowSurface.blit(gameBackground_lvl1, (0, -100))
         # Draw the Lutin score and top score.
@@ -526,9 +516,9 @@ while True: #level 1
                 # Move the player around.
                 PlayerMouvement(playerRect)
                 # Move the charcoal to the left.
-                bad_character_movement(baddies, WINDOWWIDTH)
+                character_movement(baddies, WINDOWWIDTH)
                 # Move the presents to the left.
-                good_character_movement(lutin, WINDOWWIDTH)
+                character_movement(lutin, WINDOWWIDTH)
                 # Set up the background
                 windowSurface.blit(gameBackground_lvl2, (0, -100))
                 # Draw the Lutin score and top score.
@@ -687,9 +677,9 @@ while True: #level 1
                         # Move the player vertically.
                         PlayerMouvement(santaRect)
                         # Move the baddies to the left.
-                        bad_character_movement(baddies, WINDOWWIDTH)
+                        character_movement(baddies, WINDOWWIDTH)
                         # Move the chimneys to the left.
-                        good_character_movement(chimneys, WINDOWWIDTH)
+                        character_movement(chimneys, WINDOWWIDTH)
                         # Set up the background
                         windowSurface.blit(gameBackground_lvl3, (0, -100))
                         # Draw the score, the number of lives remaining and the level of the game.
