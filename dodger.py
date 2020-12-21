@@ -309,6 +309,7 @@ lvl3 = pygame.image.load("ecran_final.png")
 EndGameBackground = pygame.transform.scale(lvl3, (WINDOWWIDTH, WINDOWHEIGHT))
 gameOverBackground = pygame.image.load("Grinch end game.png")
 ####game####
+# -----------------------------------------------------------------------------------------------------------------------
 while True: #level 1
     # Set up the start of the game.
     baddies = []
